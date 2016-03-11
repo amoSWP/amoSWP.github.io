@@ -36,12 +36,12 @@ int max = 450;
 	textureEnte = new Texture("ente.png");
 	textureWal = new Texture("wal.png");
 	batch = new SpriteBatch();
-	// camera = new OrthographicCamera(300, 480);
+	camera = new OrthographicCamera(300, 480);
 	
 
 	Ente1 = new Ente(700, randomInteger(max), 100, 100, -2.0f, textureEnte);
 	Ente2 = new Ente(700, randomInteger(max), 50, 50, -1.5f, textureEnte);
-	Ente3 = new Ente(700, randomInteger(max), 80, 80, -1.8f, textureEnte);
+	Ente3 = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureEnte);
 	Wal1 = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureWal);
 
 	}
@@ -60,9 +60,10 @@ int max = 450;
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// Gdx.graphics.setWindowedMode(400, 300);
-		// camera.update();
-		// batch.setProjectionMatrix(camera.combined);
+		//camera.update();
+		//batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		
 		
 		// movement of the duck
 
