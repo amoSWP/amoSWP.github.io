@@ -53,5 +53,8 @@ public class Jet {
 		return (float) Math.sqrt(d[0]*d[0]+d[1]*d[1]);
 	}
 	
+	
+	
+	
 
 }
