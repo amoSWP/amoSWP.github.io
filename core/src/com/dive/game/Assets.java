@@ -19,6 +19,8 @@ public class Assets {
 	public Texture backgroundFront;
 	public Texture backgroundMiddle;
 	public Texture backgroundRear;
+	public Texture background;
+	public Texture diver;
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -50,6 +52,8 @@ public class Assets {
 		backgroundFront  = loadTexture("background/BottomBackground.png");
 		backgroundMiddle = loadTexture("background/MainBackground.jpg");
 		backgroundRear   = loadTexture("background/TopBackground 2.png");
+		background		 = loadTexture("background/backgroundExpanded.png");
+		diver 			 = loadTexture("diver/diver.png");
 		
 	}
 
