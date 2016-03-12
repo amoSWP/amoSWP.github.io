@@ -1,5 +1,6 @@
 package com.dive.game;
 
+import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -7,8 +8,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,6 +34,14 @@ public class DiveGame extends ApplicationAdapter {
 	        diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 200);
 	        background1 = new Sprite(Assets.getInstance().background);
 	        background2 = new Sprite(Assets.getInstance().background);
+	        
+			textureEnte = new Texture("ente.png");
+			textureWal = new Texture("wal.png");
+			
+			Ente1 = new Ente(700, randomInteger(max), 100, 100, -2.0f, textureEnte);
+			Ente2 = new Ente(700, randomInteger(max), 50, 50, -1.5f, textureEnte);
+			Ente3 = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureEnte);
+			Wal1  = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureWal);
 	        
 	        background1.setX(0);
 	        background1.setSize(2*w, h);
@@ -59,10 +71,24 @@ public class DiveGame extends ApplicationAdapter {
 	        	background2.setX(background1.getX()+background1.getWidth());
 	        }
 	        
+	        // Move the duck before a batch.begin()
+	        Ente1.moveEnte(Ente1, 700, randomInteger(max));
+			Ente2.moveEnte(Ente2, 700, randomInteger(max));
+			Ente3.moveEnte(Ente3, 700, randomInteger(max));
+			Wal1.moveEnte(Wal1, 700, randomInteger(max));
+	        
 	        batch.begin();
-	        	background1.draw(batch);
-	        	background2.draw(batch);
-	        	diver.draw(batch, Gdx.graphics.getDeltaTime());
+	        background1.draw(batch);
+	        background2.draw(batch);
+	        	
+	        // draws moving duck
+		 	// Ente1.sprite.translateX(Ente1.enteSpeed);
+			Ente1.getSprite().draw(batch);
+			Ente2.getSprite().draw(batch);
+			Ente3.getSprite().draw(batch);
+		 	Wal1.getSprite().draw(batch);
+	        	
+	        diver.draw(batch, Gdx.graphics.getDeltaTime());
 	        batch.end();
 	    }
 
@@ -83,4 +109,12 @@ public class DiveGame extends ApplicationAdapter {
 	    public void resume() {
 	    }
 	
+
+	
+public int randomInteger(int max) {
+    Random rand = new Random();
+    int randomNum = (int)(Math.random() * ((max) + 1));
+    return randomNum;
+}
+
 }
