@@ -25,6 +25,11 @@ public class DiveGame extends ApplicationAdapter {
 	    private Diver diver;
 	    private Sprite background1, background2;
 	    
+	    Ente Ente1, Ente2, Ente3, Wal1;
+	    Texture textureEnte, textureWal;
+	    
+	    int max = 450;
+	    
 	    @Override
 	    public void create() {        
 	        float w = Gdx.graphics.getWidth();
@@ -71,7 +76,7 @@ public class DiveGame extends ApplicationAdapter {
 	        	background2.setX(background1.getX()+background1.getWidth());
 	        }
 	        
-	        // Move the duck before a batch.begin()
+	        // Move the duck before batch.begin()
 	        Ente1.moveEnte(Ente1, 700, randomInteger(max));
 			Ente2.moveEnte(Ente2, 700, randomInteger(max));
 			Ente3.moveEnte(Ente3, 700, randomInteger(max));
