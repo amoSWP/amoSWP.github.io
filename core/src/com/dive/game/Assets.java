@@ -41,6 +41,8 @@ public class Assets {
 	}
 
 	private static Texture loadTexture (String location) {
+		// Falls exceptions auftreten, die besagen, dass eine Datei nicht
+		// gefunden wurde, ersetze die folgende Zeile mit der nachfolgenden.
 		return new Texture(Gdx.files.internal(location));
 		//return new Texture(location);
 	}
