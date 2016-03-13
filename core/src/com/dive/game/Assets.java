@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 
 public class Assets {
 	
+
 	// Assets is Singleton
 	
 	private static Assets instance = null;
@@ -29,7 +30,7 @@ public class Assets {
 	//public Sound makeSomeNoise;
 	
 	protected Assets() {
-		// Empty
+		// Empty constructor
 	}
 	
 	public static Assets getInstance() {
