@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 // Extended by Singleton-mechanics
 
 public class Assets {
+	
 
 	// Assets is Singleton
 	
