@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 
 public class Assets {
 	
+
 	// Assets is Singleton
 	
 	private static Assets instance = null;
