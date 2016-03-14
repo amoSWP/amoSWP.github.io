@@ -127,4 +127,4 @@ libgdx-*.zip.MD5
 
 #directories created by fetch.xml
 /tests/gdx-tests-android/libs
-/tmp/
+/tmp
