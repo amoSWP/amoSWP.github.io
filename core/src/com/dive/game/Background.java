@@ -39,8 +39,6 @@ public class Background {
 		}else{
 			sprite1.setX(sprite2.getX() + screen.width);
 		}
-		this.w = w;
-		this.h = h;
 		
 	}
 
