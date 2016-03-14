@@ -7,6 +7,12 @@ import com.dive.game.DiveGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		// Set basic properties of the game window
+		config.title = "Clean Ocean";
+		config.width = 1280;
+		config.height = 720;
+		
 		new LwjglApplication(new DiveGame(), config);
 	}
 }
