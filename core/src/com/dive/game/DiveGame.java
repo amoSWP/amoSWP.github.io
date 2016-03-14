@@ -19,39 +19,45 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class DiveGame extends ApplicationAdapter {
 	 private SpriteBatch batch;
 	    private Diver diver;
 	    private Sprite background1, background2;
-	    
+	    private Boolean collision;
 	    Ente Ente1, Ente2, Ente3, Wal1;
 	    Texture textureEnte, textureWal;
+	    private BitmapFont font;
+	    private Integer counter;
 	    
-	    int max = 450;
 	    
 	    @Override
 	    public void create() {        
 	        float w = Gdx.graphics.getWidth();
 	        float h = Gdx.graphics.getHeight();
 	        
+	        font = new BitmapFont();
+	        font.setColor(Color.RED);
+	        
 	        batch = new SpriteBatch();
 	        diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 200);
 	        background1 = new Sprite(Assets.getInstance().background);
 	        background2 = new Sprite(Assets.getInstance().background);
 	        
-			textureEnte = new Texture("ente.png");
-			textureWal = new Texture("wal.png");
+			textureEnte = Assets.getInstance().ente;
+			textureWal = Assets.getInstance().wal;
 			
-			Ente1 = new Ente(700, randomInteger(max), 100, 100, -2.0f, textureEnte);
-			Ente2 = new Ente(700, randomInteger(max), 50, 50, -1.5f, textureEnte);
-			Ente3 = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureEnte);
-			Wal1  = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureWal);
-	        
 	        background1.setX(0);
 	        background1.setSize(2*w, h);
 	        background2.setX(2*w);
 	        background2.setSize(2*w, h);
+	        
+	        collision = false;
+	        
+	        counter = 0;
 	        
 	    }
 
@@ -75,25 +81,25 @@ public class DiveGame extends ApplicationAdapter {
 	        if(background2.getX()+background2.getWidth() <0){
 	        	background2.setX(background1.getX()+background1.getWidth());
 	        }
-	        
-	        // Move the duck before batch.begin()
-	        Ente1.moveEnte(Ente1, 700, randomInteger(max));
-			Ente2.moveEnte(Ente2, 700, randomInteger(max));
-			Ente3.moveEnte(Ente3, 700, randomInteger(max));
-			Wal1.moveEnte(Wal1, 700, randomInteger(max));
+	        			
+			// check collisions
+			if ((Intersector.overlaps(diver.getShape(), Ente1.getShape())) || (Intersector.overlaps(diver.getShape(), Ente2.getShape()) || (Intersector.overlaps(diver.getShape(), Ente3.getShape()) || (Intersector.overlaps(diver.getShape(), Wal1.getShape()))))){
+				collision = true;
+				counter = counter +1;
+			}
 	        
 	        batch.begin();
+	        
+	        // draw background
 	        background1.draw(batch);
 	        background2.draw(batch);
 	        	
-	        // draws moving duck
-		 	// Ente1.sprite.translateX(Ente1.enteSpeed);
-			Ente1.getSprite().draw(batch);
-			Ente2.getSprite().draw(batch);
-			Ente3.getSprite().draw(batch);
-		 	Wal1.getSprite().draw(batch);
-	        	
+		 	// draw diver
 	        diver.draw(batch, Gdx.graphics.getDeltaTime());
+	        
+	        // draw collision
+	        	font.draw(batch, "Kollision"+ counter, 200, 200);
+	        	
 	        batch.end();
 	    }
 
@@ -113,15 +119,7 @@ public class DiveGame extends ApplicationAdapter {
 	    @Override
 	    public void resume() {
 	    }
-	
-
-	
-public int randomInteger(int max) {
-    Random rand = new Random();
-    int randomNum = (int)(Math.random() * ((max) + 1));
-    return randomNum;
-}
 
 }
 
-}
+
