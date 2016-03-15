@@ -7,14 +7,14 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 
 public class ObjectGenerator {
-	Ente[] listEnten;
-	float countDown;
-	float maxCountDown;
-	int pointer;
+	private Ente[] listEnten;
+	private float countDown;
+	private float maxCountDown;
+	private int pointer;
 
-	int maxNoEnte;
-	int min = 70;
-	int max = 390;
+	private int maxNoEnte;
+	private int min = 70;
+	private int max = 390;
 
 	// constructor: kreiere Liste mit Enten
 	public ObjectGenerator(int maxNoEnte) {
@@ -48,12 +48,12 @@ public class ObjectGenerator {
 		// zur Verfügung
 		for (int i = 0; i < maxNoEnte; i++) {
 			Ente e = listEnten[i];
-			if (e.active && (e.sprite.getX() < -e.sprite.getWidth())) {
+			if (e.getActive() && (e.getSprite().getX() < -e.getSprite().getWidth())) {
 
-				e.active = false;
+				e.setActive(false);
 				list.remove(e);
-				e.sprite.setX(Gdx.graphics.getWidth());
-				e.sprite.setY(randomInteger(min, max));
+				e.getSprite().setX(Gdx.graphics.getWidth());
+				e.getSprite().setY(randomInteger(min, max));
 			}
 		}
 	}

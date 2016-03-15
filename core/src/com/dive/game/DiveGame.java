@@ -82,11 +82,6 @@ public class DiveGame extends ApplicationAdapter {
 	        	background2.setX(background1.getX()+background1.getWidth());
 	        }
 	        			
-			// check collisions
-//			if ((Intersector.overlaps(diver.getShape(), Ente1.getShape())) || (Intersector.overlaps(diver.getShape(), Ente2.getShape()) || (Intersector.overlaps(diver.getShape(), Ente3.getShape()) || (Intersector.overlaps(diver.getShape(), Wal1.getShape()))))){
-//				collision = true;
-//				counter = counter +1;
-//			}
 	        
 	        batch.begin();
 	        
@@ -96,9 +91,6 @@ public class DiveGame extends ApplicationAdapter {
 	        	
 		 	// draw diver
 	        diver.draw(batch, Gdx.graphics.getDeltaTime());
-	        
-	        // draw collision
-//	        	font.draw(batch, "Kollision"+ counter, 200, 200);
 	        	
 	        batch.end();
 	    }

@@ -21,6 +21,8 @@ import com.badlogic.gdx.math.Rectangle;
 			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 			
 			this.enteSpeed = enteSpeed;
+			
+			this.active = false;
 
 		}
 		
@@ -28,8 +30,20 @@ import com.badlogic.gdx.math.Rectangle;
 			return shape;
 		}
 		
+		public Sprite getSprite(){
+			return sprite;
+		}
+		
 		public float getEnteSpeed(){
 			return enteSpeed;
+		}
+		
+		public boolean getActive(){
+			return active;
+		}
+		
+		public void setActive(boolean status){
+			this.active = status;
 		}
 		
 		public void moveEnte(Ente ente, int xcord, int ycord){
