@@ -9,13 +9,14 @@ public class Plant extends GameObject {
 	private int ycord;
 	private float plantSpeed;
 
-	public Plant(int xcord, int width, int height, float plantSpeed, Texture texture) {
+	public Plant(int xcord, int width, int height, float plantSpeed,
+			Texture texture) {
 		ycord = 40;
 
 		sprite = new Sprite(texture);
 		sprite.setPosition(xcord, ycord);
 		sprite.setSize(width, height);
-		
+
 		this.plantSpeed = plantSpeed;
 
 		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(),
@@ -24,14 +25,12 @@ public class Plant extends GameObject {
 		active = false;
 		type = ObjectType.PLANT;
 	}
-	
-	public float getPlantSpeed(){
+
+	public float getPlantSpeed() {
 		return plantSpeed;
 	}
-	
-	
-	public void moveObject(){
+
+	public void moveObject() {
 		sprite.translateX(plantSpeed);
-		System.out.println("move plant" + sprite.getX() + "  "+ plantSpeed);
-}
+	}
 }

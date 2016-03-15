@@ -7,19 +7,24 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 
 public class ObjectGenerator {
+	private GameObject[] listGameObjects;
 	private Shark[] listSharks;
 	private Plant[] listPlants;
 
+	private float countDownObject;
 	private float countDownShark;
 	private float countDownPlant;
 
 	private float maxCountDown;
 	private int pointerShark;
 	private int pointerPlant;
+	private int pointerObject;
 
 	// maximale Anzahl Haie, Pflanzen
+	private int maxNoGameObject;
 	private int maxNoShark;
 	private int maxNoPlant;
+	
 
 	// Höhe von Haien, Pflanzen haben feste y Koordinate
 	private int minHeightShark = 120;
@@ -30,9 +35,11 @@ public class ObjectGenerator {
 
 	// constructor: kreiere Liste mit Haien
 	public ObjectGenerator(int maxNoShark, int maxNoPlant) {
+		pointerObject = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
-		countDownShark = countDownPlant = maxCountDown = 1;
+		
+		countDownObject = countDownShark = countDownPlant = maxCountDown = 1;
 
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
@@ -40,6 +47,7 @@ public class ObjectGenerator {
 		newSizeShark = randomInteger(70, 150);
 		newSizePlant = randomInteger(50, 110);
 
+		listGameObjects = new GameObject[maxNoGameObject];
 		listSharks = new Shark[maxNoShark];
 		listPlants = new Plant[maxNoPlant];
 
@@ -56,7 +64,11 @@ public class ObjectGenerator {
 					newSizePlant, -3.0f, Assets.getInstance().wal);
 		}
 	}
-
+// allgemeine Einfügemethode
+	public void nextObject(ArrayList<GameObject> list, float deltaTime){
+		countDownObject -= deltaTime;
+	}
+	
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
 	public void nextShark(ArrayList<GameObject> list, float deltaTime) {
