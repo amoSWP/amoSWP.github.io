@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 		private float enteSpeed;
 		boolean active;
 		
+		//kreiere Ente und ihr wird das bild, Größe des Bildes (width,height) und koordinaten übergeben
 		public Ente(int xcord, int ycord, int width, int height, float enteSpeed, Texture texture){
 			
 			sprite = new Sprite(texture);
@@ -21,8 +22,7 @@ import com.badlogic.gdx.math.Rectangle;
 			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 			
 			this.enteSpeed = enteSpeed;
-			
-			this.active = false;
+			active = false;
 
 		}
 		
@@ -33,6 +33,7 @@ import com.badlogic.gdx.math.Rectangle;
 		public Sprite getSprite(){
 			return sprite;
 		}
+		
 		
 		public float getEnteSpeed(){
 			return enteSpeed;
@@ -46,16 +47,10 @@ import com.badlogic.gdx.math.Rectangle;
 			this.active = status;
 		}
 		
-		public void moveEnte(Ente ente, int xcord, int ycord){
+		public void moveEnte(){
 			sprite.translateX(getEnteSpeed());
-			shape.setPosition(sprite.getX(), sprite.getY());
 			
-			// gets duck back to original position once its left the screen
-			if(sprite.getX() == -sprite.getWidth()){
-				sprite.setPosition(xcord, ycord);
-				shape.setPosition(xcord, ycord);
-				}
-			
+		
 		}
 
 	}

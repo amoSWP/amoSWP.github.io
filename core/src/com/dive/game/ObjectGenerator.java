@@ -54,6 +54,8 @@ public class ObjectGenerator {
 				list.remove(e);
 				e.getSprite().setX(Gdx.graphics.getWidth());
 				e.getSprite().setY(randomInteger(min, max));
+				newSize = randomInteger(50,120);
+				e.getSprite().setSize(newSize, newSize);
 			}
 		}
 	}

@@ -54,7 +54,7 @@ public class Assets {
 		System.out.println("Loading Assets..");
 		
 		backgroundFront  = loadTexture("background/BottomBackground.png");
-		backgroundMiddle = loadTexture("background/waterExpanded.png");
+		backgroundMiddle = loadTexture("background/MainBackground.jpg");
 		backgroundRear   = loadTexture("background/TopBackground 2.png");
 		background		 = loadTexture("background/backgroundExpanded.png");
 		diver 			 = loadTexture("diver/diver.png");
