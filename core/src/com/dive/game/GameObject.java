@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class GameObject {
 	
-	private Sprite sprite;			//Hintergrund des Objekts, "die Textur"
-	private float[] acc;			//Ein zweidimensionaler Vektor, welcher die Beschleunigung des Objektes angibt
-	private Rectangle shape;		//die Kollisionsform des Objekts
-	private ObjectType type;		//Typ des Objects (Shark, Plant, etc.)
-	private float width, height;	//Außmaße des  Objekts in % des Bildschirms
-	private GameScreen screen;		//Spielbereich festlegen
+	protected Sprite sprite;			//Hintergrund des Objekts, "die Textur"
+	protected float[] acc;				//Ein zweidimensionaler Vektor, welcher die Beschleunigung des Objektes angibt
+	protected Rectangle shape;			//die Kollisionsform des Objekts
+	protected ObjectType type;			//Typ des Objects (Shark, Plant, etc.)
+	protected float x,y;				//relative Koordinaten des Objekts (% des Gamescreens)
+	protected float width, height;		//relative Größe des Objekts (% des Gamescreens)
+	protected GameScreen screen;		//Spielbereich festlegen
 	
 	
 	public void draw(Batch batch){	//zeichnet das Objekt auf den gegebenen batch
@@ -26,7 +27,13 @@ public class GameObject {
 		return type;
 	}
 	
-	public void resize(GameScreen screen){
+	public void resize(float scale){
+		
+		//Größe anpassen
+		sprite.setSize(sprite.getWidth()*scale,sprite.getHeight()*scale);
+		
+		//Position anpassen
+		sprite.setPosition(screen.x+scale*x, screen.y+scale*y);
 		
 		
 	}

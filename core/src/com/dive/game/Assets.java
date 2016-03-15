@@ -63,6 +63,13 @@ public class Assets {
 		
 	}
 
+	public void dispose() {
+		Texture[] tex = new Texture[]{backgroundFront, backgroundMiddle, backgroundRear, background, diver, ente, wal};
+		for(Texture t:tex){
+			t.dispose();
+		}
+	}
+
 	//public static void playSound (Sound sound) {
 	//	if (Settings.soundEnabled) sound.play(1);
 	//}

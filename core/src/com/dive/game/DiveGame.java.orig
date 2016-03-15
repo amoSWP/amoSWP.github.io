@@ -29,37 +29,40 @@ public class DiveGame extends ApplicationAdapter {
 	 private SpriteBatch batch;
 	    private Diver diver;
 	    private Sprite background1, background2;
-	    private Boolean collision;
+	    
 	    Ente Ente1, Ente2, Ente3, Wal1;
 	    Texture textureEnte, textureWal;
-	    private BitmapFont font;
-	    private Integer counter;
 	    
+	    Shark shark;
+	    GameScreen screen;
+	    
+	    int max = 450;
 	    
 	    @Override
 	    public void create() {        
 	        float w = Gdx.graphics.getWidth();
 	        float h = Gdx.graphics.getHeight();
 	        
-	        font = new BitmapFont();
-	        font.setColor(Color.RED);
+	        screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
+	        shark = new Shark(new Sprite(Assets.getInstance().diver), new float[]{0,0}, ObjectType.SHARK, 0.5f, 0.5f, 0.1f, 0.1f,screen);
 	        
 	        batch = new SpriteBatch();
 	        diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 200);
 	        background1 = new Sprite(Assets.getInstance().background);
 	        background2 = new Sprite(Assets.getInstance().background);
 	        
-			textureEnte = Assets.getInstance().ente;
-			textureWal = Assets.getInstance().wal;
+			textureEnte = new Texture("ente.png");
+			textureWal = new Texture("wal.png");
 			
+			Ente1 = new Ente(700, randomInteger(max), 100, 100, -2.0f, textureEnte);
+			Ente2 = new Ente(700, randomInteger(max), 50, 50, -1.5f, textureEnte);
+			Ente3 = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureEnte);
+			Wal1  = new Ente(700, randomInteger(max), 80, 80, -1.5f, textureWal);
+	        
 	        background1.setX(0);
 	        background1.setSize(2*w, h);
 	        background2.setX(2*w);
 	        background2.setSize(2*w, h);
-	        
-	        collision = false;
-	        
-	        counter = 0;
 	        
 	    }
 
@@ -83,17 +86,26 @@ public class DiveGame extends ApplicationAdapter {
 	        if(background2.getX()+background2.getWidth() <0){
 	        	background2.setX(background1.getX()+background1.getWidth());
 	        }
-	        			
+	        
+	        // Move the duck before batch.begin()
+	        Ente1.moveEnte(Ente1, 700, randomInteger(max));
+			Ente2.moveEnte(Ente2, 700, randomInteger(max));
+			Ente3.moveEnte(Ente3, 700, randomInteger(max));
+			Wal1.moveEnte(Wal1, 700, randomInteger(max));
 	        
 	        batch.begin();
-	        
-	        // draw background
 	        background1.draw(batch);
 	        background2.draw(batch);
 	        	
-		 	// draw diver
-	        diver.draw(batch, Gdx.graphics.getDeltaTime());
+	        // draws moving duck
+		 	// Ente1.sprite.translateX(Ente1.enteSpeed);
+			Ente1.getSprite().draw(batch);
+			Ente2.getSprite().draw(batch);
+			Ente3.getSprite().draw(batch);
+		 	Wal1.getSprite().draw(batch);
+		 	shark.draw(batch);
 	        	
+	        diver.draw(batch, Gdx.graphics.getDeltaTime());
 	        batch.end();
 	    }
 
@@ -101,7 +113,7 @@ public class DiveGame extends ApplicationAdapter {
 	    public void resize(int width, int height) {
 	    	
 	    	diver.setWindow(width, height);
-	    	
+	    	shark.resize(0.99f);
 	    	
 	    	
 	    }
@@ -113,9 +125,14 @@ public class DiveGame extends ApplicationAdapter {
 	    @Override
 	    public void resume() {
 	    }
+	
 
+	
+public int randomInteger(int max) {
+    Random rand = new Random();
+    int randomNum = (int)(Math.random() * ((max) + 1));
+    return randomNum;
 }
-
 =======
 	private SpriteBatch batch;
 	private Diver diver;
@@ -182,7 +199,7 @@ public class DiveGame extends ApplicationAdapter {
 		// Enten durch und bwege, danach zeichne sie
 		for (Ente e : listEnten) {
 			e.moveEnte();
-			e.sprite.draw(batch);
+			e.getSprite().draw(batch);
 		}
 
 		diver.draw(batch, Gdx.graphics.getDeltaTime());
@@ -203,5 +220,6 @@ public class DiveGame extends ApplicationAdapter {
 	@Override
 	public void resume() {
 	}
->>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
+>>>>>>> upstream/master
 
+}
