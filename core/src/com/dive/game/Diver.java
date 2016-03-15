@@ -13,7 +13,6 @@ public class Diver {
 	private int air;
 	private float[] v;
 	private float maxSpeed, decay, windowWidth, windowHeight;
-	//private Polygon shape;
 	private Rectangle shape;
 	private Sprite sprite;
 	
