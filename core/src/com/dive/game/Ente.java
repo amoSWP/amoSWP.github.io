@@ -35,11 +35,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 		public void moveEnte(){
 			sprite.translateX(getEnteSpeed());
 			
-//			// gets duck back to original position once its left the screen
-//			if(sprite.getX() < -sprite.getWidth()){
-//				// sprite.dispose();
-//				sprite.setPosition(xcord, ycord);}
-			
+		
 		}
 
 	}
