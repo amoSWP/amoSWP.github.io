@@ -22,7 +22,10 @@ public class Assets {
 	public Texture background;
 	public Texture diver;
 	public Texture ente;
+<<<<<<< HEAD
 	public Texture wal;
+=======
+>>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -54,13 +57,17 @@ public class Assets {
 		System.out.println("Loading Assets..");
 		
 		backgroundFront  = loadTexture("background/BottomBackground.png");
-		backgroundMiddle = loadTexture("background/MainBackground.jpg");
+		backgroundMiddle = loadTexture("background/waterExpanded.png");
 		backgroundRear   = loadTexture("background/TopBackground 2.png");
 		background		 = loadTexture("background/backgroundExpanded.png");
 		diver 			 = loadTexture("diver/diver.png");
+<<<<<<< HEAD
 		ente			 = loadTexture("ente.png");
 		wal				 = loadTexture("wal.png");
 		
+=======
+		ente 			 = loadTexture("ente.png");
+>>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
 	}
 
 	//public static void playSound (Sound sound) {
