@@ -11,6 +11,7 @@ public class ObjectGenerator {
 	float countDown;
 	float maxCountDown;
 	int pointer;
+	private int newSize;
 
 	int maxNoEnte;
 	int min = 70;
@@ -48,12 +49,14 @@ public class ObjectGenerator {
 		// zur Verfügung
 		for (int i = 0; i < maxNoEnte; i++) {
 			Ente e = listEnten[i];
-			if (e.active && (e.sprite.getX() < -e.sprite.getWidth())) {
+			if (e.getActive() && (e.sprite.getX() < -e.sprite.getWidth())) {
 
-				e.active = false;
+				e.setActive(false);
 				list.remove(e);
 				e.sprite.setX(Gdx.graphics.getWidth());
 				e.sprite.setY(randomInteger(min, max));
+				newSize = randomInteger(50,120);
+				e.sprite.setSize(newSize, newSize);
 			}
 		}
 	}

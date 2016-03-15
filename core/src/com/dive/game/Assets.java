@@ -21,6 +21,7 @@ public class Assets {
 	public Texture backgroundRear;
 	public Texture background;
 	public Texture diver;
+	public Texture ente;
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -56,7 +57,7 @@ public class Assets {
 		backgroundRear   = loadTexture("background/TopBackground 2.png");
 		background		 = loadTexture("background/backgroundExpanded.png");
 		diver 			 = loadTexture("diver/diver.png");
-		
+		ente 			 = loadTexture("ente.png");
 	}
 
 	//public static void playSound (Sound sound) {
