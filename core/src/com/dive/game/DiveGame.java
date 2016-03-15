@@ -90,7 +90,7 @@ public class DiveGame extends ApplicationAdapter {
 		// Enten durch und bwege, danach zeichne sie
 		for (Ente e : listEnten) {
 			e.moveEnte();
-			e.sprite.draw(batch);
+			e.getSprite().draw(batch);
 		}
 
 		diver.draw(batch, Gdx.graphics.getDeltaTime());
