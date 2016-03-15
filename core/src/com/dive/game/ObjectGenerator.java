@@ -14,6 +14,7 @@ public class ObjectGenerator {
 	private float countDownObject;
 	private float countDownShark;
 	private float countDownPlant;
+	private float gameSpeed;
 
 	private float maxCountDown;
 	private int pointerShark;
@@ -28,13 +29,15 @@ public class ObjectGenerator {
 
 	// Höhe von Haien, Pflanzen haben feste y Koordinate
 	private int minHeightShark = 120;
-	private int maxHeightShark = 390;
+	private int maxHeightShark = 500;
 
 	private int newSizeShark;
 	private int newSizePlant;
+	
+	private GameScreen screen;
 
 	// constructor: kreiere Liste mit Haien
-	public ObjectGenerator(int maxNoShark, int maxNoPlant) {
+	public ObjectGenerator(int maxNoShark, int maxNoPlant, float gameSpeed, GameScreen screen) {
 		pointerObject = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
@@ -43,6 +46,7 @@ public class ObjectGenerator {
 
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
+		this.screen = screen;
 
 		newSizeShark = randomInteger(70, 150);
 		newSizePlant = randomInteger(50, 110);
@@ -54,14 +58,14 @@ public class ObjectGenerator {
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
 			listSharks[i] = new Shark(Gdx.graphics.getWidth(), randomInteger(
-					minHeightShark, maxHeightShark), newSizeShark,
-					newSizeShark + 20, -3.0f, Assets.getInstance().shark);
+					minHeightShark, maxHeightShark), newSizeShark+100,
+					newSizeShark + 20, -gameSpeed, Assets.getInstance().shark);
 		}
 
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
-			listPlants[i] = new Plant(Gdx.graphics.getWidth(), newSizePlant,
-					newSizePlant, -3.0f, Assets.getInstance().wal);
+			listPlants[i] = new Plant(Gdx.graphics.getWidth(), newSizePlant + 100,
+					newSizePlant, Assets.getInstance().plant);
 		}
 	}
 // allgemeine Einfügemethode
@@ -99,7 +103,7 @@ public class ObjectGenerator {
 				e.getSprite().setY(
 						randomInteger(minHeightShark, maxHeightShark));
 				newSizeShark = randomInteger(70, 150);
-				e.getSprite().setSize(newSizeShark, newSizeShark + 20);
+				e.getSprite().setSize(newSizeShark+100, newSizeShark + 20);
 			}
 		}
 	}
@@ -126,7 +130,7 @@ public class ObjectGenerator {
 				list.remove(p);
 				p.getSprite().setX(Gdx.graphics.getWidth());
 				newSizePlant = randomInteger(50, 120);
-				p.getSprite().setSize(newSizePlant, newSizePlant);
+				p.getSprite().setSize(newSizePlant+100, newSizePlant);
 			}
 		}
 		

@@ -1,5 +1,29 @@
 package com.dive.game;
 
+<<<<<<< HEAD
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public class Shark extends GameObject{
+	
+	public Shark(Sprite sprite, float[] acc, ObjectType type, float x, float y, float width, float height, GameScreen screen){
+		this.sprite = sprite;
+		this.acc = acc;
+		this.type = type;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.screen = screen;
+		
+		this.sprite.setPosition(x, y);
+		this.sprite.setSize(screen.width*width, screen.height*height);
+		
+		
+		
+	}
+
+}
+=======
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
@@ -8,6 +32,7 @@ import com.badlogic.gdx.math.Rectangle;
 	public class Shark extends GameObject{
 		
 		// private Sprite sprite;
+		private Rectangle shape;
 		private float sharkSpeed;
 		
 		
@@ -19,7 +44,6 @@ import com.badlogic.gdx.math.Rectangle;
 			sprite.setSize(width, height);
 		
 			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
-			shape.setPosition(sprite.getX(), sprite.getY());
 			
 			this.sharkSpeed = sharkSpeed;
 			active = false;
@@ -39,7 +63,9 @@ import com.badlogic.gdx.math.Rectangle;
 		
 		public void moveObject(){
 			sprite.translateX(getSharkSpeed());
-			shape.setPosition(sprite.getX(), sprite.getY());
+			
+		
 		}
 
 	}
+>>>>>>> upstream/master

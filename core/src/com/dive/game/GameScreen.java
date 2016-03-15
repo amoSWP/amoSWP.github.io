@@ -10,5 +10,19 @@ public class GameScreen {
 		this.x = x;
 		this.y = y;
 	}
+
+	public void setSize(int width, int height) {
+		this.width = width;
+		this.height = height;
+		
+	}
+	
+	public float top(){
+		return y+height;
+	}
+	
+	public float right(){
+		return x+width;
+	}
 	
 }

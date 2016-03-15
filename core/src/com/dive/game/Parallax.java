@@ -1,22 +1,23 @@
 package com.dive.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Parallax {
 	
 	private Background top,middle,bottom;
-	private Sprite tops,middles,bottoms;
+	private Texture tops,middles,bottoms;
 	
 	public Parallax(float gamespeed, GameScreen screen){
 		// load Sprites from Assetmanager
-		tops = new Sprite(Assets.getInstance().backgroundTop);
-		middles = new Sprite(Assets.getInstance().backgroundMiddle);
-		bottoms = new Sprite(Assets.getInstance().backgroundBottom);
+		tops = Assets.getInstance().backgroundTop;
+		middles = Assets.getInstance().backgroundMiddle;
+		bottoms = Assets.getInstance().backgroundBottom;
 		// create Backgroundobjects
-		top = new Background(tops, (0.5f * gamespeed), screen);
-		middle = new Background(middles, gamespeed, screen);
-		bottom = new Background(bottoms, (0.5f * gamespeed), screen);
+		top = new Background(tops, (0.7f * gamespeed), screen);
+		middle = new Background(middles, 0.4f*gamespeed, screen);
+		bottom = new Background(bottoms, (gamespeed), screen);
 	}
 
 	public void setSpeed(float gamespeed){
@@ -26,8 +27,8 @@ public class Parallax {
 	}
 	
 	public void draw(Batch batch){
-		top.draw(batch);
 		middle.draw(batch);
+		top.draw(batch);
 		bottom.draw(batch);
 	}
 	
