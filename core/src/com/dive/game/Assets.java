@@ -23,6 +23,7 @@ public class Assets {
 	public Texture diver;
 	public Texture shark;
 	public Texture wal;
+	public Texture shark;
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -60,6 +61,7 @@ public class Assets {
 		diver 			 = loadTexture("diver/diver.png");
 		shark			 = loadTexture("background/myshark.png");
 		wal				 = loadTexture("wal.png");
+		shark			= loadTexture("myshark.png");
 		
 	}
 
