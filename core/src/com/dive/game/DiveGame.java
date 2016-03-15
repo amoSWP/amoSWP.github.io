@@ -28,12 +28,18 @@ public class DiveGame extends ApplicationAdapter {
 	    Ente Ente1, Ente2, Ente3, Wal1;
 	    Texture textureEnte, textureWal;
 	    
+	    Shark shark;
+	    GameScreen screen;
+	    
 	    int max = 450;
 	    
 	    @Override
 	    public void create() {        
 	        float w = Gdx.graphics.getWidth();
 	        float h = Gdx.graphics.getHeight();
+	        
+	        screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
+	        shark = new Shark(new Sprite(Assets.getInstance().diver), new float[]{0,0}, ObjectType.SHARK, 0.5f, 0.5f, 0.1f, 0.1f,screen);
 	        
 	        batch = new SpriteBatch();
 	        diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 200);
@@ -92,6 +98,7 @@ public class DiveGame extends ApplicationAdapter {
 			Ente2.getSprite().draw(batch);
 			Ente3.getSprite().draw(batch);
 		 	Wal1.getSprite().draw(batch);
+		 	shark.draw(batch);
 	        	
 	        diver.draw(batch, Gdx.graphics.getDeltaTime());
 	        batch.end();
@@ -101,7 +108,7 @@ public class DiveGame extends ApplicationAdapter {
 	    public void resize(int width, int height) {
 	    	
 	    	diver.setWindow(width, height);
-	    	
+	    	shark.resize(0.99f);
 	    	
 	    	
 	    }
