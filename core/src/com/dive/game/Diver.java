@@ -5,12 +5,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Diver {
 	
 	private int air;
 	private float[] v;
 	private float maxSpeed, decay, windowWidth, windowHeight;
+	//private Polygon shape;
+	private Rectangle shape;
 	private Sprite sprite;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed){
@@ -24,6 +28,8 @@ public class Diver {
 		sprite = new Sprite(texture);
 		sprite.setY(startY);
 		sprite.setSize(width, height);
+		
+		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		
 	}
 	
@@ -68,9 +74,14 @@ public class Diver {
 		}
 		
 		sprite.translate(xTranslate, v[1]*deltaTime);
+		shape.setPosition(sprite.getX(), sprite.getY());
 		
 		v[0]*=decay;
 		
+	}
+
+	public Rectangle getShape(){
+		return this.shape;
 	}
 	
 	private void norm(){
