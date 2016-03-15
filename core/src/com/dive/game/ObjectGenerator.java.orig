@@ -7,10 +7,18 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 
 public class ObjectGenerator {
+<<<<<<< HEAD
 	private Ente[] listEnten;
 	private float countDown;
 	private float maxCountDown;
 	private int pointer;
+=======
+	Ente[] listEnten;
+	float countDown;
+	float maxCountDown;
+	int pointer;
+	private int newSize;
+>>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
 
 	private int maxNoEnte;
 	private int min = 70;
@@ -48,14 +56,23 @@ public class ObjectGenerator {
 		// zur Verfügung
 		for (int i = 0; i < maxNoEnte; i++) {
 			Ente e = listEnten[i];
+<<<<<<< HEAD
 			if (e.getActive() && (e.getSprite().getX() < -e.getSprite().getWidth())) {
 
 				e.setActive(false);
 				list.remove(e);
 				e.getSprite().setX(Gdx.graphics.getWidth());
 				e.getSprite().setY(randomInteger(min, max));
-				int newSize = randomInteger(50,120);
-				e.getSprite().setSize(newSize, newSize);
+=======
+			if (e.getActive() && (e.sprite.getX() < -e.sprite.getWidth())) {
+
+				e.setActive(false);
+				list.remove(e);
+				e.sprite.setX(Gdx.graphics.getWidth());
+				e.sprite.setY(randomInteger(min, max));
+				newSize = randomInteger(50,120);
+				e.sprite.setSize(newSize, newSize);
+>>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
 			}
 		}
 	}
