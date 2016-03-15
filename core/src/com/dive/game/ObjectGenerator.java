@@ -24,7 +24,7 @@ public class ObjectGenerator {
 		listSharks = new Shark[maxNoShark];
 		for (int i = 0; i < maxNoShark; i++) {
 			listSharks[i] = new Shark(Gdx.graphics.getWidth(), randomInteger(min,
-					max), 100, 100, -3.0f, Assets.getInstance().ente);
+					max), 100, 100, -3.0f, Assets.getInstance().shark);
 		}
 	}
 
