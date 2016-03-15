@@ -7,47 +7,47 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 
 public class ObjectGenerator {
-	private Ente[] listEnten;
+	private Shark[] listSharks;
 	private float countDown;
 	private float maxCountDown;
 	private int pointer;
 
-	private int maxNoEnte;
+	private int maxNoShark;
 	private int min = 70;
 	private int max = 390;
 
-	// constructor: kreiere Liste mit Enten
-	public ObjectGenerator(int maxNoEnte) {
+	// constructor: kreiere Liste mit Haien
+	public ObjectGenerator(int maxNoShark) {
 		pointer = 0;
-		this.maxNoEnte = maxNoEnte;
+		this.maxNoShark = maxNoShark;
 		countDown = maxCountDown = 1;
-		listEnten = new Ente[maxNoEnte];
-		for (int i = 0; i < maxNoEnte; i++) {
-			listEnten[i] = new Ente(Gdx.graphics.getWidth(), randomInteger(min,
+		listSharks = new Shark[maxNoShark];
+		for (int i = 0; i < maxNoShark; i++) {
+			listSharks[i] = new Shark(Gdx.graphics.getWidth(), randomInteger(min,
 					max), 100, 100, -3.0f, Assets.getInstance().ente);
 		}
 	}
 
-	// gehe Liste der Enten durch und erstelle neue Liste von Enten welche genau
+	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextObject(ArrayList<Ente> list, float deltaTime) {
+	public void nextObject(ArrayList<Shark> list, float deltaTime) {
 		countDown -= deltaTime;
 		
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
 		// Liste um dann gezeichnet zu werden
-		if (countDown < 0 && !listEnten[pointer].active) {
-			list.add(listEnten[pointer]);
+		if (countDown < 0 && !listSharks[pointer].active) {
+			list.add(listSharks[pointer]);
 
-			listEnten[pointer].active = true;
-			pointer = (pointer + 1) % maxNoEnte;
+			listSharks[pointer].active = true;
+			pointer = (pointer + 1) % maxNoShark;
 			countDown = maxCountDown + randomInteger(0, 2);
 		}
 
 		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
 		// Ausgangsposition gesetzt und Status auf nicht aktiv, steht nun wieder
 		// zur Verfügung
-		for (int i = 0; i < maxNoEnte; i++) {
-			Ente e = listEnten[i];
+		for (int i = 0; i < maxNoShark; i++) {
+			Shark e = listSharks[i];
 			if (e.getActive() && (e.getSprite().getX() < -e.getSprite().getWidth())) {
 
 				e.setActive(false);
