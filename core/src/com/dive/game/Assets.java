@@ -23,7 +23,6 @@ public class Assets {
 	public Texture diver;
 	public Texture shark;
 	public Texture wal;
-	public Texture shark;
 	//public TextureRegion backgroundRegion;
 	
 	/*
