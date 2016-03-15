@@ -37,8 +37,8 @@ public class Diver {
 		
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]+=-maxSpeed;}		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]+=-maxSpeed;}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]-=maxSpeed;}		
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed;}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))	{v[0]+=maxSpeed;}
 		
 		//Bewegung normieren (durch Maximalgeschwindigkeit begrenzen)

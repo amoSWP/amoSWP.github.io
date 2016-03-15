@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 	public class Shark extends GameObject{
 		
 		// private Sprite sprite;
-		private Rectangle shape;
 		private float sharkSpeed;
 		
 		
@@ -20,6 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
 			sprite.setSize(width, height);
 		
 			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
+			shape.setPosition(sprite.getX(), sprite.getY());
 			
 			this.sharkSpeed = sharkSpeed;
 			active = false;
@@ -39,8 +39,7 @@ import com.badlogic.gdx.math.Rectangle;
 		
 		public void moveObject(){
 			sprite.translateX(getSharkSpeed());
-			
-		
+			shape.setPosition(sprite.getX(), sprite.getY());
 		}
 
 	}

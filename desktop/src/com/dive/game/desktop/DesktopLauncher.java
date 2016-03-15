@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 		// Set basic properties of the game window
-		config.title = "Clean Ocean";
+		config.title = "Save the Sea";
 		config.width = 1280;
 		config.height = 720;
 		

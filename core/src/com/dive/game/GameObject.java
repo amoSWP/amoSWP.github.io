@@ -12,7 +12,6 @@ public class GameObject {
 	protected ObjectType type;			//Typ des Objects (Shark, Plant, etc.)
 	protected float x,y;				//relative Koordinaten des Objekts (% des Gamescreens)
 	protected float width, height;		//relative Größe des Objekts (% des Gamescreens)
-	protected GameScreen screen;		//Spielbereich festlegen
 	protected boolean active;			//staus des Spielobjekts
 	
 	
@@ -42,17 +41,13 @@ public class GameObject {
 	
 	public void resize(float scale){
 		
-		//Größe anpassen
-		sprite.setSize(sprite.getWidth()*scale,sprite.getHeight()*scale);
-		
-		//Position anpassen
-		sprite.setPosition(screen.x+scale*x, screen.y+scale*y);
-		
 		
 	}
 
-	public void moveObject() {
-		
+	public void moveObject(float width, float deltaTime, float gameSpeed){
+		sprite.translateX(-width*deltaTime*gameSpeed);
+		shape.setPosition(sprite.getX(), sprite.getY());
+		System.out.println("x:" + sprite.getY() + " shapex:" + shape.y);
 	}
 	
 	

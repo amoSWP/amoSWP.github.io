@@ -12,16 +12,18 @@ public class World {
 	private GameScreen screen;				//Darstellungsbereich
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
+	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
 	
 	
 	
-	public World(ObjectGenerator objectGen, GameScreen screen, float iniSpeed){
+	public World(ObjectGenerator objectGen, GameScreen screen, float iniSpeed, GameState state){
 		
 		objects = new ArrayList<GameObject>();
 		speed = iniSpeed;
 		
 		this.objectGen = objectGen;
 		this.screen = screen;
+		this.state = state;
 		
 		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 300, screen);
 		parallax = new Parallax(speed, screen);
@@ -38,17 +40,20 @@ public class World {
 	}
 	
 	public void move(float deltaTime){
-		
-		objectGen.nextPlant(objects, deltaTime);
-		objectGen.nextShark(objects, deltaTime);
-		
-		for(GameObject o: objects){o.moveObject();}
+		for(GameObject o: objects){o.moveObject(screen.width,deltaTime, speed);}
 		diver.move(deltaTime);
 		parallax.move(deltaTime);
 	}
 	
 	public void resize(){
 		diver.resize();
+	}
+	
+	public void update(float deltaTime){
+		objectGen.nextPlant(objects, deltaTime);
+		objectGen.nextShark(objects, deltaTime);
+		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){state=GameState.PAUSE;}
+		
 	}
 
 }
