@@ -53,7 +53,7 @@ public class ObjectGenerator {
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
 			listPlants[i] = new Plant(Gdx.graphics.getWidth(), newSizePlant,
-					newSizePlant, -3.0f, Assets.getInstance().ente);
+					newSizePlant, -3.0f, Assets.getInstance().wal);
 		}
 	}
 
