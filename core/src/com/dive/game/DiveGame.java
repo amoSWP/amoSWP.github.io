@@ -30,8 +30,8 @@ public class DiveGame extends ApplicationAdapter {
 	private Sprite background1, background2;
 
 	ObjectGenerator newObjects;
-	ArrayList<Ente> listEnten;
-	Ente Ente1, Ente2, Ente3, Wal1;
+	ArrayList<Shark> listSharks;
+	
 	Texture textureEnte, textureWal;
 
 	int creationPixel = 1400;
@@ -49,7 +49,7 @@ public class DiveGame extends ApplicationAdapter {
 		background2 = new Sprite(Assets.getInstance().background);
 
 		newObjects = new ObjectGenerator(4);
-		listEnten = new ArrayList<Ente>();
+		listSharks = new ArrayList<Shark>();
 
 		background1.setX(0);
 		background1.setSize(2 * w, h);
@@ -84,12 +84,12 @@ public class DiveGame extends ApplicationAdapter {
 		background2.draw(batch);
 
 		// kreiert List mit zu Verfügung stehenden Objekten (Enten)
-		newObjects.nextObject(listEnten, Gdx.graphics.getDeltaTime());
+		newObjects.nextObject(listSharks, Gdx.graphics.getDeltaTime());
 
 		// gehe List mit aktiven (dh auf dem Bildschrirm erscheinen sollen)
 		// Enten durch und bwege, danach zeichne sie
-		for (Ente e : listEnten) {
-			e.moveEnte();
+		for (Shark e : listSharks) {
+			e.moveShark();
 			e.getSprite().draw(batch);
 		}
 
