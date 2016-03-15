@@ -30,9 +30,10 @@ public class DiveGame extends ApplicationAdapter {
 	private Sprite background1, background2;
 
 	ObjectGenerator newObjects;
-	ArrayList<Shark> listSharks;
+//	ArrayList<Shark> listSharks;
+//	ArrayList<Plant> listPlants;
 	
-	Texture textureEnte, textureWal;
+	ArrayList<GameObject> listGameObjects;
 
 	int creationPixel = 1400;
 	int min = 80;
@@ -48,8 +49,10 @@ public class DiveGame extends ApplicationAdapter {
 		background1 = new Sprite(Assets.getInstance().background);
 		background2 = new Sprite(Assets.getInstance().background);
 
-		newObjects = new ObjectGenerator(4);
-		listSharks = new ArrayList<Shark>();
+		newObjects = new ObjectGenerator(4,4);
+		listGameObjects = new ArrayList<GameObject>();
+//		listSharks = new ArrayList<Shark>();
+//		listPlants = new ArrayList<Plant>();
 
 		background1.setX(0);
 		background1.setSize(2 * w, h);
@@ -83,16 +86,28 @@ public class DiveGame extends ApplicationAdapter {
 		background1.draw(batch);
 		background2.draw(batch);
 
-		// kreiert List mit zu Verfügung stehenden Objekten (Enten)
-		newObjects.nextObject(listSharks, Gdx.graphics.getDeltaTime());
+		// kreiert Liste mit zu Verfügung stehenden Objekten, einmal Haie, einmal Pflanzen
+		newObjects.nextShark(listGameObjects, Gdx.graphics.getDeltaTime());
+		newObjects.nextPlant(listGameObjects, Gdx.graphics.getDeltaTime());
 
-		// gehe List mit aktiven (dh auf dem Bildschrirm erscheinen sollen)
-		// Enten durch und bwege, danach zeichne sie
-		for (Shark e : listSharks) {
-			e.moveShark();
-			e.getSprite().draw(batch);
+//		 gehe List mit aktiven (dh auf dem Bildschrirm erscheinen sollen)
+//		 Enten durch und bwege, danach zeichne sie
+//		for (Shark e : listSharks) {
+//			e.moveShark();
+//			e.draw(batch);
+//		}
+//		
+		for (GameObject e : listGameObjects) {
+			e.moveObject();
+			e.draw(batch);
 		}
-
+		
+		
+//		for (Plant p : listPlants){
+//			p.movePlant();
+//			p.draw(batch);
+//		}
+//		
 		diver.draw(batch, Gdx.graphics.getDeltaTime());
 		batch.end();
 	}

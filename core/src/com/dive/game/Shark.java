@@ -7,10 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 	public class Shark extends GameObject{
 		
-		private Sprite sprite;
+		// private Sprite sprite;
 		private Rectangle shape;
 		private float sharkSpeed;
-		boolean active;
 		
 		
 		//kreiere Hai und ihr wird das bild, Größe des Bildes (width,height) und koordinaten übergeben
@@ -31,24 +30,14 @@ import com.badlogic.gdx.math.Rectangle;
 			return shape;
 		}
 		
-		public Sprite getSprite(){
-			return sprite;
-		}
 		
 		
 		public float getSharkSpeed(){
 			return sharkSpeed;
 		}
 		
-		public boolean getActive(){
-			return active;
-		}
 		
-		public void setActive(boolean status){
-			this.active = status;
-		}
-		
-		public void moveShark(){
+		public void moveObject(){
 			sprite.translateX(getSharkSpeed());
 			
 		
