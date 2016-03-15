@@ -16,12 +16,12 @@ public class Assets {
 	/*
 	 * 	TEXTUREN
 	 */
-	public Texture backgroundFront;
+	public Texture backgroundBottom;
 	public Texture backgroundMiddle;
-	public Texture backgroundRear;
+	public Texture backgroundTop;
 	public Texture background;
 	public Texture diver;
-	public Texture ente;
+	public Texture shark;
 	public Texture wal;
 	//public TextureRegion backgroundRegion;
 	
@@ -53,12 +53,12 @@ public class Assets {
 		
 		System.out.println("Loading Assets..");
 		
-		backgroundFront  = loadTexture("background/BottomBackground.png");
-		backgroundMiddle = loadTexture("background/MainBackground.jpg");
-		backgroundRear   = loadTexture("background/TopBackground 2.png");
-		background		 = loadTexture("background/backgroundExpanded.png");
+		backgroundBottom = loadTexture("background/sandBackgrounds.png");
+		backgroundMiddle = loadTexture("background/mainBackground.png");
+		backgroundTop    = loadTexture("background/topBackground.png");
+		background		 = loadTexture("background/mainBackground.png");
 		diver 			 = loadTexture("diver/diver.png");
-		ente			 = loadTexture("ente.png");
+		shark			 = loadTexture("background/myshark.png");
 		wal				 = loadTexture("wal.png");
 		
 	}
