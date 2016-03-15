@@ -24,7 +24,7 @@ public class DiveGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		newObjects = new ObjectGenerator(4);
+		newObjects = new ObjectGenerator(4,4);
 		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		world = new World(newObjects,screen,0.05f);
 

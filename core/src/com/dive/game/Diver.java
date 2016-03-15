@@ -5,14 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Diver {
 	
 	private int air;
 	private float[] v;
-	private float maxSpeed, decay, windowWidth, windowHeight;
+	private float maxSpeed, decay;
 	private Rectangle shape;
 	private Sprite sprite;
 	private GameScreen screen;
@@ -71,11 +70,7 @@ public class Diver {
 		v[1]*=decay;
 		
 	}
-	
-	public void setWindow(float width, float height){
-		windowWidth = width;
-		windowHeight = height;
-	}
+
 	
 	public void draw(Batch batch){
 		sprite.draw(batch);
