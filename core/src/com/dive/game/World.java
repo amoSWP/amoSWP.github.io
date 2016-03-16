@@ -50,10 +50,17 @@ public class World {
 	}
 	
 	public void update(float deltaTime){
+		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
+		diver.refresh();
+		
+		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
-		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){state=GameState.PAUSE;}
 		
+		//Kollisionsabfragen
+		ObjectType coll = Collision.checkCollision(diver, objects);
+		if(coll == ObjectType.SHARK){state.pause();}
+		else if(coll == ObjectType.PLANT){diver.slow();}
 	}
 
 }
