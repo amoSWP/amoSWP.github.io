@@ -15,4 +15,8 @@ public class Collision {
 		}
 		return null;
 	}
+	
+	public static boolean checkCollision(GameObject object1, GameObject object2){
+		return Intersector.overlaps(object1.getShape(), object2.getShape());
+	}
 }
