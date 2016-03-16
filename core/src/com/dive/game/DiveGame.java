@@ -23,11 +23,23 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class DiveGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Diver diver;
 	private Sprite background1, background2;
+	private Touchpad joystick;
+	private Drawable knob;
+	private Drawable background;
+	private TouchpadStyle joystickstyle;
+	private Skin skin;
+	private Stage stage;
+
 
 	ObjectGenerator newObjects;
 	ArrayList<Shark> listSharks;
@@ -42,6 +54,8 @@ public class DiveGame extends ApplicationAdapter {
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+		
+
 
 		batch = new SpriteBatch();
 		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 200);
@@ -50,6 +64,19 @@ public class DiveGame extends ApplicationAdapter {
 
 		newObjects = new ObjectGenerator(4);
 		listSharks = new ArrayList<Shark>();
+		
+    	skin = new Skin();
+    	skin.add("background",Assets.getInstance().joystickunder);
+    	skin.add("knob",Assets.getInstance().joystickup);
+		
+    	joystickstyle = new TouchpadStyle();
+    	background = skin.getDrawable("background");
+    	knob = skin.getDrawable("knob");
+   
+		knob.setMinWidth(20);
+		knob.setMinHeight(20);
+		
+		joystick = new Touchpad(5,joystickstyle);
 
 		background1.setX(0);
 		background1.setSize(2 * w, h);
@@ -69,6 +96,7 @@ public class DiveGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		diver.onKeystroke();
+		//diver.onJoystick();
 
 		background1.translateX(-3);
 		background2.translateX(-3);
@@ -92,6 +120,8 @@ public class DiveGame extends ApplicationAdapter {
 			e.moveShark();
 			e.getSprite().draw(batch);
 		}
+		joystick.setBounds(15, 15, creationPixel, creationPixel);
+		joystick.draw(batch, creationPixel);
 
 		diver.draw(batch, Gdx.graphics.getDeltaTime());
 		batch.end();
@@ -111,5 +141,7 @@ public class DiveGame extends ApplicationAdapter {
 	@Override
 	public void resume() {
 	}
+
+
 
 }

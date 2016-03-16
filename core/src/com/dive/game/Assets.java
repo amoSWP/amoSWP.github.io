@@ -23,6 +23,8 @@ public class Assets {
 	public Texture diver;
 	public Texture ente;
 	public Texture wal;
+	public Texture joystickup;
+	public Texture joystickunder;
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -60,6 +62,8 @@ public class Assets {
 		diver 			 = loadTexture("diver/diver.png");
 		ente			 = loadTexture("ente.png");
 		wal				 = loadTexture("wal.png");
+		joystickup       = loadTexture("Joystick/Joystickup.png");
+		joystickunder    = loadTexture("Joystick/Joystickunder.png");
 		
 	}
 

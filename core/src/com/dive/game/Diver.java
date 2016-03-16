@@ -7,15 +7,22 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 
 public class Diver {
 	
 	private int air;
 	private float[] v;
 	private float maxSpeed, decay, windowWidth, windowHeight;
-	//private Polygon shape;
 	private Rectangle shape;
 	private Sprite sprite;
+	private Touchpad joystick;
+	private TouchpadStyle joystickstyle;
+	private Skin skin;
+	private Stage stage;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed){
 
@@ -52,6 +59,24 @@ public class Diver {
 			v[0]+=maxSpeed;
 		}
 		
+		norm();
+		
+	}
+	public void onJoystick(){
+		
+		if(joystick.getKnobPercentY()*2.0f/(1.5f)!= 0 && (sprite.getY() < windowHeight-sprite.getHeight())){
+			v[1] = joystick.getKnobPercentY()*2.0f/(1.5f);
+		}
+		else{
+			v[1] = 0;
+		}
+		
+		if(joystick.getKnobPercentX()*2.0f!= 0 && (sprite.getX() < windowWidth-sprite.getWidth())){
+			v[0] = joystick.getKnobPercentX()*2.0f;
+		}
+		else{
+			v[0] = 0;
+		}
 		norm();
 		
 	}
