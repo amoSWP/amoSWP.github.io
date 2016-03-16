@@ -78,7 +78,6 @@ out/
 classes/
 .gwt/
 gwt-unitCache/
-war/
 gen/
 gen-external-apklibs/
 armeabi/
