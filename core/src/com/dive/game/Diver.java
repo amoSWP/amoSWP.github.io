@@ -6,23 +6,31 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 
 public class Diver {
 	
-	private int air;
 	private float[] v;
-	private float maxSpeed, decay;
+	private float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
 	private Sprite sprite;
 	private GameScreen screen;
+	private Touchpad joystick;
+	private TouchpadStyle joystickstyle;
+	private Skin skin;
+	private Stage stage;
+	private Air air;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
-		this.maxSpeed = maxSpeed;
+		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		this.screen = screen;
 		
-		air = 100;
 		v = new float[]{0,0};
+		air = new Air(screen, 1000);
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
@@ -34,6 +42,8 @@ public class Diver {
 	}
 	
 	public void move(float deltaTime){
+		
+		v[1]=0;
 		
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
@@ -71,9 +81,17 @@ public class Diver {
 		
 	}
 
-	
+	public void moveonjoystick(Touchpad joystick){
+		if(joystick.isTouched())		{v[1]+=maxSpeed;}
+		v[0] = joystick.getKnobPercentX()*2.0f;
+
+		norm();
+		
+	}
+
 	public void draw(Batch batch){
 		sprite.draw(batch);
+		air.draw(batch);
 	}
 
 	public Rectangle getShape(){
@@ -95,6 +113,23 @@ public class Diver {
 	public void resize() {
 		sprite.setSize(100, 50);
 		
+	}
+
+	public void refresh() {
+		maxSpeed = maxSpeedOrigin;
+	}
+
+	public void slow() {
+		maxSpeed = maxSpeedOrigin*0.2f;
+		
+	}
+
+	public void breathe(float deltaTime) {
+		air.breathe(deltaTime);
+	}
+
+	public boolean hasAir() {
+		return (air.getAir() > 0);
 	}
 
 }
