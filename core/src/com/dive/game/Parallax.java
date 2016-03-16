@@ -21,8 +21,8 @@ public class Parallax {
 	}
 
 	public void setSpeed(float gamespeed){
-		top.setSpeed(gamespeed);
-		middle.setSpeed(gamespeed);
+		top.setSpeed(0.7f *gamespeed);
+		middle.setSpeed(0.4f*gamespeed);
 		bottom.setSpeed(gamespeed);
 	}
 	

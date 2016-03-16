@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +27,7 @@ public class DiveGame extends ApplicationAdapter {
 	private GameScreen screen;
 	private GameState gameState;
 	private float deltaTime, pauseCD;
+	private BitmapFont font;
 
 	public DiveGame(boolean Android) {
 		this.Android = Android;
@@ -37,12 +40,15 @@ public class DiveGame extends ApplicationAdapter {
 	public void create() {
 
 		batch = new SpriteBatch();
+		
+		font = new BitmapFont();
+        font.setColor(Color.RED);
 
 		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		
 		gameState = new GameState(1);
 		newObjects = new ObjectGenerator(8,8,8, 0.1f, screen);
-		world = new World(newObjects,screen,0.1f,gameState, Android);
+		world = new World(newObjects,screen,0.1f,gameState, font);
 		pauseCD = 0;
 
 	}
@@ -50,6 +56,7 @@ public class DiveGame extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		font.dispose();
 		Assets.getInstance().dispose();
 	}
 
