@@ -22,7 +22,7 @@ public class Diver {
 		this.screen = screen;
 		
 		v = new float[]{0,0};
-		air = new Air(screen, 1000);
+		air = new Air(screen, 500);
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
@@ -57,8 +57,8 @@ public class Diver {
 		}
 		//y-Grenze
 		float yTranslate = v[1]*deltaTime;
-		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()){
-			yTranslate = screen.top() - (sprite.getY()+sprite.getHeight());
+		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()-80){
+			yTranslate = screen.top()-80 - (sprite.getY()+sprite.getHeight());
 		}
 		if(yTranslate+sprite.getY() < 0){
 			yTranslate = -sprite.getY();
@@ -102,11 +102,12 @@ public class Diver {
 
 	public void refresh() {
 		maxSpeed = maxSpeedOrigin;
+		air.catchBreath();
 	}
 
 	public void slow() {
 		maxSpeed = maxSpeedOrigin*0.2f;
-		
+		air.setBreath(1000);
 	}
 
 	public void breathe(float deltaTime) {
@@ -115,6 +116,10 @@ public class Diver {
 
 	public boolean hasAir() {
 		return (air.getAir() > 0);
+	}
+
+	public void recover() {
+		air.setBreath(-2000);
 	}
 
 }

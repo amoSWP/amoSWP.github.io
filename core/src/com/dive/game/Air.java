@@ -8,12 +8,12 @@ public class Air {
 	private int air;
 	private Sprite sprite;
 	private GameScreen screen;
-	private int breath;
+	private int breath, breathOrigin;
 	
 	public Air(GameScreen screen, int breathe){
 		air = 10000;
 		this.screen = screen;
-		this.breath = breathe;
+		breathOrigin = this.breath = breathe;
 		
 		sprite = new Sprite(Assets.getInstance().air);
 		sprite.setPosition(0, 0);
@@ -22,6 +22,7 @@ public class Air {
 	
 	public void breathe(float deltaTime){
 		air = (int) Math.max(0, air-deltaTime*breath);
+		air = Math.min(10000, air);
 		sprite.setSize(screen.width*(air/10000.0f), screen.height*0.02f);
 	}
 	
@@ -35,6 +36,14 @@ public class Air {
 	
 	public int getAir(){
 		return air;
+	}
+	
+	public void catchBreath(){
+		breath = breathOrigin;
+	}
+	
+	public void setBreath(int breath){
+		this.breath = breath;
 	}
 	
 	
