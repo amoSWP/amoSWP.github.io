@@ -16,16 +16,21 @@ public class Assets {
 	/*
 	 * 	TEXTUREN
 	 */
-	public Texture backgroundFront;
+	public Texture backgroundBottom;
 	public Texture backgroundMiddle;
-	public Texture backgroundRear;
+	public Texture backgroundTop;
 	public Texture background;
 	public Texture diver;
-	public Texture ente;
 <<<<<<< HEAD
+	public Texture ente;
 	public Texture wal;
+	public Texture joystickup;
+	public Texture joystickunder;
 =======
->>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
+	public Texture shark;
+	public Texture plant;
+	
+>>>>>>> upstream/master
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -56,18 +61,28 @@ public class Assets {
 		
 		System.out.println("Loading Assets..");
 		
-		backgroundFront  = loadTexture("background/BottomBackground.png");
-		backgroundMiddle = loadTexture("background/waterExpanded.png");
-		backgroundRear   = loadTexture("background/TopBackground 2.png");
-		background		 = loadTexture("background/backgroundExpanded.png");
+		backgroundBottom = loadTexture("background/sandBackgrounds.png");
+		backgroundMiddle = loadTexture("background/mainBackground.png");
+		backgroundTop    = loadTexture("background/topBackground.png");
+		background		 = loadTexture("background/mainBackground.png");
 		diver 			 = loadTexture("diver/diver.png");
 <<<<<<< HEAD
 		ente			 = loadTexture("ente.png");
 		wal				 = loadTexture("wal.png");
-		
+		joystickup       = loadTexture("Joystick/Joystickup.png");
+		joystickunder    = loadTexture("Joystick/Joystickunder.png");
 =======
-		ente 			 = loadTexture("ente.png");
->>>>>>> 0aa5ec03167ae41edff5032ec4bdea1a8e7cdd20
+		shark			 = loadTexture("Hindernisse/myshark.png");
+		plant			 = loadTexture("Hindernisse/green-plant.png");
+>>>>>>> upstream/master
+		
+	}
+
+	public void dispose() {
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark};
+		for(Texture t:tex){
+			t.dispose();
+		}
 	}
 
 	//public static void playSound (Sound sound) {

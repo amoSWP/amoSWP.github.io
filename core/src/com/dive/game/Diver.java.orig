@@ -15,14 +15,20 @@ public class Diver {
 	
 	private int air;
 	private float[] v;
-	private float maxSpeed, decay;
+<<<<<<< HEAD
+	private float maxSpeed, decay, windowWidth, windowHeight;
 	private Rectangle shape;
 	private Sprite sprite;
-	private GameScreen screen;
 	private Touchpad joystick;
 	private TouchpadStyle joystickstyle;
 	private Skin skin;
 	private Stage stage;
+=======
+	private float maxSpeed, decay;
+	private Rectangle shape;
+	private Sprite sprite;
+	private GameScreen screen;
+>>>>>>> upstream/master
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
@@ -52,8 +58,40 @@ public class Diver {
 		//Bewegung normieren (durch Maximalgeschwindigkeit begrenzen)
 		norm();
 		
+<<<<<<< HEAD
+	}
+	public void onJoystick(){
+		
+		if(joystick.getKnobPercentY()*2.0f/(1.5f)!= 0 && (sprite.getY() < windowHeight-sprite.getHeight())){
+			v[1] = joystick.getKnobPercentY()*2.0f/(1.5f);
+		}
+		else{
+			v[1] = 0;
+		}
+		
+		if(joystick.getKnobPercentX()*2.0f!= 0 && (sprite.getX() < windowWidth-sprite.getWidth())){
+			v[0] = joystick.getKnobPercentX()*2.0f;
+		}
+		else{
+			v[0] = 0;
+		}
+		norm();
+		
+	}
+	
+	public void setWindow(float width, float height){
+		windowWidth = width;
+		windowHeight = height;
+	}
+	
+	public void draw(Batch batch, float deltaTime){
+		
+		sprite.draw(batch);
+		
+=======
 		//Grenzen am BildschirmRand:
 		//x-Grenze
+>>>>>>> upstream/master
 		float xTranslate = v[0]*deltaTime;
 		if(xTranslate+sprite.getX()+sprite.getWidth() > screen.right()){
 			xTranslate = screen.right() - (sprite.getX()+sprite.getWidth());
@@ -79,25 +117,7 @@ public class Diver {
 		
 	}
 
-	public void onJoystick(){
-		
-		if(joystick.getKnobPercentY()*2.0f/(1.5f)!= 0 && (sprite.getY() < windowHeight-sprite.getHeight())){
-			v[1] = joystick.getKnobPercentY()*2.0f/(1.5f);
-		}
-		else{
-			v[1] = 0;
-		}
-		
-		if(joystick.getKnobPercentX()*2.0f!= 0 && (sprite.getX() < windowWidth-sprite.getWidth())){
-			v[0] = joystick.getKnobPercentX()*2.0f;
-		}
-		else{
-			v[0] = 0;
-		}
-		norm();
-		
-	}
-
+	
 	public void draw(Batch batch){
 		sprite.draw(batch);
 	}
