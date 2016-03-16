@@ -43,11 +43,10 @@ public class GameObject {
 		
 		
 	}
-
+	
 	public void moveObject(float width, float deltaTime, float gameSpeed){
 		sprite.translateX(-width*deltaTime*gameSpeed);
-//		shape.setPosition(sprite.getX(), sprite.getY());
-		// System.out.println("x:" + sprite.getY() + " shapex:" + shape.y);
+		shape.setPosition(sprite.getX(), sprite.getY());
 	}
 	
 	
