@@ -26,7 +26,7 @@ public class DiveGame extends ApplicationAdapter {
 
 		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		
-		newObjects = new ObjectGenerator(8,8,0.1f, screen);
+		newObjects = new ObjectGenerator(8,8,8, 0.1f, screen);
 		world = new World(newObjects,screen,0.1f,gameState);
 		gameState = GameState.GAME;
 		pauseCD = 0;

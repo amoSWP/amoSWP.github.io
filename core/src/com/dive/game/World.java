@@ -52,6 +52,7 @@ public class World {
 	public void update(float deltaTime){
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
+		objectGen.nextTrash(objects, deltaTime);
 		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){
 			// System.out.println(ObjectType.SHARK);
 			state=GameState.PAUSE;
