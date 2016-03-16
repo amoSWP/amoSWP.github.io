@@ -48,11 +48,11 @@ public class DiveGame extends ApplicationAdapter {
 		
 		//Spiellogik updaten und Welt bewegen
 		if(gameState == GameState.GAME){
-			world.update(deltaTime);
+			world.update(deltaTime); 
 			world.move(deltaTime);
 		}
 		
-
+		
 		//Spiel pausieren
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 			if(gameState == GameState.GAME){gameState=GameState.PAUSE; pauseCD=1;}

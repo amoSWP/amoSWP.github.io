@@ -23,6 +23,7 @@ public class Assets {
 	public Texture diver;
 	public Texture shark;
 	public Texture plant;
+	public Texture trash;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -61,7 +62,7 @@ public class Assets {
 		diver 			 = loadTexture("diver/diver.png");
 		shark			 = loadTexture("Hindernisse/myshark.png");
 		plant			 = loadTexture("Hindernisse/green-plant.png");
-		
+		trash 			= loadTexture("Garbage/apple.png");
 	}
 
 	public void dispose() {

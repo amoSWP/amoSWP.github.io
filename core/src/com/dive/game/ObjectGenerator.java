@@ -7,11 +7,11 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 
 public class ObjectGenerator {
-	private GameObject[] listGameObjects;
+	private Trash[] listTrash;
 	private Shark[] listSharks;
 	private Plant[] listPlants;
 
-	private float countDownObject;
+	private float countDownTrash;
 	private float countDownShark;
 	private float countDownPlant;
 	private float gameSpeed;
@@ -19,60 +19,73 @@ public class ObjectGenerator {
 	private float maxCountDown;
 	private int pointerShark;
 	private int pointerPlant;
-	private int pointerObject;
+	private int pointerTrash;
 
-	// maximale Anzahl Haie, Pflanzen
-	private int maxNoGameObject;
+	// maximale Anzahl Haie, Pflanzen, Müll
+	private int maxNoTrash;
 	private int maxNoShark;
 	private int maxNoPlant;
-	
 
-	// Höhe von Haien, Pflanzen haben feste y Koordinate
-	private int minHeightShark = 120;
-	private int maxHeightShark = 500;
+	// zufällige Schwimmhöhe von Haien mit festem min/max Wert, Pflanzen haben
+	// feste y
+	// Koordinate
+	private int minHeightWater = 80;
+	private int maxHeightWater = 500;
 
+	// initialisieren von Variablen die Hai/Pflanze neue Größe zuordnet
 	private int newSizeShark;
 	private int newSizePlant;
-	
+	private int newSizeTrash;
+
 	private GameScreen screen;
 
 	// constructor: kreiere Liste mit Haien
-	public ObjectGenerator(int maxNoShark, int maxNoPlant, float gameSpeed, GameScreen screen) {
-		pointerObject = 0;
+	public ObjectGenerator(int maxNoShark, int maxNoPlant, float gameSpeed,
+			GameScreen screen) {
+		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
-		
-		countDownObject = countDownShark = countDownPlant = maxCountDown = 1;
 
+		countDownTrash = countDownShark = countDownPlant = maxCountDown = 1;
+
+		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
 		this.screen = screen;
 
 		newSizeShark = randomInteger(70, 150);
 		newSizePlant = randomInteger(50, 110);
+		newSizeTrash = randomInteger(30, 90);
 
-		listGameObjects = new GameObject[maxNoGameObject];
+		listTrash = new Trash[maxNoTrash];
 		listSharks = new Shark[maxNoShark];
 		listPlants = new Plant[maxNoPlant];
 
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
 			listSharks[i] = new Shark(Gdx.graphics.getWidth(), randomInteger(
-					minHeightShark, maxHeightShark), newSizeShark+100,
+					minHeightWater, maxHeightWater), newSizeShark + 100,
 					newSizeShark + 20, -gameSpeed, Assets.getInstance().shark);
 		}
 
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
-			listPlants[i] = new Plant(Gdx.graphics.getWidth(), newSizePlant + 100,
-					newSizePlant, Assets.getInstance().plant);
+			listPlants[i] = new Plant(Gdx.graphics.getWidth(),
+					newSizePlant + 100, newSizePlant,
+					Assets.getInstance().plant);
 		}
+		
+		// kreiert Liste mit Müll
+		for (int i = 0; i < maxNoTrash; i++) {
+			listTrash[i] = new Trash(Gdx.graphics.getWidth(), randomInteger(
+					minHeightWater, maxHeightWater), newSizeTrash,
+					newSizeTrash, -gameSpeed, Assets.getInstance().trash);
+		}
+
+//		
+
 	}
-// allgemeine Einfügemethode
-	public void nextObject(ArrayList<GameObject> list, float deltaTime){
-		countDownObject -= deltaTime;
-	}
-	
+
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
 	public void nextShark(ArrayList<GameObject> list, float deltaTime) {
@@ -101,9 +114,9 @@ public class ObjectGenerator {
 				list.remove(e);
 				e.getSprite().setX(Gdx.graphics.getWidth());
 				e.getSprite().setY(
-						randomInteger(minHeightShark, maxHeightShark));
+						randomInteger(minHeightWater, maxHeightWater));
 				newSizeShark = randomInteger(70, 150);
-				e.getSprite().setSize(newSizeShark+100, newSizeShark + 20);
+				e.getSprite().setSize(newSizeShark + 100, newSizeShark + 20);
 			}
 		}
 	}
@@ -130,12 +143,46 @@ public class ObjectGenerator {
 				list.remove(p);
 				p.getSprite().setX(Gdx.graphics.getWidth());
 				newSizePlant = randomInteger(50, 120);
-				p.getSprite().setSize(newSizePlant+100, newSizePlant);
+				p.getSprite().setSize(newSizePlant + 100, newSizePlant);
 			}
 		}
 		
-		int z = 2;
 
+	}
+	
+	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
+	// so gezeichnet werden soll
+	public void nextTrash(ArrayList<GameObject> list, float deltaTime) {
+		countDownTrash -= deltaTime;
+
+		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
+		// Liste um dann gezeichnet zu werden
+		if (countDownTrash < 0 && !listTrash[pointerTrash].active) {
+			list.add(listTrash[pointerTrash]);
+
+			listTrash[pointerTrash].active = true;
+			pointerTrash = (pointerTrash + 1) % maxNoTrash;
+			countDownTrash = maxCountDown + randomInteger(0, 2);
+		}
+
+		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
+		// Ausgangsposition gesetzt und Status auf nicht aktiv, steht nun wieder
+		// zur Verfügung
+
+		for (int i = 0; i < maxNoTrash; i++) {
+			Trash e = listTrash[i];
+			if (e.getActive()
+					&& (e.getSprite().getX() < -e.getSprite().getWidth())) {
+
+				e.setActive(false);
+				list.remove(e);
+				e.getSprite().setX(Gdx.graphics.getWidth());
+				e.getSprite().setY(
+						randomInteger(minHeightWater, maxHeightWater));
+				newSizeTrash = randomInteger(70, 150);
+				e.getSprite().setSize(newSizeTrash + 100, newSizeTrash);
+			}
+		}
 	}
 
 	// Zufällige Erzeugung von integer Werten zwischen min max
