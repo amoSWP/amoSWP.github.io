@@ -6,18 +6,32 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class DiveGame extends ApplicationAdapter {
-	
+
+	public boolean Android;
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
 	private GameScreen screen;
 	private GameState gameState;
 	private float deltaTime, pauseCD;
+
+	public DiveGame(boolean Android) {
+		this.Android = Android;
+	}
+	public DiveGame() {
+		this.Android = false;
+	}
 
 	@Override
 	public void create() {
@@ -28,8 +42,7 @@ public class DiveGame extends ApplicationAdapter {
 		
 		gameState = new GameState(1);
 		newObjects = new ObjectGenerator(8,8,0.1f, screen);
-		world = new World(newObjects,screen,0.1f,gameState);
-		
+		world = new World(newObjects,screen,0.1f,gameState, Android);
 		pauseCD = 0;
 
 	}
@@ -61,7 +74,7 @@ public class DiveGame extends ApplicationAdapter {
 		
 		//batch erstellen
 		batch.begin();
-			world.draw(batch);
+		world.draw(batch,Android);
 		batch.end();
 	}
 

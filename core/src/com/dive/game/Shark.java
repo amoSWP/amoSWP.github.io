@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 	public class Shark extends GameObject{
 		
-		private float sharkSpeed;
+		private float sharkSpeed,x,y;
 		
 		
 		//kreiere Hai und ihr wird das bild, Größe des Bildes (width,height) und koordinaten übergeben
@@ -17,8 +17,8 @@ import com.badlogic.gdx.math.Rectangle;
 			sprite.setPosition(xcord, ycord);
 			sprite.setSize(width, height);
 			
-			shape = new Rectangle(0f, sprite.getY()*1.18f, sprite.getWidth(), sprite.getHeight()*0.5f);
-			shape.setPosition(sprite.getX(), sprite.getY()*1.18f);
+			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight()*0.5f);
+			shape.setPosition(sprite.getX(), sprite.getY());
 			
 			this.sharkSpeed = sharkSpeed;
 			active = false;
@@ -35,10 +35,11 @@ import com.badlogic.gdx.math.Rectangle;
 			return sharkSpeed;
 		}
 		
-		
-		public void moveObject(){
+		public void moveObject(float width, float deltaTime, float gameSpeed){
 			sprite.translateX(getSharkSpeed());
-			shape.setPosition(sprite.getX(), sprite.getY()*1.18f);
+			x = sprite.getX();
+			y = sprite.getY() + sprite.getHeight()*0.5f;
+			shape.setPosition(x, y);
 		}
 
 	}
