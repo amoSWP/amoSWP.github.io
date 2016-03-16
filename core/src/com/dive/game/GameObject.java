@@ -12,6 +12,7 @@ public class GameObject {
 	protected ObjectType type;		//Typ des Objects (Shark, Plant, etc.)
 	protected float width, height;	//Außmaße des  Objekts in % des Bildschirms
 	protected GameScreen screen;		//Spielbereich festlegen
+	protected boolean active;
 	
 	
 	public void draw(Batch batch){	//zeichnet das Objekt auf den gegebenen batch
@@ -26,8 +27,20 @@ public class GameObject {
 		return type;
 	}
 	
-	public void moveObject(float groundSpeed){
-		sprite.translateX(groundSpeed*screen.width);
+	public Sprite getSprite(){
+		return sprite;
+	}
+	
+	public void setActive(boolean status){
+		this.active = status;
+	}
+	
+	public boolean getActive(){
+		return active;
+	}
+	
+	public void moveObject(){
+		
 	}
 	
 	public void resize(GameScreen screen){
