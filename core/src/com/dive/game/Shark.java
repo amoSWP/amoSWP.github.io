@@ -36,9 +36,9 @@ import com.badlogic.gdx.math.Rectangle;
 		}
 		
 		public void moveObject(float width, float deltaTime, float gameSpeed){
-			sprite.translateX(getSharkSpeed());
+			sprite.translateX(sharkSpeed*width*deltaTime*2);
 			x = sprite.getX();
-			y = sprite.getY() + sprite.getHeight()*0.5f;
+			y = sprite.getY() + sprite.getHeight()*0.18f;
 			shape.setPosition(x, y);
 		}
 

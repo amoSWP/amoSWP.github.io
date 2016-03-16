@@ -18,6 +18,7 @@ public class World {
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
+
 	
 	private Touchpad joystick;
 	private Drawable knob;
@@ -92,6 +93,10 @@ public class World {
 		ObjectType coll = Collision.checkCollision(diver, objects);
 		if(coll == ObjectType.SHARK){state.pause();}
 		else if(coll == ObjectType.PLANT){diver.slow();}
+		
+		//Luft updaten
+		diver.breathe(deltaTime);
+		if(!diver.hasAir()){state.pause();}
 	}
 
 }
