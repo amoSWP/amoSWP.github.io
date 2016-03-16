@@ -1,5 +1,6 @@
 package com.dive.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -9,10 +10,10 @@ public class Background {
 	private float speed, oldwidth;
 	private GameScreen screen;
 	
-	public Background(Sprite sprite, float speed, GameScreen screen){
+	public Background(Texture sprite, float speed, GameScreen screen){
 		// set sprites
-		sprite1 = sprite;
-		sprite2 = sprite;
+		sprite1 = new Sprite(sprite);
+		sprite2 = new Sprite(sprite);
 		// set size of sprites
 		sprite1.setSize(screen.width, screen.height);
 		sprite2.setSize(screen.width, screen.height);
@@ -21,6 +22,7 @@ public class Background {
 		sprite2.setX(screen.x + screen.width);
 		// set speed
 		this.speed = speed;
+		this.screen = screen;
         
 	}
 	

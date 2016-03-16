@@ -22,7 +22,8 @@ public class Assets {
 	public Texture background;
 	public Texture diver;
 	public Texture shark;
-	public Texture wal;
+	public Texture plant;
+	
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -58,10 +59,16 @@ public class Assets {
 		backgroundTop    = loadTexture("background/topBackground.png");
 		background		 = loadTexture("background/mainBackground.png");
 		diver 			 = loadTexture("diver/diver.png");
-		shark			 = loadTexture("background/myshark.png");
-		wal				 = loadTexture("wal.png");
-		shark			= loadTexture("myshark.png");
+		shark			 = loadTexture("Hindernisse/myshark.png");
+		plant			 = loadTexture("Hindernisse/green-plant.png");
 		
+	}
+
+	public void dispose() {
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark};
+		for(Texture t:tex){
+			t.dispose();
+		}
 	}
 
 	//public static void playSound (Sound sound) {

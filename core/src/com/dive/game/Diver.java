@@ -5,20 +5,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Diver {
 	
 	private int air;
 	private float[] v;
-	private float maxSpeed, decay, windowWidth, windowHeight;
+	private float maxSpeed, decay;
 	private Rectangle shape;
 	private Sprite sprite;
+	private GameScreen screen;
 	
-	public Diver(Texture texture,int width, int height, int startY, int maxSpeed){
+	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
 		this.maxSpeed = maxSpeed;
+		this.screen = screen;
 		
 		air = 100;
 		v = new float[]{0,0};
@@ -32,51 +33,47 @@ public class Diver {
 		
 	}
 	
-	public void onKeystroke(){
+	public void move(float deltaTime){
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.UP) && (sprite.getY() < windowHeight-sprite.getHeight())){
-			v[1]+=maxSpeed;
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && (sprite.getY()>0)){
-			v[1]+=-maxSpeed;
-		}
-		else{
-			v[1] = 0;
-		}
+		//Bewegungssteuerung
+		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]-=maxSpeed;}		
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed;}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))	{v[0]+=maxSpeed;}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && (sprite.getX()>0)){
-			v[0]+=-maxSpeed;
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && (sprite.getX() < windowWidth -sprite.getWidth())){
-			v[0]+=maxSpeed;
-		}
-		
+		//Bewegung normieren (durch Maximalgeschwindigkeit begrenzen)
 		norm();
 		
-	}
-	
-	public void setWindow(float width, float height){
-		windowWidth = width;
-		windowHeight = height;
-	}
-	
-	public void draw(Batch batch, float deltaTime){
-		
-		sprite.draw(batch);
-		
+		//Grenzen am BildschirmRand:
+		//x-Grenze
 		float xTranslate = v[0]*deltaTime;
-		if(xTranslate+sprite.getX()+sprite.getWidth() > windowWidth){
-			xTranslate = windowWidth - (sprite.getX()+sprite.getWidth());
+		if(xTranslate+sprite.getX()+sprite.getWidth() > screen.right()){
+			xTranslate = screen.right() - (sprite.getX()+sprite.getWidth());
 		}
-		if(xTranslate+sprite.getX() < 0){
+		if(xTranslate+sprite.getX() < screen.x){
 			xTranslate = -sprite.getX();
 		}
+		//y-Grenze
+		float yTranslate = v[1]*deltaTime;
+		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()){
+			yTranslate = screen.top() - (sprite.getY()+sprite.getHeight());
+		}
+		if(yTranslate+sprite.getY() < 0){
+			yTranslate = -sprite.getY();
+		}
 		
-		sprite.translate(xTranslate, v[1]*deltaTime);
+		//Diver bewegen
+		sprite.translate(xTranslate, yTranslate);
 		shape.setPosition(sprite.getX(), sprite.getY());
 		
 		v[0]*=decay;
+		v[1]*=decay;
 		
+	}
+
+	
+	public void draw(Batch batch){
+		sprite.draw(batch);
 	}
 
 	public Rectangle getShape(){
@@ -93,6 +90,11 @@ public class Diver {
 	
 	private float speed(){
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
+	}
+
+	public void resize() {
+		sprite.setSize(100, 50);
+		
 	}
 
 }
