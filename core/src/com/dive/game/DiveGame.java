@@ -26,9 +26,10 @@ public class DiveGame extends ApplicationAdapter {
 
 		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		
+		gameState = new GameState(1);
 		newObjects = new ObjectGenerator(8,8,0.1f, screen);
 		world = new World(newObjects,screen,0.1f,gameState);
-		gameState = GameState.GAME;
+		
 		pauseCD = 0;
 
 	}
@@ -47,18 +48,16 @@ public class DiveGame extends ApplicationAdapter {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Spiellogik updaten und Welt bewegen
-		if(gameState == GameState.GAME){
-			world.update(deltaTime); 
+		if(gameState.isRunning()){
+			world.update(deltaTime);
 			world.move(deltaTime);
 		}
-		
-		
+
 		//Spiel pausieren
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-			if(gameState == GameState.GAME){gameState=GameState.PAUSE; pauseCD=1;}
-			else if(gameState == GameState.PAUSE){gameState=GameState.GAME; pauseCD=1;}
-			else{pauseCD-=deltaTime;}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && pauseCD <= 0){
+			gameState.toggle();pauseCD=0.1f;
 		}
+		pauseCD-=deltaTime;
 		
 		//batch erstellen
 		batch.begin();
@@ -74,11 +73,12 @@ public class DiveGame extends ApplicationAdapter {
 
 	@Override
 	public void pause() {
-		gameState = GameState.PAUSE;
+		gameState.pause();
 	}
 
 	@Override
 	public void resume() {
+		gameState.resume();
 	}
 
 }
