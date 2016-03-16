@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 
 public class Diver {
 	
@@ -15,6 +19,10 @@ public class Diver {
 	private Rectangle shape;
 	private Sprite sprite;
 	private GameScreen screen;
+	private Touchpad joystick;
+	private TouchpadStyle joystickstyle;
+	private Skin skin;
+	private Stage stage;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
@@ -73,7 +81,14 @@ public class Diver {
 		
 	}
 
-	
+	public void moveonjoystick(Touchpad joystick){
+		if(joystick.isTouched())		{v[1]+=maxSpeed;}
+		v[0] = joystick.getKnobPercentX()*2.0f;
+
+		norm();
+		
+	}
+
 	public void draw(Batch batch){
 		sprite.draw(batch);
 	}
