@@ -48,7 +48,7 @@ public class DiveGame extends ApplicationAdapter {
 		
 		gameState = new GameState(1);
 		newObjects = new ObjectGenerator(8,8,8, 0.1f, screen);
-		world = new World(newObjects,screen,0.1f,gameState, Android);
+		world = new World(newObjects,screen,0.1f,gameState, font);
 		pauseCD = 0;
 
 	}
