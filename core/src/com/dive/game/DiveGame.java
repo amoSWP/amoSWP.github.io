@@ -17,21 +17,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class DiveGame extends ApplicationAdapter {
-	private Touchpad joystick;
-	private Drawable knob;
-	private Drawable background;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
-	private Stage stage;
 
-
-	
+	public boolean Android;
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
 	private GameScreen screen;
 	private GameState gameState;
 	private float deltaTime, pauseCD;
+
+	public DiveGame(boolean Android) {
+		this.Android = Android;
+	}
+	public DiveGame() {
+		this.Android = false;
+	}
 
 	@Override
 	public void create() {
@@ -41,22 +41,9 @@ public class DiveGame extends ApplicationAdapter {
 		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		
 		newObjects = new ObjectGenerator(8,8,0.1f, screen);
-		world = new World(newObjects,screen,0.1f,gameState);
+		world = new World(newObjects,screen,0.1f,gameState, Android);
 		gameState = GameState.GAME;
 		pauseCD = 0;
-
-		skin = new Skin();
-    		skin.add("background",Assets.getInstance().joystickunder);
-    		skin.add("knob",Assets.getInstance().joystickup);
-		
-    		joystickstyle = new TouchpadStyle();
-    		background = skin.getDrawable("background");
-    		knob = skin.getDrawable("knob");
-   
-		knob.setMinWidth(20);
-		knob.setMinHeight(20);
-		
-		joystick = new Touchpad(5,joystickstyle);
 
 	}
 
@@ -89,9 +76,7 @@ public class DiveGame extends ApplicationAdapter {
 		
 		//batch erstellen
 		batch.begin();
-			joystick.setBounds(15, 15, creationPixel, creationPixel);
-			joystick.draw(batch, creationPixel);
-			world.draw(batch);
+		world.draw(batch,Android);
 		batch.end();
 	}
 

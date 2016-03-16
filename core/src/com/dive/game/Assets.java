@@ -63,13 +63,13 @@ public class Assets {
 		diver 			 = loadTexture("diver/diver.png");
 		shark			 = loadTexture("Hindernisse/myshark.png");
 		plant			 = loadTexture("Hindernisse/green-plant.png");
-		joystickup       = loadTexture("Joystick/Joystickup.png");
-		joystickunder    = loadTexture("Joystick/Joystickunder.png");
+		joystickup       = loadTexture("joystick/Joystickup.png");
+		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder};
 		for(Texture t:tex){
 			t.dispose();
 		}

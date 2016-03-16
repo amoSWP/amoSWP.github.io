@@ -79,21 +79,10 @@ public class Diver {
 		
 	}
 
-	public void onJoystick(){
-		
-		if(joystick.getKnobPercentY()*2.0f/(1.5f)!= 0 && (sprite.getY() < windowHeight-sprite.getHeight())){
-			v[1] = joystick.getKnobPercentY()*2.0f/(1.5f);
-		}
-		else{
-			v[1] = 0;
-		}
-		
-		if(joystick.getKnobPercentX()*2.0f!= 0 && (sprite.getX() < windowWidth-sprite.getWidth())){
-			v[0] = joystick.getKnobPercentX()*2.0f;
-		}
-		else{
-			v[0] = 0;
-		}
+	public void moveonjoystick(Touchpad joystick){
+		if(joystick.isTouched())		{v[1]+=maxSpeed;}
+		v[0] = joystick.getKnobPercentX()*2.0f;
+
 		norm();
 		
 	}
