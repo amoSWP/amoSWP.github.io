@@ -89,10 +89,7 @@ public class World {
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
-		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){
-			// System.out.println(ObjectType.SHARK);
-			state=GameState.PAUSE;
-			System.out.println(state);}
+		
 		
 		//Kollisionsabfragen
 		ObjectType coll = Collision.checkCollision(diver, objects);
