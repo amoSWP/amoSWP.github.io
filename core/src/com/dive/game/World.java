@@ -13,6 +13,7 @@ public class World {
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
+
 	
 	
 	
@@ -35,8 +36,7 @@ public class World {
 	public void draw(Batch batch){			//Ale Spielobjekte zeichnen
 		parallax.draw(batch);
 		for(GameObject o: objects){o.draw(batch);}
-		diver.draw(batch);
-		
+		diver.draw(batch);		
 	}
 	
 	public void move(float deltaTime){
@@ -61,6 +61,10 @@ public class World {
 		ObjectType coll = Collision.checkCollision(diver, objects);
 		if(coll == ObjectType.SHARK){state.pause();}
 		else if(coll == ObjectType.PLANT){diver.slow();}
+		
+		//Luft updaten
+		diver.breathe(deltaTime);
+		if(!diver.hasAir()){state.pause();}
 	}
 
 }

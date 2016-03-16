@@ -23,6 +23,7 @@ public class Assets {
 	public Texture diver;
 	public Texture shark;
 	public Texture plant;
+	public Texture air;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -61,11 +62,12 @@ public class Assets {
 		diver 			 = loadTexture("diver/diver.png");
 		shark			 = loadTexture("Hindernisse/myshark.png");
 		plant			 = loadTexture("Hindernisse/green-plant.png");
+		air				 = loadTexture("air.png");
 		
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, air};
 		for(Texture t:tex){
 			t.dispose();
 		}
