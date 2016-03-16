@@ -32,7 +32,7 @@ public class World {
 	
 	
 	
-	public void draw(Batch batch){			//Ale Spielobjekte zeichnen
+	public void draw(Batch batch){			//Alle Spielobjekte zeichnen
 		parallax.draw(batch);
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
@@ -52,7 +52,10 @@ public class World {
 	public void update(float deltaTime){
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
-		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){state=GameState.PAUSE;}
+		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){
+			// System.out.println(ObjectType.SHARK);
+			state=GameState.PAUSE;
+			System.out.println(state);}
 		
 	}
 
