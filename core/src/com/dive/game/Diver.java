@@ -15,7 +15,7 @@ public class Diver {
 	
 	private int air;
 	private float[] v;
-	private float maxSpeed, decay;
+	private float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
 	private Sprite sprite;
 	private GameScreen screen;
@@ -26,7 +26,7 @@ public class Diver {
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
-		this.maxSpeed = maxSpeed;
+		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		this.screen = screen;
 		
 		air = 100;
@@ -42,6 +42,8 @@ public class Diver {
 	}
 	
 	public void move(float deltaTime){
+		
+		v[1]=0;
 		
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
@@ -109,6 +111,15 @@ public class Diver {
 
 	public void resize() {
 		sprite.setSize(100, 50);
+		
+	}
+
+	public void refresh() {
+		maxSpeed = maxSpeedOrigin;
+	}
+
+	public void slow() {
+		maxSpeed = maxSpeedOrigin*0.2f;
 		
 	}
 

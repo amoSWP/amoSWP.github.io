@@ -11,7 +11,7 @@ public class Trash extends GameObject{
 	private float trashSpeed;
 	
 	
-	//kreiere Hai und ihr wird das bild, Größe des Bildes (width,height) und koordinaten übergeben
+	//kreiere Müll und ihr wird das Bild, Größe des Bildes (width,height) und Koordinaten übergeben
 	public Trash(int xcord, int ycord, int width, int height, float trashSpeed, Texture texture){
 		
 		sprite = new Sprite(texture);

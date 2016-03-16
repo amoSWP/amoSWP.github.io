@@ -41,10 +41,10 @@ public class World {
 		
 		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
 		skin.add("background",Assets.getInstance().joystickunder);
-    	skin.add("knob",Assets.getInstance().joystickup);
+    		skin.add("knob",Assets.getInstance().joystickup);
 		background = skin.getDrawable("background");
-    	knob = skin.getDrawable("knob");
-    	joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
+    		knob = skin.getDrawable("knob");
+    		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
     	
 		knob.setMinWidth(screen.width/10);						//Größe des Joysticks
 		knob.setMinHeight(screen.width/10);
@@ -79,10 +79,17 @@ public class World {
 	}
 	
 	public void update(float deltaTime){
+		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
+		diver.refresh();
+		
+		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
-		if(Collision.checkCollision(diver, objects)==ObjectType.SHARK){state=GameState.PAUSE;}
 		
+		//Kollisionsabfragen
+		ObjectType coll = Collision.checkCollision(diver, objects);
+		if(coll == ObjectType.SHARK){state.pause();}
+		else if(coll == ObjectType.PLANT){diver.slow();}
 	}
 
 }
