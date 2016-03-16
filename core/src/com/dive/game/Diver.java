@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 
 public class Diver {
 	
-	private int air;
 	private float[] v;
 	private float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
@@ -23,14 +22,15 @@ public class Diver {
 	private TouchpadStyle joystickstyle;
 	private Skin skin;
 	private Stage stage;
+	private Air air;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		this.screen = screen;
 		
-		air = 100;
 		v = new float[]{0,0};
+		air = new Air(screen, 1000);
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
@@ -91,6 +91,7 @@ public class Diver {
 
 	public void draw(Batch batch){
 		sprite.draw(batch);
+		air.draw(batch);
 	}
 
 	public Rectangle getShape(){
@@ -121,6 +122,14 @@ public class Diver {
 	public void slow() {
 		maxSpeed = maxSpeedOrigin*0.2f;
 		
+	}
+
+	public void breathe(float deltaTime) {
+		air.breathe(deltaTime);
+	}
+
+	public boolean hasAir() {
+		return (air.getAir() > 0);
 	}
 
 }
