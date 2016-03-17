@@ -1,5 +1,7 @@
 package com.dive.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -7,20 +9,30 @@ import com.badlogic.gdx.math.Rectangle;
 public class Plant extends GameObject {
 
 	private int ycord;
+	private Random rand;
+	private int sizePlant;
 
-	public Plant(int xcord, int width, int height, Texture texture) {
+	public Plant(int xcord) {
 		ycord = 20;
-
-		this.sprite = new Sprite(texture);
-		sprite.setPosition(xcord, ycord);
-		sprite.setSize(width, height);
-		
+		rand = new Random();
 		acc = new float[]{0,0};
 
+		this.sprite = new Sprite(Assets.getInstance().plant);
+		
+		reset();
+		sprite.setPosition(xcord, ycord);
+		
 		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		shape.setPosition(sprite.getX(), sprite.getY());
 
 		active = false;
 		type = ObjectType.PLANT;
+
 	}
+	
+	public void reset(){
+		sizePlant = 50 + rand.nextInt(70);
+		sprite.setSize(sizePlant + 100, sizePlant);
+	}
+	
 }

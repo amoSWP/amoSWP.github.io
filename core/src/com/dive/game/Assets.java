@@ -28,6 +28,7 @@ public class Assets {
 	public Texture air;
 	public Texture trash1;
 	public Texture trash2;
+	public Texture trash3;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -71,6 +72,7 @@ public class Assets {
 		air				 = loadTexture("air.png");
 		trash1 			= loadTexture("Garbage/apple.png");
 		trash2			= loadTexture("Garbage/garbage.png");
+		trash3			=  loadTexture("Garbage/oil.png");
 	}
 
 	public void dispose() {
