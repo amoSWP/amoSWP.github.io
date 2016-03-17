@@ -48,8 +48,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 	
 	public void reset(){
-		sizeShark = 70 + rand.nextInt(80);
-		sprite.setSize(sizeShark + 80, sizeShark);
+		sizeShark = 100 + rand.nextInt(120);
+		sprite.setSize(sizeShark + 120, sizeShark);
 	}
 	
 	}
