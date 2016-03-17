@@ -39,11 +39,9 @@ public class ObjectGenerator {
 
 	private Random rand;
 
-	private GameScreen screen;
-
 	// constructor: kreiere Liste mit Haien
 	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash,
-			float gameSpeed, GameScreen screen) {
+			float gameSpeed) {
 		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
@@ -54,7 +52,6 @@ public class ObjectGenerator {
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
-		this.screen = screen;
 
 		newSizeShark = 70 + rand.nextInt(70);
 		newSizePlant = 50 + rand.nextInt(50);
@@ -65,18 +62,18 @@ public class ObjectGenerator {
 
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
-			listSharks[i] = new Shark(Gdx.graphics.getWidth(), minHeightWater
+			listSharks[i] = new Shark(1920, minHeightWater
 					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
 
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
-			listPlants[i] = new Plant(Gdx.graphics.getWidth());
+			listPlants[i] = new Plant(1920);
 		}
 
 		// kreiert Liste mit Müll
 		for (int i = 0; i < maxNoTrash; i++) {
-			listTrash[i] = new Trash(Gdx.graphics.getWidth(), minHeightWater
+			listTrash[i] = new Trash(1920, minHeightWater
 					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
 
@@ -111,7 +108,7 @@ public class ObjectGenerator {
 				e.setActive(false);
 				list.remove(e);
 				e.reset();
-				e.getSprite().setX(Gdx.graphics.getWidth());
+				e.getSprite().setX(1920);
 				e.getSprite()
 						.setY(minHeightWater
 								+ rand.nextInt(maxHeightWater - minHeightWater));
@@ -141,7 +138,7 @@ public class ObjectGenerator {
 				p.setActive(false);
 				list.remove(p);
 				p.reset();
-				p.getSprite().setX(Gdx.graphics.getWidth());
+				p.getSprite().setX(1920);
 			}
 		}
 
@@ -187,7 +184,7 @@ public class ObjectGenerator {
 				e.setActive(false);
 				list.remove(e);
 				e.setRandomTexture();
-				e.getSprite().setX(Gdx.graphics.getWidth());
+				e.getSprite().setX(1920);
 				e.getSprite()
 						.setY(minHeightWater
 								+ rand.nextInt(maxHeightWater - minHeightWater));
@@ -201,7 +198,7 @@ public class ObjectGenerator {
 	public boolean overlap(float height, float y) {
 
 		for (GameObject o : listSharks) {
-			if (Gdx.graphics.getWidth() < o.getSprite().getX()
+			if (1920 < o.getSprite().getX()
 					+ o.getSprite().getWidth()
 					&& y < o.getSprite().getY() + o.getSprite().getHeight()
 					&& y + height >= o.getSprite().getY()) {

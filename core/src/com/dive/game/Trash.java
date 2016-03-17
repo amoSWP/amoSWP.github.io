@@ -38,14 +38,14 @@ public class Trash extends GameObject {
 		type = ObjectType.TRASH;
 	}
 
-	public void moveObject(float width, float height, float deltaTime,
+	public void moveObject(float deltaTime,
 			float gameSpeed) {
 		// Bewegung des Hais, Hintergrund + eigene Geschwindigkeit
 		float yTranslate = acc[1] * height * deltaTime;
 		if (yTranslate + sprite.getY() < 20) {
 			yTranslate = -sprite.getY() + 20;
 		}
-		sprite.translate(-width * deltaTime * (gameSpeed + acc[0]), yTranslate);
+		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), yTranslate);
 
 		// bewegt Feld hinter dem Hai für Kollisionserkennung
 		shape.setPosition(sprite.getX(), sprite.getY() + sprite.getHeight()

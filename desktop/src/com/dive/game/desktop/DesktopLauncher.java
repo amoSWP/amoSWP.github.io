@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		
 		// Set basic properties of the game window
 		config.title = "Save the Sea";
-		config.width = 1280;
-		config.height = 720;
+		config.width = 1920;
+		config.height = 1080;
 		
 		new LwjglApplication(new DiveGame(), config);
 	}
