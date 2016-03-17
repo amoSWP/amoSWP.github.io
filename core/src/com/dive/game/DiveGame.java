@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,10 +25,13 @@ public class DiveGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
-	private GameScreen screen;
 	private GameState gameState;
 	private float deltaTime, pauseCD;
 	private BitmapFont font;
+	private float widthScale; //breite der black bars 
+	private Sprite bb1, bb2; //blackBars für horizontales 16:9
+	
+	private OrthographicCamera cam;
 
 	public DiveGame(boolean Android) {
 		this.Android = Android;
@@ -38,18 +42,26 @@ public class DiveGame extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		
+		float h = Gdx.graphics.getHeight();
+		float w = Gdx.graphics.getWidth();
 
 		batch = new SpriteBatch();
 		
 		font = new BitmapFont();
         font.setColor(Color.RED);
-
-		screen = new GameScreen(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0,0);
 		
 		gameState = new GameState(1);
-		newObjects = new ObjectGenerator(8,8,8, 0.1f, screen);
-		world = new World(newObjects,screen,0.1f,gameState, font);
+		newObjects = new ObjectGenerator(8,8,8,8, 0.1f);
+		world = new World(newObjects,0.1f,gameState, font);
 		pauseCD = 0;
+		
+		cam = new OrthographicCamera(1920, 1920 * (h / w));
+        cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+        cam.update();
+        
+        bb1 = new Sprite(Assets.getInstance().black);
+        bb2 = new Sprite(Assets.getInstance().black);
 
 	}
 
@@ -63,7 +75,10 @@ public class DiveGame extends ApplicationAdapter {
 	@Override
 	public void render() {
 		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		cam.update();
+        batch.setProjectionMatrix(cam.combined);
+		
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
@@ -81,14 +96,27 @@ public class DiveGame extends ApplicationAdapter {
 		
 		//batch erstellen
 		batch.begin();
-		world.draw(batch,Android);
+			world.draw(batch,Android);
+			bb1.draw(batch);
+			bb2.draw(batch);
 		batch.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		screen.setSize(width, height);
-		world.resize();
+		if(width/(float) height < 16.0/9){
+			cam.viewportWidth = 1920f;
+	        cam.viewportHeight = 1920f * height/width;
+	        widthScale = 0;
+		}
+		else{
+			cam.viewportHeight = 1080f;
+	        cam.viewportWidth = 1080f * width/height;
+	        widthScale = (cam.viewportWidth-1920)/(2*1920);
+		}
+		bb1.setBounds(-widthScale*1920, 0,widthScale*1920, 1080);
+		bb2.setBounds(1920, 0,widthScale*1920, 1080);
+        cam.update();
 	}
 
 	@Override
