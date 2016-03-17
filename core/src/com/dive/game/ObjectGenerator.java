@@ -71,9 +71,7 @@ public class ObjectGenerator {
 
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
-			listPlants[i] = new Plant(Gdx.graphics.getWidth(),
-					newSizePlant + 100, newSizePlant,
-					Assets.getInstance().plant);
+			listPlants[i] = new Plant(Gdx.graphics.getWidth());
 		}
 
 		// kreiert Liste mit Müll
@@ -142,9 +140,8 @@ public class ObjectGenerator {
 
 				p.setActive(false);
 				list.remove(p);
+				p.reset();
 				p.getSprite().setX(Gdx.graphics.getWidth());
-				newSizePlant = 50 + rand.nextInt(70);
-				p.getSprite().setSize(newSizePlant + 100, newSizePlant);
 			}
 		}
 

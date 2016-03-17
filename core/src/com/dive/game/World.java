@@ -108,7 +108,7 @@ public class World {
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
-		System.out.println("score: " + score + ", speed:" + speed);
+		// System.out.println("score: " + score + ", speed:" + speed);
 		speed = (float) (0.001*score+0.1);
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);
