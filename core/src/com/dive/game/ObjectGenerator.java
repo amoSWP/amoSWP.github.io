@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 
 public class ObjectGenerator {
 	private Trash[] listTrash;
@@ -40,13 +41,13 @@ public class ObjectGenerator {
 	private GameScreen screen;
 
 	// constructor: kreiere Liste mit Haien
-	public ObjectGenerator(int maxNoShark, int maxNoPlant, float gameSpeed,
-			GameScreen screen) {
+	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash,
+			float gameSpeed, GameScreen screen) {
 		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
 
-		countDownTrash = countDownShark = countDownPlant = maxCountDown = 1;
+		countDownTrash = countDownShark = countDownPlant = maxCountDown = 2;
 
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
@@ -55,7 +56,7 @@ public class ObjectGenerator {
 
 		newSizeShark = randomInteger(70, 150);
 		newSizePlant = randomInteger(50, 110);
-		newSizeTrash = randomInteger(30, 90);
+		newSizeTrash = randomInteger(30, 60);
 
 		listTrash = new Trash[maxNoTrash];
 		listSharks = new Shark[maxNoShark];
@@ -74,15 +75,17 @@ public class ObjectGenerator {
 					newSizePlant + 100, newSizePlant,
 					Assets.getInstance().plant);
 		}
-		
+
 		// kreiert Liste mit Müll
 		for (int i = 0; i < maxNoTrash; i++) {
 			listTrash[i] = new Trash(Gdx.graphics.getWidth(), randomInteger(
 					minHeightWater, maxHeightWater), newSizeTrash,
-					newSizeTrash, -gameSpeed, Assets.getInstance().trash);
+					newSizeTrash, -gameSpeed, randomGarbage());
 		}
+		
+		
 
-//		
+		//
 
 	}
 
@@ -146,7 +149,6 @@ public class ObjectGenerator {
 				p.getSprite().setSize(newSizePlant + 100, newSizePlant);
 			}
 		}
-		
 
 	}
 	
@@ -185,11 +187,82 @@ public class ObjectGenerator {
 		}
 	}
 
+	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
+	// so gezeichnet werden soll
+	public void nextTrash(ArrayList<GameObject> list, float deltaTime) {
+		countDownTrash -= deltaTime;
+
+		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
+		// Liste um dann gezeichnet zu werden
+		if (countDownTrash < 0 && !listTrash[pointerTrash].active) {
+
+			Trash t = listTrash[pointerTrash];
+
+			for (int k = 0; k < 10; k++) {
+				if (!overlap(t.getSprite().getHeight(), t.getSprite().getY())) {
+					list.add(listTrash[pointerTrash]);
+					listTrash[pointerTrash].active = true;
+					listTrash[pointerTrash].sprite.setTexture(randomGarbage());
+					pointerTrash = (pointerTrash + 1) % maxNoTrash;
+					countDownTrash = maxCountDown + randomInteger(0, 2);
+					
+					break;
+				} else {
+					t.getSprite().setY(
+							randomInteger(minHeightWater, maxHeightWater));
+				}
+			}
+
+			
+		}
+
+		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
+		// Ausgangsposition gesetzt und Status auf nicht aktiv, steht nun wieder
+		// zur Verfügung
+
+		for (int i = 0; i < maxNoTrash; i++) {
+			Trash e = listTrash[i];
+			if (e.getActive()
+					&& (e.getSprite().getX() < -e.getSprite().getWidth())) {
+
+				e.setActive(false);
+				list.remove(e);
+				e.getSprite().setX(Gdx.graphics.getWidth());
+				e.getSprite().setY(
+						randomInteger(minHeightWater, maxHeightWater));
+
+				newSizeTrash = randomInteger(30, 60);
+				e.getSprite().setSize(newSizeTrash, newSizeTrash);
+			}
+		}
+	}
+
 	// Zufällige Erzeugung von integer Werten zwischen min max
 	public int randomInteger(int min, int max) {
 		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 		return randomNum;
 	}
+
+	public boolean overlap(float height, float y) {
+
+		for (GameObject o : listSharks) {
+			if (Gdx.graphics.getWidth()< o.getSprite().getX()+ o.getSprite().getWidth()
+					&& y < o.getSprite().getY() + o.getSprite().getHeight() 
+					&& y + height >= o.getSprite().getY()) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+	
+	public Texture randomGarbage(){
+		int i = randomInteger(1,2);
+		if(i ==1){
+			return (Assets.getInstance().trash1);
+		}
+		else {return (Assets.getInstance().trash2);
+	}
+}
 
 }

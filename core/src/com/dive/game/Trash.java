@@ -38,7 +38,8 @@ public class Trash extends GameObject{
 	
 	public void moveObject(){
 		sprite.translateX(getTrashSpeed());
-		
+		shape.setPosition(sprite.getX(), sprite.getY());
+
 	
 	}
 

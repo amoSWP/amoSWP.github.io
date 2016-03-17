@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 
 public class Diver {
 	
-	private int air;
 	private float[] v;
 	private float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
@@ -23,14 +22,15 @@ public class Diver {
 	private TouchpadStyle joystickstyle;
 	private Skin skin;
 	private Stage stage;
+	private Air air;
 	
 	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		this.screen = screen;
 		
-		air = 100;
 		v = new float[]{0,0};
+		air = new Air(screen, 500);
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
@@ -65,8 +65,8 @@ public class Diver {
 		}
 		//y-Grenze
 		float yTranslate = v[1]*deltaTime;
-		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()){
-			yTranslate = screen.top() - (sprite.getY()+sprite.getHeight());
+		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()-80){
+			yTranslate = screen.top()-80 - (sprite.getY()+sprite.getHeight());
 		}
 		if(yTranslate+sprite.getY() < 0){
 			yTranslate = -sprite.getY();
@@ -91,6 +91,7 @@ public class Diver {
 
 	public void draw(Batch batch){
 		sprite.draw(batch);
+		air.draw(batch);
 	}
 
 	public Rectangle getShape(){
@@ -116,11 +117,24 @@ public class Diver {
 
 	public void refresh() {
 		maxSpeed = maxSpeedOrigin;
+		air.catchBreath();
 	}
 
 	public void slow() {
 		maxSpeed = maxSpeedOrigin*0.2f;
-		
+		air.setBreath(1000);
+	}
+
+	public void breathe(float deltaTime) {
+		air.breathe(deltaTime);
+	}
+
+	public boolean hasAir() {
+		return (air.getAir() > 0);
+	}
+
+	public void recover() {
+		air.setBreath(-2000);
 	}
 
 }
