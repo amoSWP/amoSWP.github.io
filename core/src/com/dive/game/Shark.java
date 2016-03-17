@@ -38,9 +38,9 @@ import com.badlogic.gdx.math.Rectangle;
 			return shape;
 		}
 		
-		public void moveObject(float width, float height, float deltaTime, float gameSpeed){
+		public void moveObject(float deltaTime, float gameSpeed){
 			//Bewegung des Hais, Hintergrund + eigene Geschwindigkeit
-			sprite.translate(-width*deltaTime*(gameSpeed+acc[0]), acc[1]*height*deltaTime);
+			sprite.translate(-1920*deltaTime*(gameSpeed+acc[0]), acc[1]*1080*deltaTime);
 			
 			//bewegt Feld hinter dem Hai für Kollisionserkennung
 			shape.setPosition(sprite.getX(), sprite.getY() + sprite.getHeight()*0.18f);
@@ -48,8 +48,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 	
 	public void reset(){
-		sizeShark = 70 + rand.nextInt(80);
-		sprite.setSize(sizeShark + 80, sizeShark);
+		sizeShark = 100 + rand.nextInt(120);
+		sprite.setSize(sizeShark + 120, sizeShark);
 	}
 	
 	}

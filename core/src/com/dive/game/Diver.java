@@ -17,20 +17,18 @@ public class Diver {
 	private float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
 	private Sprite sprite;
-	private GameScreen screen;
 	private Touchpad joystick;
 	private TouchpadStyle joystickstyle;
 	private Skin skin;
 	private Stage stage;
 	private Air air;
 	
-	public Diver(Texture texture,int width, int height, int startY, int maxSpeed, GameScreen screen){
+	public Diver(Texture texture,int width, int height, int startY, int maxSpeed){
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
-		this.screen = screen;
 		
 		v = new float[]{0,0};
-		air = new Air(screen, 500);
+		air = new Air(500);
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
@@ -57,16 +55,16 @@ public class Diver {
 		//Grenzen am BildschirmRand:
 		//x-Grenze
 		float xTranslate = v[0]*deltaTime;
-		if(xTranslate+sprite.getX()+sprite.getWidth() > screen.right()){
-			xTranslate = screen.right() - (sprite.getX()+sprite.getWidth());
+		if(xTranslate+sprite.getX()+sprite.getWidth() > 1920){
+			xTranslate = 1920 - (sprite.getX()+sprite.getWidth());
 		}
-		if(xTranslate+sprite.getX() < screen.x){
+		if(xTranslate+sprite.getX() < 0){
 			xTranslate = -sprite.getX();
 		}
 		//y-Grenze
 		float yTranslate = v[1]*deltaTime;
-		if(yTranslate+sprite.getY()+sprite.getHeight() > screen.top()-80){
-			yTranslate = screen.top()-80 - (sprite.getY()+sprite.getHeight());
+		if(yTranslate+sprite.getY()+sprite.getHeight() > 960){
+			yTranslate = 960 - (sprite.getY()+sprite.getHeight());
 		}
 		if(yTranslate+sprite.getY() < 0){
 			yTranslate = -sprite.getY();
@@ -110,10 +108,6 @@ public class Diver {
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 	}
 
-	public void resize() {
-		sprite.setSize(100, 50);
-		
-	}
 
 	public void refresh() {
 		maxSpeed = maxSpeedOrigin;
