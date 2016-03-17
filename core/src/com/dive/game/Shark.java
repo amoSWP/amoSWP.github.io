@@ -1,5 +1,7 @@
 package com.dive.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
@@ -7,20 +9,27 @@ import com.badlogic.gdx.math.Rectangle;
 
 	public class Shark extends GameObject{
 		
-		private float sharkSpeed,x,y;
+		private float x,y;
+		private int sizeShark;
+		private Random rand;
 		
 		
 		//kreiere Hai und ihr wird das bild, Größe des Bildes (width,height) und koordinaten übergeben
-		public Shark(int xcord, int ycord, int width, int height, float sharkSpeed, Texture texture){
+		public Shark(int xcord, int ycord){
+			// initialize random variable, speed in relation to background
+			rand = new Random();
+			acc = new float[]{0.1f, 0};
+			sprite = new Sprite(Assets.getInstance().shark);
 			
-			sprite = new Sprite(texture);
+			// set size of shark
+			reset();
+			
+			// set position of shark
 			sprite.setPosition(xcord, ycord);
-			sprite.setSize(width, height);
 			
 			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight()*0.5f);
 			shape.setPosition(sprite.getX(), sprite.getY());
 			
-			this.sharkSpeed = sharkSpeed;
 			active = false;
 			type = ObjectType.SHARK;
 		}
@@ -29,17 +38,18 @@ import com.badlogic.gdx.math.Rectangle;
 			return shape;
 		}
 		
-		
-		
-		public float getSharkSpeed(){
-			return sharkSpeed;
-		}
-		
-		public void moveObject(float width, float deltaTime, float gameSpeed){
-			sprite.translateX(sharkSpeed*width*deltaTime*2);
-			x = sprite.getX();
-			y = sprite.getY() + sprite.getHeight()*0.18f;
-			shape.setPosition(x, y);
+		public void moveObject(float deltaTime, float gameSpeed){
+			//Bewegung des Hais, Hintergrund + eigene Geschwindigkeit
+			sprite.translate(-1920*deltaTime*(gameSpeed+acc[0]), acc[1]*1080*deltaTime);
+			
+			//bewegt Feld hinter dem Hai für Kollisionserkennung
+			shape.setPosition(sprite.getX(), sprite.getY() + sprite.getHeight()*0.18f);
 		}
 
+	
+	public void reset(){
+		sizeShark = 70 + rand.nextInt(80);
+		sprite.setSize(sizeShark + 80, sizeShark);
+	}
+	
 	}

@@ -28,8 +28,11 @@ public class Assets {
 	public Texture air;
 	public Texture trash1;
 	public Texture trash2;
+<<<<<<< HEAD
 	public Texture black;
+=======
 	public Texture trash3;
+>>>>>>> upstream/master
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -71,14 +74,19 @@ public class Assets {
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		air				 = loadTexture("air.png");
+<<<<<<< HEAD
+		trash1 			 = loadTexture("Garbage/apple.png");
+		trash2			 = loadTexture("Garbage/garbage.png");
+		black			 = loadTexture("background/black.png");
+=======
 		trash1 			= loadTexture("Garbage/apple.png");
 		trash2			= loadTexture("Garbage/garbage.png");
 		trash3			=  loadTexture("Garbage/oil.png");
-		black			 = loadTexture("background/black.png");
+>>>>>>> upstream/master
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, trash1, trash2,trash3, air, black};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, trash1, trash2, air, black};
 		for(Texture t:tex){
 			t.dispose();
 		}

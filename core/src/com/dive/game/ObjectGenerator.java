@@ -31,12 +31,13 @@ public class ObjectGenerator {
 	// feste y
 	// Koordinate
 	private int minHeightWater = 80;
-	private int maxHeightWater = 500;
+	private int maxHeightWater = 510;
 
 	// initialisieren von Variablen die Hai/Pflanze neue Größe zuordnet
 	private int newSizeShark;
 	private int newSizePlant;
-	private int newSizeTrash;
+
+	private Random rand;
 
 	// constructor: kreiere Liste mit Haien
 	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash,
@@ -45,15 +46,15 @@ public class ObjectGenerator {
 		pointerShark = 0;
 		pointerPlant = 0;
 
-		countDownTrash = countDownShark = countDownPlant = maxCountDown = 2;
+		countDownTrash = countDownShark = countDownPlant = maxCountDown = 1.5f;
+		rand = new Random();
 
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
 
-		newSizeShark = randomInteger(70, 150);
-		newSizePlant = randomInteger(50, 110);
-		newSizeTrash = randomInteger(30, 60);
+		newSizeShark = 70 + rand.nextInt(70);
+		newSizePlant = 50 + rand.nextInt(50);
 
 		listTrash = new Trash[maxNoTrash];
 		listSharks = new Shark[maxNoShark];
@@ -61,26 +62,20 @@ public class ObjectGenerator {
 
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
-			listSharks[i] = new Shark(Gdx.graphics.getWidth(), randomInteger(
-					minHeightWater, maxHeightWater), newSizeShark + 100,
-					newSizeShark + 20, -gameSpeed, Assets.getInstance().shark);
+			listSharks[i] = new Shark(1920, minHeightWater
+					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
 
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
-			listPlants[i] = new Plant(Gdx.graphics.getWidth(),
-					newSizePlant + 100, newSizePlant,
-					Assets.getInstance().plant);
+			listPlants[i] = new Plant(1920);
 		}
 
 		// kreiert Liste mit Müll
 		for (int i = 0; i < maxNoTrash; i++) {
-			listTrash[i] = new Trash(Gdx.graphics.getWidth(), randomInteger(
-					minHeightWater, maxHeightWater), newSizeTrash,
-					newSizeTrash, -gameSpeed, randomGarbage());
+			listTrash[i] = new Trash(1920, minHeightWater
+					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
-		
-		
 
 		//
 
@@ -98,7 +93,7 @@ public class ObjectGenerator {
 
 			listSharks[pointerShark].active = true;
 			pointerShark = (pointerShark + 1) % maxNoShark;
-			countDownShark = maxCountDown + randomInteger(0, 2);
+			countDownShark = maxCountDown + 2 * rand.nextFloat();
 		}
 
 		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
@@ -112,11 +107,12 @@ public class ObjectGenerator {
 
 				e.setActive(false);
 				list.remove(e);
-				e.getSprite().setX(Gdx.graphics.getWidth());
-				e.getSprite().setY(
-						randomInteger(minHeightWater, maxHeightWater));
-				newSizeShark = randomInteger(70, 150);
-				e.getSprite().setSize(newSizeShark + 100, newSizeShark + 20);
+				e.reset();
+				e.getSprite().setX(1920);
+				e.getSprite()
+						.setY(minHeightWater
+								+ rand.nextInt(maxHeightWater - minHeightWater));
+				
 			}
 		}
 	}
@@ -131,7 +127,7 @@ public class ObjectGenerator {
 
 			listPlants[pointerPlant].active = true;
 			pointerPlant = (pointerPlant + 1) % maxNoPlant;
-			countDownPlant = maxCountDown + randomInteger(0, 2);
+			countDownPlant = maxCountDown + 2 * rand.nextFloat();
 		}
 
 		for (int i = 0; i < maxNoPlant; i++) {
@@ -141,9 +137,8 @@ public class ObjectGenerator {
 
 				p.setActive(false);
 				list.remove(p);
-				p.getSprite().setX(Gdx.graphics.getWidth());
-				newSizePlant = randomInteger(50, 120);
-				p.getSprite().setSize(newSizePlant + 100, newSizePlant);
+				p.reset();
+				p.getSprite().setX(1920);
 			}
 		}
 
@@ -164,18 +159,17 @@ public class ObjectGenerator {
 				if (!overlap(t.getSprite().getHeight(), t.getSprite().getY())) {
 					list.add(listTrash[pointerTrash]);
 					listTrash[pointerTrash].active = true;
-					listTrash[pointerTrash].sprite.setTexture(randomGarbage());
+
 					pointerTrash = (pointerTrash + 1) % maxNoTrash;
-					countDownTrash = maxCountDown + randomInteger(0, 2);
-					
+					countDownTrash = maxCountDown + 2 * rand.nextFloat();
+
 					break;
 				} else {
 					t.getSprite().setY(
-							randomInteger(minHeightWater, maxHeightWater));
+							minHeightWater + rand.nextInt(maxHeightWater - minHeightWater));
 				}
 			}
 
-			
 		}
 
 		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
@@ -189,42 +183,29 @@ public class ObjectGenerator {
 
 				e.setActive(false);
 				list.remove(e);
-				e.getSprite().setX(Gdx.graphics.getWidth());
-				e.getSprite().setY(
-						randomInteger(minHeightWater, maxHeightWater));
+				e.setRandomTexture();
+				e.getSprite().setX(1920);
+				e.getSprite()
+						.setY(minHeightWater
+								+ rand.nextInt(maxHeightWater - minHeightWater));
 
-				newSizeTrash = randomInteger(30, 60);
-				e.getSprite().setSize(newSizeTrash, newSizeTrash);
 			}
 		}
 	}
 
 	// Zufällige Erzeugung von integer Werten zwischen min max
-	public int randomInteger(int min, int max) {
-		Random rand = new Random();
-		int randomNum = rand.nextInt((max - min) + 1) + min;
-		return randomNum;
-	}
 
 	public boolean overlap(float height, float y) {
 
 		for (GameObject o : listSharks) {
-			if (Gdx.graphics.getWidth()< o.getSprite().getX()+ o.getSprite().getWidth()
-					&& y < o.getSprite().getY() + o.getSprite().getHeight() 
+			if (1920 < o.getSprite().getX()
+					+ o.getSprite().getWidth()
+					&& y < o.getSprite().getY() + o.getSprite().getHeight()
 					&& y + height >= o.getSprite().getY()) {
 				return (true);
 			}
 		}
 		return (false);
 	}
-	
-	public Texture randomGarbage(){
-		int i = randomInteger(1,2);
-		if(i ==1){
-			return (Assets.getInstance().trash1);
-		}
-		else {return (Assets.getInstance().trash2);
-	}
-}
 
 }
