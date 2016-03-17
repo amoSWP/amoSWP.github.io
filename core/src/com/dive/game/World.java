@@ -73,7 +73,7 @@ public class World {
 	
 	public void move(float deltaTime){
 		for(GameObject o: objects){
-			o.moveObject(screen.width,deltaTime, speed);
+			o.moveObject(screen.width, screen.height,deltaTime, speed);
 			}
 		diver.move(deltaTime);
 		parallax.move(deltaTime);
