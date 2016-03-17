@@ -38,11 +38,9 @@ public class ObjectGenerator {
 	private int newSizePlant;
 	private int newSizeTrash;
 
-	private GameScreen screen;
-
 	// constructor: kreiere Liste mit Haien
 	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash,
-			float gameSpeed, GameScreen screen) {
+			float gameSpeed) {
 		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
@@ -52,7 +50,6 @@ public class ObjectGenerator {
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
-		this.screen = screen;
 
 		newSizeShark = randomInteger(70, 150);
 		newSizePlant = randomInteger(50, 110);
