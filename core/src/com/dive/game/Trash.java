@@ -20,8 +20,8 @@ public class Trash extends GameObject {
 		acc = new float[] { 0, 0 };
 
 		// array with sprites to choose from set of random textures
-		sprites = new Sprite[] { new Sprite(Assets.getInstance().trash1),
-				new Sprite(Assets.getInstance().trash2) , new Sprite(Assets.getInstance().trash3)};
+		sprites = new Sprite[] { new Sprite(Assets.getInstance().apple),
+				new Sprite(Assets.getInstance().paper) , new Sprite(Assets.getInstance().oil)};
 
 		// set texture, size
 		setRandomTexture();

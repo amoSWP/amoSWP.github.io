@@ -11,21 +11,25 @@ public class ObjectGenerator {
 	private Trash[] listTrash;
 	private Shark[] listSharks;
 	private Plant[] listPlants;
+	private Boat[] listBoats;
 
 	private float countDownTrash;
 	private float countDownShark;
 	private float countDownPlant;
-	private float gameSpeed;
+	private float countDownBoat;
+
 
 	private float maxCountDown;
 	private int pointerShark;
 	private int pointerPlant;
 	private int pointerTrash;
+	private int pointerBoat;
 
 	// maximale Anzahl Haie, Pflanzen, Müll
 	private int maxNoTrash;
 	private int maxNoShark;
 	private int maxNoPlant;
+	private int maxNoBoat;
 
 	// zufällige Schwimmhöhe von Haien mit festem min/max Wert, Pflanzen haben
 	// feste y
@@ -42,18 +46,20 @@ public class ObjectGenerator {
 	private GameScreen screen;
 
 	// constructor: kreiere Liste mit Haien
-	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash,
+	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash, int maxNoBoat,
 			float gameSpeed, GameScreen screen) {
 		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
+		pointerBoat = 0;
 
-		countDownTrash = countDownShark = countDownPlant = maxCountDown = 1.5f;
+		countDownTrash = countDownShark = countDownPlant = maxCountDown = countDownBoat = 1.5f;
 		rand = new Random();
 
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
+		this.maxNoBoat = maxNoBoat;
 		this.screen = screen;
 
 		newSizeShark = 70 + rand.nextInt(70);
@@ -62,6 +68,7 @@ public class ObjectGenerator {
 		listTrash = new Trash[maxNoTrash];
 		listSharks = new Shark[maxNoShark];
 		listPlants = new Plant[maxNoPlant];
+		listBoats = new Boat[maxNoBoat];
 
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
@@ -73,6 +80,11 @@ public class ObjectGenerator {
 		for (int i = 0; i < maxNoPlant; i++) {
 			listPlants[i] = new Plant(Gdx.graphics.getWidth());
 		}
+		
+		for (int i = 0; i < maxNoBoat; i++) {
+			listBoats[i] = new Boat(Gdx.graphics.getWidth());
+		}
+
 
 		// kreiert Liste mit Müll
 		for (int i = 0; i < maxNoTrash; i++) {
@@ -142,6 +154,33 @@ public class ObjectGenerator {
 				list.remove(p);
 				p.reset();
 				p.getSprite().setX(Gdx.graphics.getWidth());
+			}
+		}
+
+	}
+	
+	public void nextBoat(ArrayList<GameObject> list, float deltaTime) {
+		countDownBoat -= deltaTime;
+
+		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
+		// Liste um dann gezeichnet zu werden
+		if (countDownBoat < 0 && !listBoats[pointerBoat].active) {
+			list.add(listBoats[pointerBoat]);
+
+			listBoats[pointerBoat].active = true;
+			pointerBoat = (pointerBoat + 1) % maxNoBoat;
+			countDownBoat = 10 + maxCountDown + 5 * rand.nextFloat();
+		}
+
+		for (int i = 0; i < maxNoBoat; i++) {
+			Boat b = listBoats[i];
+			if (b.getActive()
+					&& (b.getSprite().getX() < -b.getSprite().getWidth())) {
+
+				b.setActive(false);
+				list.remove(b);
+				b.reset();
+				b.getSprite().setX(Gdx.graphics.getWidth());
 			}
 		}
 

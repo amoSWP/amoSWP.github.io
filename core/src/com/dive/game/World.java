@@ -94,6 +94,7 @@ public class World {
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextBoat(objects, deltaTime);
 		
 		
 		//Kollisionsabfragen
