@@ -43,6 +43,11 @@ public class Air {
 	public void setBreath(int breath){
 		this.breath = breath;
 	}
+
+	public void reset() {
+		air = 10000;
+		
+	}
 	
 	
 }

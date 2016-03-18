@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-public class DiveGame extends ApplicationAdapter {
+public class DiveGame extends ApplicationAdapter{
 
 	public boolean Android;
 	private SpriteBatch batch;
@@ -33,6 +34,8 @@ public class DiveGame extends ApplicationAdapter {
 	private BitmapFont font;
 	private float widthScale; //breite der black bars 
 	private Sprite bb1, bb2; //blackBars für horizontales 16:9
+	private EndScreen endscreen;
+	private EndscreenProcessor processor;
 	
 	private OrthographicCamera cam;
 
@@ -48,7 +51,7 @@ public class DiveGame extends ApplicationAdapter {
 		
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
-
+		
 		batch = new SpriteBatch();
 		
 		font = new BitmapFont();
@@ -65,6 +68,11 @@ public class DiveGame extends ApplicationAdapter {
         
         bb1 = new Sprite(Assets.getInstance().black);
         bb2 = new Sprite(Assets.getInstance().black);
+        
+        endscreen = new EndScreen(0);
+        processor = new EndscreenProcessor(world, endscreen, gameState);
+        Gdx.input.setInputProcessor(processor);
+
 
 	}
 
@@ -90,6 +98,7 @@ public class DiveGame extends ApplicationAdapter {
 			world.update(deltaTime);
 			world.move(deltaTime);
 		}
+		
 
 		//Spiel pausieren
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && pauseCD <= 0){
@@ -102,6 +111,10 @@ public class DiveGame extends ApplicationAdapter {
 			world.draw(batch,Android);
 			bb1.draw(batch);
 			bb2.draw(batch);
+			if(gameState.isEndscreen()){
+				endscreen.setScore(2);
+				endscreen.draw(batch);
+			}
 		batch.end();
 	}
 
