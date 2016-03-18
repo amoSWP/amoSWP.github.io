@@ -130,5 +130,9 @@ public class Diver {
 	public void recover() {
 		air.setBreath(-2000);
 	}
+	
+	public void reset(){
+		air.reset();
+	}
 
 }
