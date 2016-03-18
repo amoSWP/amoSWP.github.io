@@ -39,11 +39,9 @@ public class Boat extends GameObject{
 
 	public void moveObject(float deltaTime,
 			float gameSpeed) {
-		// Bewegung des Hais, Hintergrund + eigene Geschwindigkeit
-		float yTranslate = acc[1] * height * deltaTime;
 		
-		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), yTranslate);
-
+		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), 0);
+		
 		// bewegt Feld hinter dem Hai für Kollisionserkennung
 		shape.setPosition(sprite.getX(), sprite.getY());
 	}
