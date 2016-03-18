@@ -228,7 +228,6 @@ public class ObjectGenerator {
 				e.setActive(false);
 				list.remove(e);
 				e.setRandomTexture();
-				System.out.println(e.sprite.getHeight());
 				e.getSprite().setX(1920);
 				e.getSprite()
 						.setY(minHeightWater
@@ -256,21 +255,25 @@ public class ObjectGenerator {
 	public void reset() {
 		for(Shark s:listSharks){
 			s.getSprite().setX(-1000);
+			s.getShape().setX(-1000);
 			s.setActive(true);
 			
 		}
 		for(Plant p:listPlants){
 			p.getSprite().setX(-1000);
+			p.getShape().setX(-1000);
 			p.setActive(true);
 			
 		}
 		for(Trash t:listTrash){
 			t.getSprite().setX(-1000);
+			t.getShape().setX(-1000);
 			t.setActive(true);
 			
 		}
 		for(Boat b:listBoats){
 			b.getSprite().setX(-1000);
+			b.getShape().setX(-1000);
 			b.setActive(true);
 			
 		}

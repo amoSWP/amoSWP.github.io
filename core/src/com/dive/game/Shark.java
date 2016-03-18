@@ -21,14 +21,15 @@ import com.badlogic.gdx.math.Rectangle;
 			acc = new float[]{0.1f, 0};
 			sprite = new Sprite(Assets.getInstance().shark);
 			
-			// set size of shark
-			reset();
-			
 			// set position of shark
 			sprite.setPosition(xcord, ycord);
 			
-			shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight()*0.5f);
+			// set shape of shark for collision
+			shape = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()*0.5f);
 			shape.setPosition(sprite.getX(), sprite.getY());
+			
+			// set size of shark
+			reset();
 			
 			active = false;
 			type = ObjectType.SHARK;
@@ -50,6 +51,8 @@ import com.badlogic.gdx.math.Rectangle;
 	public void reset(){
 		sizeShark = 100 + rand.nextInt(120);
 		sprite.setSize(sizeShark + 120, sizeShark);
+		shape.setSize(sprite.getWidth(), sprite.getHeight()*0.5f);
+		shape.setPosition(sprite.getX(), sprite.getY() + sprite.getHeight()*0.18f);
 	}
 	
 	}

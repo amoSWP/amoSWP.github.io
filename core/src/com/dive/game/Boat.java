@@ -22,15 +22,15 @@ public class Boat extends GameObject{
 		acc = new float[] { 0, 0 };
 		sprite = new Sprite(Assets.getInstance().boat);
 
-		// set texture, size
-		reset();
-
 		// set position to the right of the screen at arbitrary height
 		sprite.setPosition(xcord, ycord);
 		
 		// rectangle behind sprite to detect collisions
 		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(),
 				sprite.getHeight());
+		
+		// set texture, size
+		reset();
 		
 		//assign other attributes
 		active = false;
@@ -50,5 +50,6 @@ public class Boat extends GameObject{
 	public void reset(){
 		sizeBoat = 60 + rand.nextInt(40);
 		sprite.setSize(sizeBoat+120, sizeBoat + 60);
+		shape.setSize(sprite.getWidth(), sprite.getHeight());
 	}
 }
