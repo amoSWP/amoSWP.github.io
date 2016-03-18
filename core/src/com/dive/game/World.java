@@ -92,13 +92,13 @@ public class World {
 		
 		//Kollisionsabfragen
 		ObjectType coll = Collision.checkCollision(diver, objects);
-		if(coll == ObjectType.SHARK){state.pause();}
+		if(coll == ObjectType.SHARK){state.gameOver();}
 		else if(coll == ObjectType.PLANT){diver.slow();}
 		
 		//Luft updaten
 		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
-		if(!diver.hasAir()){state.pause();}
+		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
@@ -107,6 +107,22 @@ public class World {
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);
 		
+	}
+
+
+	public float getScore() {
+		return score;
+	}
+	
+	public void reset(){
+		score = 0;
+		speed = 0.1f;
+		objects.clear();
+		diver.reset();
+		
+		objectGen.reset();
+		parallax.setSpeed(speed);
+
 	}
 
 }

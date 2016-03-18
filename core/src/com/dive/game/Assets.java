@@ -30,6 +30,8 @@ public class Assets {
 	public Texture paper;
 	public Texture oil;
 	public Texture black;
+	public Texture restartButton;
+	public Texture restartButton_hover;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -75,10 +77,12 @@ public class Assets {
 		paper			= loadTexture("Garbage/garbage.png");
 		oil				=  loadTexture("Garbage/oil.png");
 		black			 = loadTexture("background/black.png");
-}
+		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
+		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
+	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, apple, paper, oil, air, black};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, apple, paper, oil, air, black,restartButton,restartButton_hover};
 		for(Texture t:tex){
 			t.dispose();
 		}

@@ -247,4 +247,23 @@ public class ObjectGenerator {
 		return (false);
 	}
 
+	public void reset() {
+		for(Shark s:listSharks){
+			s.getSprite().setX(-1000);
+			s.setActive(true);
+			
+		}
+		for(Plant p:listPlants){
+			p.getSprite().setX(-1000);
+			p.setActive(true);
+			
+		}
+		for(Trash t:listTrash){
+			t.getSprite().setX(-1000);
+			t.setActive(true);
+			
+		}
+		
+	}
+
 }
