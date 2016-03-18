@@ -69,8 +69,8 @@ public class Assets {
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		air				 = loadTexture("air.png");
-		trash1 			= loadTexture("Garbage/apple.png");
-		trash2			= loadTexture("Garbage/garbage.png");
+		trash1 			 = loadTexture("Garbage/apple.png");
+		trash2			 = loadTexture("Garbage/garbage.png");
 	}
 
 	public void dispose() {
