@@ -14,8 +14,7 @@ public class World {
 	
 	private ArrayList<GameObject> objects;	//Liste aller im Spiel aktiven Objekte
 	private float speed;					//Spielgeschwindigkeit in (% der Darstellungsbreite pro Sek.)
-	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die SPielwelt erzeugt (wird im Konstruktor übergeben)
-	private GameScreen screen;				//Darstellungsbereich
+	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die Spielwelt erzeugt (wird im Konstruktor übergeben)
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
@@ -30,19 +29,18 @@ public class World {
 	private Skin skin;
 	
 	
-	public World(ObjectGenerator objectGen, GameScreen screen, float iniSpeed, GameState state, BitmapFont font){
+	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
 		
 		objects = new ArrayList<GameObject>();
 		speed = iniSpeed;
 		score = 0;
 		
 		this.objectGen = objectGen;
-		this.screen = screen;
 		this.state = state;
 		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 300, screen);
-		parallax = new Parallax(speed, screen);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
+		parallax = new Parallax(speed);
 		
 		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
 		skin.add("background",Assets.getInstance().joystickunder);
@@ -51,11 +49,11 @@ public class World {
     		knob = skin.getDrawable("knob");
     		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
     	
-		knob.setMinWidth(screen.width/10);						//Größe des Joysticks
-		knob.setMinHeight(screen.width/10);
+		knob.setMinWidth(192);						//Größe des Joysticks
+		knob.setMinHeight(192);
 		
-		joystick = new Touchpad(screen.width/10,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		joystick.setBounds(4*screen.width/5,  0, screen.width/5, screen.width/5);		//Größe und Platzierung des Joystickpads
+		joystick = new Touchpad(192,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
+		joystick.setBounds(1536,  0, 384, 384);		//Größe und Platzierung des Joystickpads
 		
 	}
 	
@@ -73,18 +71,13 @@ public class World {
 	
 	public void move(float deltaTime){
 		for(GameObject o: objects){
-			o.moveObject(screen.width,deltaTime, speed);
+			o.moveObject(deltaTime, speed);
 			}
 		diver.move(deltaTime);
 		parallax.move(deltaTime);
 		diver.moveonjoystick(joystick);							//wird implementiert
 	}
 	
-	public void resize(){
-		diver.resize();
-		//joystick.resize()									//muss implementiert werden!!
-		//brauchen resize für sharks
-	}
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -94,6 +87,7 @@ public class World {
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextBoat(objects, deltaTime);
 		
 		
 		//Kollisionsabfragen
@@ -102,13 +96,13 @@ public class World {
 		else if(coll == ObjectType.PLANT){diver.slow();}
 		
 		//Luft updaten
-		if(diver.getShape().getY()+diver.getShape().getHeight()>=640){diver.recover();}
+		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
 		if(!diver.hasAir()){state.pause();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
-		System.out.println("score: " + score + ", speed:" + speed);
+//		System.out.println("score: " + score + ", speed:" + speed);
 		speed = (float) (0.001*score+0.1);
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);

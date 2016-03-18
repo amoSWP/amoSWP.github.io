@@ -44,8 +44,8 @@ public class GameObject {
 		
 	}
 	
-	public void moveObject(float width, float deltaTime, float gameSpeed){
-		sprite.translateX(-width*deltaTime*gameSpeed);
+	public void moveObject(float deltaTime, float gameSpeed){
+		sprite.translate(-1920*deltaTime*(gameSpeed+acc[0]), acc[1]*1080*deltaTime);
 		// TODO: Implement collision detection for trash 
 		//shape.setPosition(sprite.getX(), sprite.getY());
 	}

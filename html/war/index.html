@@ -8,25 +8,14 @@
   			  <script src="soundmanager2-jsmin.js"></script>
        </head>
 
-       <body>
-       
-       <br />
-       <script type="text/javascript" src="html/html.nocache.js"></script>
-       <a class="superdev" href="javascript:%7B%20window.__gwt_bookmarklet_params%20%3D%20%7B'server_url'%3A'http%3A%2F%2Flocalhost%3A9876%2F'%7D%3B%20var%20s%20%3D%20document.createElement('script')%3B%20s.src%20%3D%20'http%3A%2F%2Flocalhost%3A9876%2Fdev_mode_on.js'%3B%20void(document.getElementsByTagName('head')%5B0%5D.appendChild(s))%3B%7D">&#8635;</a>
-       
+       <body scroll="no">
+			<a class="superdev" href="javascript:%7B%20window.__gwt_bookmarklet_params%20%3D%20%7B'server_url'%3A'http%3A%2F%2Flocalhost%3A9876%2F'%7D%3B%20var%20s%20%3D%20document.createElement('script')%3B%20s.src%20%3D%20'http%3A%2F%2Flocalhost%3A9876%2Fdev_mode_on.js'%3B%20void(document.getElementsByTagName('head')%5B0%5D.appendChild(s))%3B%7D">&#8635;</a>
         	<div align="center" class="wrapper">
-      		<header>
+        	<img src="assets/Hindernisse/seastar.png" width="5%" height="5%" left=2%" class="seaStar1">
         	<h1>Save the Sea</h1>
-        	<p>Development of a diving/trash clean-up game for the SWP course 2016 at Freie Universität Berlin</p>
-       		<p class="view"><a href="https://github.com/NummerEins/dive">View Our GitHub Profile</a></p>
-       		</header>
-       		</div>
-
-              <div align="center" id="embed-html"></div>
-       		
-       		<br />
-       		<br />
-       	
+        	<p>Development of a diving/trash clean-up game for the SWP course 2016 at Freie Universität Berlin <a href="https://github.com/NummerEins/dive">View Our GitHub Profile</a></p>
+            <div align="center" id="embed-html"></div>
+            </div>
        		<img src="assets/Hindernisse/green-plant.png" width="10%" height="5%" class="img1">
 			<img src="assets/Hindernisse/green-plant.png" width="10%" height="5%" class="img2">
        		<img src="assets/Hindernisse/green-plant.png" width="10%" height="5%" class="img3">
@@ -46,15 +35,16 @@
        		<img src="assets/Hindernisse/green-plant.png" width="10%" height="5%" class="img17">
    		
        		<style type="text/css">
-				html, body {
-					background: #aae0f0;
-					width:100%; 
-					height:100%;
+       			html, body{
+       				background: #aae0f0;
+    				width: 100%;
+					height: 100%;
+					position: absolute;
 					overflow: hidden;
 				}
 				#embed-html table tbody tr td canvas{
-     				width:75%;
-     				height:75%; 
+     				width:70%;
+     				height:70%; 
      				border: 10px solid black;
    				}
    				#embed-html {
@@ -147,11 +137,18 @@
    				}
  
        		  </style>
-       		
+       	<script type="text/javascript" src="html/html.nocache.js"></script>	
        </body>
 
        <script>
-              
+       		  var keys=[32, 33, 34, 37, 38, 39, 40];
+       
+              window.addEventListener("keydown", function(e) {
+    			if(keys.indexOf(e.keyCode) >= 0) {
+        			e.preventDefault();
+    			}
+			  }, false);
+			
               function handleMouseDown(evt) {
                 evt.preventDefault();
                 evt.stopPropagation();
