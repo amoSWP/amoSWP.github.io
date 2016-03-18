@@ -6,13 +6,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 
 
-public class DiveGame extends ApplicationAdapter implements ApplicationListener,InputProcessor {
+public class DiveGame extends ApplicationAdapter implements ApplicationListener, InputProcessor {
 
 	public boolean Android;
 	private SpriteBatch batch;
@@ -83,11 +81,11 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
     		knob = skin.getDrawable("knob");
     		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
     	
-		knob.setMinWidth(1920/8);						//Größe des Joysticks
-		knob.setMinHeight(1920/8);
+		knob.setMinWidth(Gdx.graphics.getWidth()/8);						//Größe des Joysticks
+		knob.setMinHeight(Gdx.graphics.getWidth()/8);
 		
 		joystick = new Touchpad(5,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		joystick.setBounds(3*1920/4,  0 , 1920/4, 1920/4);//Größe und Platzierung des Joystickpads
+		joystick.setBounds(3*Gdx.graphics.getWidth()/4,  0 , Gdx.graphics.getWidth()/4, Gdx.graphics.getWidth()/4);//Größe und Platzierung des Joystickpads
 		if (Android){stage.addActor(joystick);}		
 		
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
@@ -99,11 +97,15 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
         
 		endscreen = new EndScreen(0);
 		processor = new EndscreenProcessor(world, endscreen, gameState);
-		Gdx.input.setInputProcessor(this);
+//		Gdx.input.setInputProcessor(stage);
 		
 		processors = new ArrayList<InputProcessor>();
 		processors.add(processor);
 		processors.add(stage);
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(processor);
+		inputMultiplexer.addProcessor(stage);
+		Gdx.input.setInputProcessor(this);
 		
 	}
 
@@ -112,6 +114,7 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 		batch.dispose();
 		font.dispose();
 		Assets.getInstance().dispose();
+		stage.dispose();
 	}
 
 	@Override
@@ -178,6 +181,7 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 	public void resume() {
 		gameState.resume();
 	}
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		for(InputProcessor p: processors){

@@ -54,7 +54,7 @@ public class World {
 			}
 		diver.move(deltaTime, Android);
 		parallax.move(deltaTime);
-		diver.moveonjoystick(Android, x, y);	//wird implementiert
+		diver.moveonjoystick(x, y);	//wird implementiert
 
 	}
 	
