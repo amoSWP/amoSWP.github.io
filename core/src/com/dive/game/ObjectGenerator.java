@@ -189,53 +189,7 @@ public class ObjectGenerator {
 
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextTrash(ArrayList<GameObject> list, float deltaTime) {
-		countDownTrash -= deltaTime;
-
-		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
-		// Liste um dann gezeichnet zu werden
-		if (countDownTrash < 0 && !listTrash[pointerTrash].active) {
-
-			Trash t = listTrash[pointerTrash];
-
-			for (int k = 0; k < 10; k++) {
-				if (!overlap(t.getSprite().getHeight(), t.getSprite().getY())) {
-					list.add(listTrash[pointerTrash]);
-					listTrash[pointerTrash].active = true;
-					listTrash[pointerTrash].sprite.setTexture(randomGarbage());
-					pointerTrash = (pointerTrash + 1) % maxNoTrash;
-					countDownTrash = maxCountDown + randomInteger(0, 2);
-					
-					break;
-				} else {
-					t.getSprite().setY(
-							randomInteger(minHeightWater, maxHeightWater));
-				}
-			}
-
-			
-		}
-
-		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
-		// Ausgangsposition gesetzt und Status auf nicht aktiv, steht nun wieder
-		// zur Verfügung
-
-		for (int i = 0; i < maxNoTrash; i++) {
-			Trash e = listTrash[i];
-			if (e.getActive()
-					&& (e.getSprite().getX() < -e.getSprite().getWidth())) {
-
-				e.setActive(false);
-				list.remove(e);
-				e.getSprite().setX(Gdx.graphics.getWidth());
-				e.getSprite().setY(
-						randomInteger(minHeightWater, maxHeightWater));
-
-				newSizeTrash = randomInteger(30, 60);
-				e.getSprite().setSize(newSizeTrash, newSizeTrash);
-			}
-		}
-	}
+	
 
 	// Zufällige Erzeugung von integer Werten zwischen min max
 	public int randomInteger(int min, int max) {

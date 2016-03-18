@@ -2,6 +2,7 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,11 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
-
 public class Diver {
 	
-	private float[] v;
-	private float maxSpeed, maxSpeedOrigin, decay;
+	public float[] v;
+	public float maxSpeed, maxSpeedOrigin, decay;
 	private Rectangle shape;
 	private Sprite sprite;
 	private GameScreen screen;
@@ -41,10 +41,8 @@ public class Diver {
 		
 	}
 	
-	public void move(float deltaTime){
-		
-		v[1]=0;
-		
+	public void move(float deltaTime, boolean Android){
+
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]-=maxSpeed;}		
@@ -80,13 +78,26 @@ public class Diver {
 		v[1]*=decay;
 		
 	}
+	
 
-	public void moveonjoystick(Touchpad joystick){
-		if(joystick.isTouched())		{v[1]+=maxSpeed;}
-		v[0] = joystick.getKnobPercentX()*2.0f;
-
+	public void moveontouch(boolean Android){
+		if (Android){
+		if(Gdx.input.isTouched())	{
+			v[1]+=maxSpeed;
+		}
+		else{
+			v[1]-=maxSpeed/2;
+			}
 		norm();
-		
+		}
+	}
+	
+	public void moveonjoystick(boolean Android,float x,float y){
+		if (Android){
+		    v[0] += x*maxSpeed;
+		    v[1] += y*maxSpeed;
+		}
+		norm();
 	}
 
 	public void draw(Batch batch){
