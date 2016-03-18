@@ -72,9 +72,16 @@ public class World {
 		
 		
 		//Kollisionsabfragen
-		ObjectType coll = Collision.checkCollision(diver, objects);
-		if(coll == ObjectType.SHARK){state.gameOver();}
-		else if(coll == ObjectType.PLANT){diver.slow();}
+		GameObject o = Collision.checkCollision(diver, objects);
+		if ( o != null){
+			if (o.getType() == ObjectType.TRASH) {o.delete(); diver.breathe(-1000);
+			}
+			if (o.getType() == ObjectType.SHARK) {
+				state.gameOver();
+			} else if (o.getType() == ObjectType.PLANT) {
+				diver.slow();
+			}
+		}
 		
 		//Luft updaten
 		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}

@@ -44,12 +44,18 @@ public class GameObject {
 		
 	}
 	
+	public void delete(){
+		sprite.setX(-sprite.getWidth()-1);
+	}
+	
 	
 	
 	public void moveObject(float deltaTime, float gameSpeed){
+		
 		sprite.translate(-1920*deltaTime*(gameSpeed+acc[0]), acc[1]*1080*deltaTime);
-		System.out.println(-1920*deltaTime*(gameSpeed+acc[0]));
-		System.out.println("führt aus GameObject");
+		System.out.println("standard: " + -1920*deltaTime*(gameSpeed+acc[0]));
+		//System.out.println(-1920*deltaTime*(gameSpeed+acc[0]));
+		// System.out.println("führt aus GameObject");
 		// TODO: Implement collision detection for trash 
 		shape.setPosition(sprite.getX(), sprite.getY());
 	}

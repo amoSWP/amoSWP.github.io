@@ -133,6 +133,10 @@ public class Diver {
 	public void breathe(float deltaTime) {
 		air.breathe(deltaTime);
 	}
+	
+	public void breathe(int k) {
+		air.breathe(k);
+	}
 
 	public boolean hasAir() {
 		return (air.getAir() > 0);
