@@ -269,6 +269,11 @@ public class ObjectGenerator {
 			t.setActive(true);
 			
 		}
+		for(Boat b:listBoats){
+			b.getSprite().setX(-1000);
+			b.setActive(true);
+			
+		}
 		
 	}
 
