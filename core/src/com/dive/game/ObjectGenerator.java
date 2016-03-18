@@ -87,6 +87,8 @@ public class ObjectGenerator {
 			listTrash[i] = new Trash(1920, minHeightWater
 					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
+		
+		
 
 		//
 

@@ -2,15 +2,19 @@ package com.dive.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class World {
+public class World implements EventListener{
+	
 	
 	private ArrayList<GameObject> objects;	//Liste aller im Spiel aktiven Objekte
 	private float speed;					//Spielgeschwindigkeit in (% der Darstellungsbreite pro Sek.)
@@ -18,8 +22,9 @@ public class World {
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
-	private float score;						//der Score des aktuellen Spiels
-	private BitmapFont font;				//Schriftart zum schreiben
+	private float score;					//der Score des aktuellen Spiels
+	private BitmapFont font;				//Schriftart zum schreiben 
+	
 
 	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
@@ -35,8 +40,24 @@ public class World {
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
 		parallax = new Parallax(speed);
 		
+<<<<<<< HEAD
 
 		 
+=======
+		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
+		skin.add("background",Assets.getInstance().joystickunder);
+    		skin.add("knob",Assets.getInstance().joystickup);
+		background = skin.getDrawable("background");
+    		knob = skin.getDrawable("knob");
+    		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
+    	
+		knob.setMinWidth(192);						//Größe des Joysticks
+		knob.setMinHeight(192);
+		
+		joystick = new Touchpad(192,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
+		joystick.setBounds(1536,  0, 384, 384);		//Größe und Platzierung des Joystickpads
+		
+>>>>>>> upstream/master
 	}
 	
 	
@@ -50,7 +71,11 @@ public class World {
 	
 	public void move(float deltaTime, boolean Android,float x,float y){
 		for(GameObject o: objects){
+<<<<<<< HEAD
+			o.moveObject(screen.width, deltaTime, deltaTime);
+=======
 			o.moveObject(deltaTime, speed);
+>>>>>>> upstream/master
 			}
 		diver.move(deltaTime, Android);
 		parallax.move(deltaTime);
@@ -58,7 +83,13 @@ public class World {
 
 	}
 	
-
+<<<<<<< HEAD
+	public void resize(){
+		diver.resize();
+		//brauchen resize für sharks
+	}
+=======
+>>>>>>> upstream/master
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -83,7 +114,10 @@ public class World {
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
+<<<<<<< HEAD
+=======
 //		System.out.println("score: " + score + ", speed:" + speed);
+>>>>>>> upstream/master
 		speed = (float) (0.001*score+0.1);
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);
@@ -91,6 +125,12 @@ public class World {
 	}
 
 
+<<<<<<< HEAD
+	@Override
+	public boolean handle(Event event) {
+		// TODO Auto-generated method stub
+		return false;
+=======
 	public float getScore() {
 		return score;
 	}
@@ -104,6 +144,7 @@ public class World {
 		objectGen.reset();
 		parallax.setSpeed(speed);
 
+>>>>>>> upstream/master
 	}
 
 }
