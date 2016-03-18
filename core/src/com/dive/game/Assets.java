@@ -73,9 +73,9 @@ public class Assets {
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		air				 = loadTexture("air.png");
-		apple 			= loadTexture("Garbage/apple.png");
-		paper			= loadTexture("Garbage/garbage.png");
-		oil				=  loadTexture("Garbage/oil.png");
+		apple 			 = loadTexture("Garbage/apple.png");
+		paper			 = loadTexture("Garbage/garbage.png");
+		oil				 =  loadTexture("Garbage/oil.png");
 		black			 = loadTexture("background/black.png");
 		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
 		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
