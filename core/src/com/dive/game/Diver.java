@@ -80,7 +80,6 @@ public class Diver {
 	public void moveonjoystick(float x,float y){
 		    v[0] += x*maxSpeed;
 		    v[1] += y*maxSpeed;
-		norm();
 	}
 
 	public void draw(Batch batch){
