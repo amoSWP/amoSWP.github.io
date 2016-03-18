@@ -108,10 +108,6 @@ public class Diver {
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 	}
 
-	public void resize() {
-		sprite.setSize(100, 50);
-		
-	}
 
 	public void refresh() {
 		maxSpeed = maxSpeedOrigin;

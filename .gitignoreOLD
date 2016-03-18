@@ -6,6 +6,7 @@
 hs_err_pid*
 
 ## GWT
+war/
 html/war/gwt_bree/
 html/gwt-unitCache/
 .apt_generated/
@@ -78,6 +79,7 @@ out/
 classes/
 .gwt/
 gwt-unitCache/
+war/
 gen/
 gen-external-apklibs/
 armeabi/
@@ -126,6 +128,3 @@ libgdx-*.zip.MD5
 #directories created by fetch.xml
 /tests/gdx-tests-android/libs
 /tmp
-
-#orig Dateien
-*.orig

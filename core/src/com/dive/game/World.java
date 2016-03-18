@@ -39,7 +39,7 @@ public class World {
 		this.state = state;
 		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 300);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
 		parallax = new Parallax(speed);
 		
 		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
@@ -78,11 +78,6 @@ public class World {
 		diver.moveonjoystick(joystick);							//wird implementiert
 	}
 	
-	public void resize(){
-		diver.resize();
-		//joystick.resize()									//muss implementiert werden!!
-		//brauchen resize für sharks
-	}
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -92,6 +87,7 @@ public class World {
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextBoat(objects, deltaTime);
 		
 		
 		//Kollisionsabfragen

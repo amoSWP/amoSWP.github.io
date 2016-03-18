@@ -31,8 +31,8 @@ public class Plant extends GameObject {
 	}
 	
 	public void reset(){
-		sizePlant = 50 + rand.nextInt(70);
-		sprite.setSize(sizePlant + 100, sizePlant);
+		sizePlant = 70 + rand.nextInt(90);
+		sprite.setSize(sizePlant + 120, sizePlant);
 	}
 	
 }
