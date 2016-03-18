@@ -9,15 +9,15 @@ public class Parallax {
 	private Background top,middle,bottom;
 	private Texture tops,middles,bottoms;
 	
-	public Parallax(float gamespeed, GameScreen screen){
+	public Parallax(float gamespeed){
 		// load Sprites from Assetmanager
 		tops = Assets.getInstance().backgroundTop;
 		middles = Assets.getInstance().backgroundMiddle;
 		bottoms = Assets.getInstance().backgroundBottom;
 		// create Backgroundobjects
-		top = new Background(tops, (0.7f * gamespeed), screen);
-		middle = new Background(middles, 0.4f*gamespeed, screen);
-		bottom = new Background(bottoms, (gamespeed), screen);
+		top = new Background(tops, (0.7f * gamespeed));
+		middle = new Background(middles, 0.4f*gamespeed);
+		bottom = new Background(bottoms, (gamespeed));
 	}
 
 	public void setSpeed(float gamespeed){
@@ -36,12 +36,6 @@ public class Parallax {
 		top.move(deltatime);
 		middle.move(deltatime);
 		bottom.move(deltatime);
-	}
-	
-	public void resize(){
-		top.resize();
-		middle.resize();
-		bottom.resize();
 	}
 	
 }

@@ -26,8 +26,12 @@ public class Assets {
 	public Texture joystickup;
 	public Texture joystickunder;
 	public Texture air;
-	public Texture trash1;
-	public Texture trash2;
+	public Texture apple;
+	public Texture paper;
+	public Texture oil;
+	public Texture black;
+	public Texture restartButton;
+	public Texture restartButton_hover;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -69,12 +73,16 @@ public class Assets {
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		air				 = loadTexture("air.png");
-		trash1 			= loadTexture("Garbage/apple.png");
-		trash2			= loadTexture("Garbage/garbage.png");
+		apple 			 = loadTexture("Garbage/apple.png");
+		paper			 = loadTexture("Garbage/garbage.png");
+		oil				 =  loadTexture("Garbage/oil.png");
+		black			 = loadTexture("background/black.png");
+		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
+		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, trash1, trash2, air};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, shark, joystickup, joystickunder, apple, paper, oil, air, black,restartButton,restartButton_hover};
 		for(Texture t:tex){
 			t.dispose();
 		}

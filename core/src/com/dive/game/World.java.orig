@@ -2,86 +2,94 @@ package com.dive.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-public class World {
+public class World implements EventListener{
+	
 	
 	private ArrayList<GameObject> objects;	//Liste aller im Spiel aktiven Objekte
 	private float speed;					//Spielgeschwindigkeit in (% der Darstellungsbreite pro Sek.)
-	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die SPielwelt erzeugt (wird im Konstruktor übergeben)
-	private GameScreen screen;				//Darstellungsbereich
+	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die Spielwelt erzeugt (wird im Konstruktor übergeben)
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
+	private float score;					//der Score des aktuellen Spiels
+	private BitmapFont font;				//Schriftart zum schreiben 
 	
-	private Touchpad joystick;
-	private Drawable knob;
-	private Drawable background;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
+
 	
-	
-	
-	public World(ObjectGenerator objectGen, GameScreen screen, float iniSpeed, GameState state, boolean Android){
+	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
 		
 		objects = new ArrayList<GameObject>();
 		speed = iniSpeed;
+		score = 0;
 		
 		this.objectGen = objectGen;
-		this.screen = screen;
 		this.state = state;
+		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 300, screen);
-		parallax = new Parallax(speed, screen);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
+		parallax = new Parallax(speed);
 		
+<<<<<<< HEAD
+
+		 
+=======
 		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
 		skin.add("background",Assets.getInstance().joystickunder);
-    	skin.add("knob",Assets.getInstance().joystickup);
+    		skin.add("knob",Assets.getInstance().joystickup);
 		background = skin.getDrawable("background");
-    	knob = skin.getDrawable("knob");
-    	joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
+    		knob = skin.getDrawable("knob");
+    		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
     	
-		knob.setMinWidth(screen.width/10);						//Größe des Joysticks
-		knob.setMinHeight(screen.width/10);
+		knob.setMinWidth(192);						//Größe des Joysticks
+		knob.setMinHeight(192);
 		
-		joystick = new Touchpad(screen.width/10,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		joystick.setBounds(4*screen.width/5,  0, screen.width/5, screen.width/5);		//Größe und Platzierung des Joystickpads
+		joystick = new Touchpad(192,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
+		joystick.setBounds(1536,  0, 384, 384);		//Größe und Platzierung des Joystickpads
 		
+>>>>>>> upstream/master
 	}
 	
 	
-<<<<<<< HEAD
 	public void draw(Batch batch,boolean android){			//Alle Spielobjekte zeichnen
-=======
-	
-	public void draw(Batch batch){			//Alle Spielobjekte zeichnen
->>>>>>> upstream/master
 		parallax.draw(batch);
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
-		if (android){
-			joystick.draw(batch, 20);
-		}
+		font.draw(batch, Float.toString(score),5, 30);
 		
 	}
 	
-	public void move(float deltaTime){
-		for(GameObject o: objects){o.moveObject(screen.width,deltaTime, speed);}
-		diver.move(deltaTime);
+	public void move(float deltaTime, boolean Android,float x,float y){
+		for(GameObject o: objects){
+<<<<<<< HEAD
+			o.moveObject(screen.width, deltaTime, deltaTime);
+=======
+			o.moveObject(deltaTime, speed);
+>>>>>>> upstream/master
+			}
+		diver.move(deltaTime, Android);
 		parallax.move(deltaTime);
-		diver.moveonjoystick(joystick);							//wird implementiert
+		diver.moveonjoystick(Android, x, y);	//wird implementiert
+
 	}
 	
+<<<<<<< HEAD
 	public void resize(){
 		diver.resize();
-		//joystick.resize()									//muss implementiert werden!!
 		//brauchen resize für sharks
 	}
+=======
+>>>>>>> upstream/master
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -90,11 +98,53 @@ public class World {
 		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
+		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextBoat(objects, deltaTime);
+		
 		
 		//Kollisionsabfragen
 		ObjectType coll = Collision.checkCollision(diver, objects);
-		if(coll == ObjectType.SHARK){state.pause();}
+		if(coll == ObjectType.SHARK){state.gameOver();}
 		else if(coll == ObjectType.PLANT){diver.slow();}
+		
+		//Luft updaten
+		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
+		diver.breathe(deltaTime);
+		if(!diver.hasAir()){state.gameOver();}
+		
+		//Score verwalten und Spielgeschwindigkeit anpassen
+		score += 10*speed*deltaTime;
+<<<<<<< HEAD
+=======
+//		System.out.println("score: " + score + ", speed:" + speed);
+>>>>>>> upstream/master
+		speed = (float) (0.001*score+0.1);
+		speed = (float) Math.min(speed, 1);
+		parallax.setSpeed(speed);
+		
+	}
+
+
+<<<<<<< HEAD
+	@Override
+	public boolean handle(Event event) {
+		// TODO Auto-generated method stub
+		return false;
+=======
+	public float getScore() {
+		return score;
+	}
+	
+	public void reset(){
+		score = 0;
+		speed = 0.1f;
+		objects.clear();
+		diver.reset();
+		
+		objectGen.reset();
+		parallax.setSpeed(speed);
+
+>>>>>>> upstream/master
 	}
 
 }

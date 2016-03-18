@@ -2,45 +2,38 @@ package com.dive.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class World implements EventListener{
-	
+public class World {
 	
 	private ArrayList<GameObject> objects;	//Liste aller im Spiel aktiven Objekte
 	private float speed;					//Spielgeschwindigkeit in (% der Darstellungsbreite pro Sek.)
-	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die SPielwelt erzeugt (wird im Konstruktor übergeben)
-	private GameScreen screen;				//Darstellungsbereich
+	private ObjectGenerator objectGen;		//der Objekt-Generator, welcher die Spielwelt erzeugt (wird im Konstruktor übergeben)
 	private Diver diver;					//der Diver (wird im Konstruktor erstellt)
 	private Parallax parallax;				//Der Hintergrund mit Parallax Effekt
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
-	private float score;					//der Score des aktuellen Spiels
-	private BitmapFont font;				//Schriftart zum schreiben 
-	
+	private float score;						//der Score des aktuellen Spiels
+	private BitmapFont font;				//Schriftart zum schreiben
 
 	
-	public World(ObjectGenerator objectGen, GameScreen screen, float iniSpeed, GameState state, BitmapFont font){
+	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
 		
 		objects = new ArrayList<GameObject>();
 		speed = iniSpeed;
 		score = 0;
 		
 		this.objectGen = objectGen;
-		this.screen = screen;
 		this.state = state;
 		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 100, 50, 100, 300, screen);
-		parallax = new Parallax(speed, screen);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
+		parallax = new Parallax(speed);
 		
 
 		 
@@ -57,7 +50,7 @@ public class World implements EventListener{
 	
 	public void move(float deltaTime, boolean Android,float x,float y){
 		for(GameObject o: objects){
-			o.moveObject(screen.width, deltaTime, deltaTime);
+			o.moveObject(deltaTime, speed);
 			}
 		diver.move(deltaTime, Android);
 		parallax.move(deltaTime);
@@ -65,10 +58,7 @@ public class World implements EventListener{
 
 	}
 	
-	public void resize(){
-		diver.resize();
-		//brauchen resize für sharks
-	}
+
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -78,20 +68,22 @@ public class World implements EventListener{
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextBoat(objects, deltaTime);
 		
 		
 		//Kollisionsabfragen
 		ObjectType coll = Collision.checkCollision(diver, objects);
-		if(coll == ObjectType.SHARK){state.pause();}
+		if(coll == ObjectType.SHARK){state.gameOver();}
 		else if(coll == ObjectType.PLANT){diver.slow();}
 		
 		//Luft updaten
-		if(diver.getShape().getY()+diver.getShape().getHeight()>=640){diver.recover();}
+		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
-		if(!diver.hasAir()){state.pause();}
+		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
+//		System.out.println("score: " + score + ", speed:" + speed);
 		speed = (float) (0.001*score+0.1);
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);
@@ -99,10 +91,19 @@ public class World implements EventListener{
 	}
 
 
-	@Override
-	public boolean handle(Event event) {
-		// TODO Auto-generated method stub
-		return false;
+	public float getScore() {
+		return score;
+	}
+	
+	public void reset(){
+		score = 0;
+		speed = 0.1f;
+		objects.clear();
+		diver.reset();
+		
+		objectGen.reset();
+		parallax.setSpeed(speed);
+
 	}
 
 }
