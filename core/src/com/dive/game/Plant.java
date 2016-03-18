@@ -19,12 +19,13 @@ public class Plant extends GameObject {
 
 		this.sprite = new Sprite(Assets.getInstance().plant);
 		
-		reset();
 		sprite.setPosition(xcord, ycord);
 		
 		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		shape.setPosition(sprite.getX(), sprite.getY());
 
+		reset();
+		
 		active = false;
 		type = ObjectType.PLANT;
 
@@ -33,6 +34,7 @@ public class Plant extends GameObject {
 	public void reset(){
 		sizePlant = 70 + rand.nextInt(90);
 		sprite.setSize(sizePlant + 120, sizePlant);
+		shape.setSize(sprite.getWidth(), sprite.getHeight());
 	}
 	
 }
