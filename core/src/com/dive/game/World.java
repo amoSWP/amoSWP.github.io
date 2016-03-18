@@ -22,13 +22,6 @@ public class World {
 	private BitmapFont font;				//Schriftart zum schreiben
 
 	
-	private Touchpad joystick;
-	private Drawable knob;
-	private Drawable background;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
-	
-	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
 		
 		objects = new ArrayList<GameObject>();
@@ -42,19 +35,8 @@ public class World {
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
 		parallax = new Parallax(speed);
 		
-		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
-		skin.add("background",Assets.getInstance().joystickunder);
-    		skin.add("knob",Assets.getInstance().joystickup);
-		background = skin.getDrawable("background");
-    		knob = skin.getDrawable("knob");
-    		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
-    	
-		knob.setMinWidth(192);						//Größe des Joysticks
-		knob.setMinHeight(192);
-		
-		joystick = new Touchpad(192,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		joystick.setBounds(1536,  0, 384, 384);		//Größe und Platzierung des Joystickpads
-		
+
+		 
 	}
 	
 	
@@ -63,21 +45,20 @@ public class World {
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
 		font.draw(batch, Float.toString(score),5, 30);
-		if (android){
-			joystick.draw(batch, 20);
-		}
 		
 	}
 	
-	public void move(float deltaTime){
+	public void move(float deltaTime, boolean Android,float x,float y){
 		for(GameObject o: objects){
 			o.moveObject(deltaTime, speed);
 			}
-		diver.move(deltaTime);
+		diver.move(deltaTime, Android);
 		parallax.move(deltaTime);
-		diver.moveonjoystick(joystick);							//wird implementiert
+		diver.moveonjoystick(Android, x, y);	//wird implementiert
+
 	}
 	
+
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
@@ -91,14 +72,21 @@ public class World {
 		
 		
 		//Kollisionsabfragen
-		ObjectType coll = Collision.checkCollision(diver, objects);
-		if(coll == ObjectType.SHARK){state.pause();}
-		else if(coll == ObjectType.PLANT){diver.slow();}
+		GameObject o = Collision.checkCollision(diver, objects);
+		if ( o != null){
+			if (o.getType() == ObjectType.TRASH) {o.delete(); diver.breathe(-1000);
+			}
+			if (o.getType() == ObjectType.SHARK) {
+				state.gameOver();
+			} else if (o.getType() == ObjectType.PLANT) {
+				diver.slow();
+			}
+		}
 		
 		//Luft updaten
 		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
-		if(!diver.hasAir()){state.pause();}
+		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		score += 10*speed*deltaTime;
@@ -107,6 +95,22 @@ public class World {
 		speed = (float) Math.min(speed, 1);
 		parallax.setSpeed(speed);
 		
+	}
+
+
+	public float getScore() {
+		return score;
+	}
+	
+	public void reset(){
+		score = 0;
+		speed = 0.1f;
+		objects.clear();
+		diver.reset();
+		
+		objectGen.reset();
+		parallax.setSpeed(speed);
+
 	}
 
 }

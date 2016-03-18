@@ -47,9 +47,8 @@ public class Trash extends GameObject {
 		}
 		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), yTranslate);
 
-		// bewegt Feld hinter dem Hai für Kollisionserkennung
-		shape.setPosition(sprite.getX(), sprite.getY() + sprite.getHeight()
-				* 0.18f);
+		// bewegt Feld hinter dem Müll für Kollisionserkennung
+		shape.setPosition(sprite.getX(), sprite.getY());
 	}
 
 	//method to assign texture and size of sprite

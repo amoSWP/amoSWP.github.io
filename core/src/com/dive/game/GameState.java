@@ -37,9 +37,19 @@ public class GameState {
 		else if(state == State.PAUSE){state=State.GAME;}
 	}
 	
+	public void gameOver(){
+		state = State.ENDSCREEN;
+	}
+	
 	public boolean isRunning(){
 		return (state == State.GAME);
 	}
+	
+	public boolean isEndscreen(){
+		return (state == State.ENDSCREEN);
+	}
+	
+	
 	
 }
 

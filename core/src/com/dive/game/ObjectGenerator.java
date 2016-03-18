@@ -87,6 +87,8 @@ public class ObjectGenerator {
 			listTrash[i] = new Trash(1920, minHeightWater
 					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
+		
+		
 
 		//
 
@@ -160,13 +162,17 @@ public class ObjectGenerator {
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
 		// Liste um dann gezeichnet zu werden
-		if (countDownBoat < 0 && !listBoats[pointerBoat].active) {
-			list.add(listBoats[pointerBoat]);
 
+		if (countDownBoat < 0 && !listBoats[pointerBoat].active) {
+
+			
+			list.add(listBoats[pointerBoat]);
 			listBoats[pointerBoat].active = true;
 			pointerBoat = (pointerBoat + 1) % maxNoBoat;
 			countDownBoat = 10 + maxCountDown + 5 * rand.nextFloat();
+
 		}
+		
 
 		for (int i = 0; i < maxNoBoat; i++) {
 			Boat b = listBoats[i];
@@ -245,6 +251,25 @@ public class ObjectGenerator {
 			}
 		}
 		return (false);
+	}
+
+	public void reset() {
+		for(Shark s:listSharks){
+			s.getSprite().setX(-1000);
+			s.setActive(true);
+			
+		}
+		for(Plant p:listPlants){
+			p.getSprite().setX(-1000);
+			p.setActive(true);
+			
+		}
+		for(Trash t:listTrash){
+			t.getSprite().setX(-1000);
+			t.setActive(true);
+			
+		}
+		
 	}
 
 }
