@@ -20,7 +20,7 @@ public class Boat extends GameObject{
 		// initialize random variable, speed in relation to background
 		rand = new Random();
 		acc = new float[] { 0, 0 };
-		sprite = new Sprite(Assets.getInstance().plant);
+		sprite = new Sprite(Assets.getInstance().boat);
 
 		// set texture, size
 		reset();
@@ -37,18 +37,18 @@ public class Boat extends GameObject{
 		type = ObjectType.SHARK;
 	}
 
-	public void moveObject(float deltaTime,
-			float gameSpeed) {
-		
-		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), 0);
-		
-		// bewegt Feld hinter dem Hai für Kollisionserkennung
-		shape.setPosition(sprite.getX(), sprite.getY());
-	}
+//	public void moveObject(float deltaTime,
+//			float gameSpeed) {
+//		
+//		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), 0);
+//		
+//		// bewegt Feld hinter dem Hai für Kollisionserkennung
+//		shape.setPosition(sprite.getX(), sprite.getY());
+//	}
 
 	//method to assign texture and size of sprite
 	public void reset(){
 		sizeBoat = 60 + rand.nextInt(40);
-		sprite.setSize(sizeBoat+120, sizeBoat);
+		sprite.setSize(sizeBoat+120, sizeBoat + 60);
 	}
 }
