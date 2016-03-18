@@ -160,13 +160,13 @@ public class ObjectGenerator {
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
 		// Liste um dann gezeichnet zu werden
-		if (countDownBoat < 0 && !listBoats[pointerBoat].active) {
+
 			list.add(listBoats[pointerBoat]);
 
 			listBoats[pointerBoat].active = true;
 			pointerBoat = (pointerBoat + 1) % maxNoBoat;
 			countDownBoat = 10 + maxCountDown + 5 * rand.nextFloat();
-		}
+		
 
 		for (int i = 0; i < maxNoBoat; i++) {
 			Boat b = listBoats[i];
