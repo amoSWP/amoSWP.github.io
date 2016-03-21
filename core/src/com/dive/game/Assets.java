@@ -2,6 +2,7 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 // From https://github.com/libgdx/libgdx-demo-superjumper/blob/master/core/src/com/badlogicgames/superjumper/Assets.java
@@ -38,7 +39,7 @@ public class Assets {
 	public Texture air_green;
 	public Texture air_orange;
 	public Texture air_red;
-	
+	public Music music;
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -63,6 +64,11 @@ public class Assets {
 		// gefunden wurde, ersetze die folgende Zeile mit der nachfolgenden.
 		return new Texture(Gdx.files.internal(location));
 		//return new Texture(location);
+	}
+	
+	private static Music loadMusic (String location){
+		// Benutze um Musik zu laden
+		return Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
 
 	private void load () {
@@ -91,6 +97,7 @@ public class Assets {
 		air_green		 = loadTexture("air/green.png");
 		air_orange		 = loadTexture("air/orange.png");
 		air_red			 = loadTexture("air/red.png");
+		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		
 	}
 
@@ -99,6 +106,7 @@ public class Assets {
 		for(Texture t:tex){
 			t.dispose();
 		}
+		music.dispose();
 	}
 
 	//public static void playSound (Sound sound) {
