@@ -76,26 +76,10 @@ public class Diver {
 		v[1]*=decay;
 		
 	}
-	
 
-	public void moveontouch(boolean Android){
-		if (Android){
-		if(Gdx.input.isTouched())	{
-			v[1]+=maxSpeed;
-		}
-		else{
-			v[1]-=maxSpeed/2;
-			}
-		norm();
-		}
-	}
-	
-	public void moveonjoystick(boolean Android,float x,float y){
-		if (Android){
+	public void moveonjoystick(float x,float y){
 		    v[0] += x*maxSpeed;
 		    v[1] += y*maxSpeed;
-		}
-		norm();
 	}
 
 	public void draw(Batch batch){
