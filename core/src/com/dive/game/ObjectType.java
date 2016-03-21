@@ -1,5 +1,5 @@
 package com.dive.game;
 
 public enum ObjectType {
-	SHARK, PLANT, TRASH, BOAT
+	SHARK, PLANT, TRASH, BOAT, JELLYFISH
 }

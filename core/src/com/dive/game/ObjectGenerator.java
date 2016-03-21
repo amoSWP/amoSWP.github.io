@@ -12,29 +12,33 @@ public class ObjectGenerator {
 	private Shark[] listSharks;
 	private Plant[] listPlants;
 	private Boat[] listBoats;
+	private Jellyfish[] listJellyfish;
 
 	private float countDownTrash;
 	private float countDownShark;
 	private float countDownPlant;
 	private float countDownBoat;
+	private float countDownJellyfish;
 
 	private float maxCountDown;
 	private int pointerShark;
 	private int pointerPlant;
 	private int pointerTrash;
 	private int pointerBoat;
+	private int pointerJellyfish;
 
 	// maximale Anzahl Haie, Pflanzen, Müll
 	private int maxNoTrash;
 	private int maxNoShark;
 	private int maxNoPlant;
 	private int maxNoBoat;
+	private int maxNoJellyfish;
 
 	// zufällige Schwimmhöhe von Haien mit festem min/max Wert, Pflanzen haben
 	// feste y
 	// Koordinate
 	private int minHeightWater = 80;
-	private int maxHeightWater = 880;
+	private int maxHeightWater = 860;
 
 	// initialisieren von Variablen die Hai/Pflanze neue Größe zuordnet
 	private int newSizeShark;
@@ -43,20 +47,22 @@ public class ObjectGenerator {
 	private Random rand;
 
 	// constructor: kreiere Liste mit Haien
-	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash, int maxNoBoat,
+	public ObjectGenerator(int maxNoShark, int maxNoPlant, int maxNoTrash, int maxNoBoat, int maxNoJellyfish,
 			float gameSpeed) {
 		pointerTrash = 0;
 		pointerShark = 0;
 		pointerPlant = 0;
 		pointerBoat = 0;
+		pointerJellyfish = 0;
 
-		countDownTrash = countDownShark = countDownPlant = maxCountDown = countDownBoat = 1.5f;
+		countDownTrash = countDownShark = countDownPlant = maxCountDown = countDownBoat = countDownJellyfish = 1.5f;
 		rand = new Random();
 
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
 		this.maxNoBoat = maxNoBoat;
+		this.maxNoJellyfish = maxNoJellyfish;
 
 		newSizeShark = 70 + rand.nextInt(70);
 		newSizePlant = 50 + rand.nextInt(50);
@@ -65,18 +71,26 @@ public class ObjectGenerator {
 		listSharks = new Shark[maxNoShark];
 		listPlants = new Plant[maxNoPlant];
 		listBoats = new Boat[maxNoBoat];
+		listJellyfish = new Jellyfish[maxNoJellyfish];
 
 		// kreiert Liste mit Haien
 		for (int i = 0; i < maxNoShark; i++) {
 			listSharks[i] = new Shark(1920, minHeightWater
 					+ rand.nextInt(maxHeightWater - minHeightWater));
 		}
-
+		
+		// kreiert Liste mit Quallen
+		for (int i = 0; i < maxNoJellyfish; i++) {
+			listJellyfish[i] = new Jellyfish(1920, minHeightWater
+					+ rand.nextInt(maxHeightWater - minHeightWater));
+		}
+		
 		// kreiert Liste mit Pflanzen
 		for (int i = 0; i < maxNoPlant; i++) {
 			listPlants[i] = new Plant(1920);
 		}
 		
+		// kreiert Liste mit Booten
 		for (int i = 0; i < maxNoBoat; i++) {
 			listBoats[i] = new Boat(1920);
 		}
@@ -130,6 +144,40 @@ public class ObjectGenerator {
 		}
 	}
 
+	public void nextJellyfish(ArrayList<GameObject> list, float deltaTime) {
+		countDownJellyfish -= deltaTime;
+
+		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
+		// Liste um dann gezeichnet zu werden
+		if (countDownJellyfish < 0 && !listJellyfish[pointerJellyfish].active) {
+			list.add(listJellyfish[pointerJellyfish]);
+
+			listJellyfish[pointerJellyfish].active = true;
+			pointerJellyfish = (pointerJellyfish + 1) % maxNoJellyfish;
+			countDownJellyfish = maxCountDown + 2 * rand.nextFloat();
+		}
+
+		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
+		// Ausgangsposition gesetzt und Status auf nicht aktiv, steht nun wieder
+		// zur Verfügung
+
+		for (int i = 0; i < maxNoJellyfish; i++) {
+			Jellyfish e = listJellyfish[i];
+			if (e.getActive()
+					&& (e.getSprite().getX() < -e.getSprite().getWidth())) {
+
+				e.setActive(false);
+				list.remove(e);
+				e.reset();
+				e.getSprite().setX(1920);
+				e.getSprite()
+						.setY(minHeightWater
+								+ rand.nextInt(maxHeightWater - minHeightWater));
+				
+			}
+		}
+	}
+	
 	public void nextPlant(ArrayList<GameObject> list, float deltaTime) {
 		countDownPlant -= deltaTime;
 
@@ -277,12 +325,13 @@ public class ObjectGenerator {
 			b.setActive(true);
 			
 		}
-		
-		for(Boat b:listBoats){
-			b.getSprite().setX(-1000);
-			b.setActive(true);
+		for(Jellyfish j:listJellyfish){
+			j.getSprite().setX(-1000);
+			j.getShape().setX(-1000);
+			j.setActive(true);
 			
 		}
+		
 		
 	}
 

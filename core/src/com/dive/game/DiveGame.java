@@ -66,7 +66,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		font.setColor(Color.RED);
 		
 		gameState = new GameState(1);
-		newObjects = new ObjectGenerator(8,8,8,8, 0.1f);
+		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
 		world = new World(newObjects,0.1f,gameState, font);
 		pauseCD = 0;
 		

@@ -69,6 +69,7 @@ public class World {
 		objectGen.nextShark(objects, deltaTime);
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
+		objectGen.nextJellyfish(objects, deltaTime);
 		
 		
 		//Kollisionsabfragen
@@ -80,6 +81,9 @@ public class World {
 				state.gameOver();
 			} else if (o.getType() == ObjectType.PLANT) {
 				diver.slow();
+			} else if (o.getType() == ObjectType.JELLYFISH){
+				diver.slow();
+				diver.breathe(10);
 			}
 		}
 		
