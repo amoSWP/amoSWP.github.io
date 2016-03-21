@@ -115,8 +115,7 @@ public class ObjectGenerator {
 
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextShark(ArrayList<GameObject> list, float deltaTime,
-			float score) {
+	public void nextShark(ArrayList<GameObject> list, float deltaTime, float distance) {
 		countDownShark -= deltaTime;
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
@@ -126,11 +125,10 @@ public class ObjectGenerator {
 
 			listSharks[pointerShark].active = true;
 			pointerShark = (pointerShark + 1) % maxNoShark;
-			if (score < 100) {
-				countDownShark = maxCountDown + 2 * rand.nextFloat()
-						- (float) 0.01 * score;
-			} else {
-				countDownShark = 2 * rand.nextFloat();
+			if(distance<100){
+			countDownShark = maxCountDown + 2 * rand.nextFloat()-(float) 0.01*distance;}
+			else{
+				countDownShark = 2*rand.nextFloat();
 			}
 		}
 
@@ -151,7 +149,8 @@ public class ObjectGenerator {
 						.setY(minHeightWater
 								+ rand.nextInt(maxHeightWater - minHeightWater));
 
-			}
+	
+		}
 		}
 	}
 
@@ -200,8 +199,10 @@ public class ObjectGenerator {
 			listPlants[pointerPlant].active = true;
 			pointerPlant = (pointerPlant + 1) % maxNoPlant;
 			countDownPlant = maxCountDown + 2 * rand.nextFloat();
-
+	
 		}
+
+		
 		for (int i = 0; i < maxNoPlant; i++) {
 			Plant p = listPlants[i];
 			if (p.getActive()
@@ -209,6 +210,7 @@ public class ObjectGenerator {
 
 				p.setActive(false);
 				list.remove(p);
+				p.reset();
 				p.getSprite().setX(1920);
 			}
 		}
@@ -225,11 +227,14 @@ public class ObjectGenerator {
 
 		if (countDownBoat < 0 && !listBoats[pointerBoat].active) {
 
+			
 			list.add(listBoats[pointerBoat]);
 			listBoats[pointerBoat].active = true;
 			pointerBoat = (pointerBoat + 1) % maxNoBoat;
 			countDownBoat = 10 + maxCountDown + 5 * rand.nextFloat();
+
 		}
+		
 
 		for (int i = 0; i < maxNoBoat; i++) {
 			Boat b = listBoats[i];
@@ -334,15 +339,7 @@ public class ObjectGenerator {
 		}
 		return (false);
 	}
-	
-//	public boolean overlapGasBottle(){
-//	for (GameObject o: listGasBottles){
-//		if(1920 < o.getSprite().getX() + o.getSprite().getWidth()){
-//			return true;
-//		}
-//	}
-//	return false;
-//	}
+
 
 	public void reset() {
 		for (Shark s : listSharks) {

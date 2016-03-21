@@ -27,7 +27,7 @@ public class EndScreen implements InputProcessor {
 		restart = new Sprite(Assets.getInstance().restartButton);
 		restart.setBounds(560, 200, 800, 155);
 		
-		menu = new Sprite(Assets.getInstance().restartButton);
+		menu = new Sprite(Assets.getInstance().menuButton);
 		menu.setBounds(560, 405, 800, 155);
 		
 		
@@ -36,7 +36,7 @@ public class EndScreen implements InputProcessor {
 	public void draw(Batch batch){
 		restart.draw(batch);
 		menu.draw(batch);
-		font.draw(batch, Integer.toString(score),1000, 500);
+		font.draw(batch, Integer.toString(score),1000, 800);
 		
 	}
 

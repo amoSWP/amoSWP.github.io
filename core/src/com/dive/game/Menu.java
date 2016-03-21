@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Menu implements InputProcessor {
 	
-	private Sprite start;
-	private int score;
+	private Sprite start, logo;
 	private GameState gameState;
 	private World world;
 	private BitmapFont font;
@@ -22,24 +21,19 @@ public class Menu implements InputProcessor {
 		gameState = state;
 		this.world = world;
 		this.font = font;
-		score = 0;
 		
 		start = new Sprite(Assets.getInstance().startButton);
 		start.setBounds(500, 200, 920, 178);
+		
+		logo = new Sprite(Assets.getInstance().diver);
+		logo.setBounds(460, 400, 1000, 400);
 		
 		
 	}
 	
 	public void draw(Batch batch){
 		start.draw(batch);
-		font.draw(batch, Integer.toString(score),1000, 500);
-		
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-		System.out.println("set " + score);
-		System.out.println("this" + this.score);
+		logo.draw(batch);
 	}
 	
 	public Sprite getRestart(){
