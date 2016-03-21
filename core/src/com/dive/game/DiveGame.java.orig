@@ -6,14 +6,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+<<<<<<< HEAD
 import com.badlogic.gdx.InputAdapter;
+=======
 import com.badlogic.gdx.InputMultiplexer;
+>>>>>>> upstream/master
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,11 +24,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
+<<<<<<< HEAD
+public class DiveGame extends ApplicationAdapter implements InputProcessor{
+=======
 
 
 
 
 public class DiveGame extends ApplicationAdapter implements ApplicationListener, InputProcessor {
+>>>>>>> upstream/master
 
 	public boolean Android;
 	private SpriteBatch batch;
@@ -105,6 +110,9 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 		processors = new ArrayList<InputProcessor>();
 		processors.add(processor);
 		processors.add(stage);
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(processor);
+		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -181,61 +189,97 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 	public void resume() {
 		gameState.resume();
 	}
+<<<<<<< HEAD
+	@Override
+	public boolean keyDown(int keycode) {
+		if(keycode == Input.Keys.SPACE){
+			gameState.toggle();
+			return true;
+=======
 	
 	@Override
 	public boolean keyDown(int keycode) {
 		for(InputProcessor p: processors){
 			p.keyDown(keycode);
+>>>>>>> upstream/master
 		}
 		return false;
 	}
 	@Override
 	public boolean keyUp(int keycode) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.keyUp(keycode);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean keyTyped(char character) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.keyTyped(character);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.touchDown(screenX, screenY, pointer, button);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.touchUp(screenX, screenY, pointer, button);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.touchDragged(screenX, screenY, pointer);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.mouseMoved(screenX, screenY);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 	@Override
 	public boolean scrolled(int amount) {
+<<<<<<< HEAD
+		// TODO Auto-generated method stub
+=======
 		for(InputProcessor p: processors){
 			p.scrolled(amount);
 		}
+>>>>>>> upstream/master
 		return false;
 	}
 

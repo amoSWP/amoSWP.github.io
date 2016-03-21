@@ -10,8 +10,6 @@ public class Coords {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
-		System.out.println("window width:" + w + ", window height: " + h);
-		
 		float relX = x/w;
 		float relY = y/h;
 		

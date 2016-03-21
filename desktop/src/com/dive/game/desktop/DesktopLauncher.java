@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		config.width = 1920;
 		config.height = 1080;
 		
-		new LwjglApplication(new DiveGame(), config);
+		new LwjglApplication(new DiveGame(true), config);
 	}
 }
 

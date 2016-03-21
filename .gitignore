@@ -127,5 +127,5 @@ libgdx-*.zip.MD5
 /tests/gdx-tests-android/libs
 /tmp
 
-#orig Dateien
+#.orig Files
 *.orig
