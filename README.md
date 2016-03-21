@@ -15,13 +15,16 @@ Zustand des Spieles am Ende der ersten Woche: Essentielle Spielelemente sind ber
 
 ![alt tag](https://github.com/tonnrueter/dive/blob/master/schwimmerUndEnten.png)
 
+Da unsere Gruppe sieben Mitglieder umfasst, sollte unser Spiel zusätzlich zum Desktop auf den Zielsysteme Browser und Android verfügbar sein.
+
 Die erste Woche wurde durch eine Sprint-Planung für die zweite Woche beendet. Am Montag stand dann auch der Git-Workflow und es konnte losgehen.
 
-..Etwas über die Zielsysteme..
 
 ## Explosion
 
 Ziel der zweiten Woche war der Nutzertest am Freitag. Es sollte eine Alpha-Version des Spieles den anderen Gruppen vorgestellt werden um die Spielmechanik und den Schwierigkeitsgrad anzupassen.
 
 ![alt tag](https://github.com/tonnrueter/dive/blob/master/ZweiteWoche.png)
+
+Ein riesiger Entwicklungssprung, sowohl sichtbar in den angepassten Grafiken und dem Spielinterface als auch unsichtbar in einer objekt-orientierten Klassenstruktur. Die einzelnen Spielelemente wie Taucher, Haie, Boote und Luftanzeige wurden zusammen geplant und in Zweierteams implementiert.
 
