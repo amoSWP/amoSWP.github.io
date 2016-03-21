@@ -33,6 +33,7 @@ public class Assets {
 	public Texture paper;
 	public Texture oil;
 	public Texture boat;
+	public Texture cargoShip;
 	public Texture black;
 	public Texture restartButton;
 	public Texture restartButton_hover;
@@ -99,6 +100,7 @@ public class Assets {
 		paper			 = loadTexture("Garbage/garbage.png");
 		oil				 =  loadTexture("Garbage/oil.png");
 		boat			= loadTexture("Hindernisse/ship.png");
+		cargoShip 	= loadTexture("Hindernisse/cargo_ship.png");
 		black			 = loadTexture("background/black.png");
 		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
 		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
@@ -115,7 +117,7 @@ public class Assets {
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, boat, shark, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, boat, cargoShip, shark, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
 		for(Texture t:tex){
 			t.dispose();
 		}
