@@ -11,4 +11,4 @@ Der Einstieg in die Spieleentwicklung begann mit Konzept-Kunst: Nach unseren Lie
 
 Zustand des Spieles am Ende der ersten Woche: Essentielle Spielelemente sind bereits erkennbar. Eine Diskussion in der Gruppe ergab, dass anstelle der teilweise fotorealistischen Grafik eine comic-haft verfremdete verwendet werden sollte. Die Implementierung der ersten Klassen und die Arbeit des Art-Departements erlaubten uns am Ende der ersten Woche bereits den charackteristischen Look unseres Spiels und die grundlegende Steuerung in einer kurzen Präsentation dem Seminar vorzustellen.
 
-![alt tag](https://github.com/NummerEins/dive/blob/master/schwimmerUndEnten.png)
+![alt tag](https://github.com/tonnrueter/dive/blob/master/schwimmerUndEnten.png)
