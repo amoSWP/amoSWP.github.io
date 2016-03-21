@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -77,7 +76,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
         // Inputverwaltung setzen
 		endscreen = new EndScreen(gameState, world, font);
-		menu = new Menu(gameState, world, font, stage);
+		menu = new Menu(gameState, world);
 		processors = new ArrayList<InputProcessor>();
 		processors.add(endscreen);
 		processors.add(stage);

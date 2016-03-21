@@ -2,25 +2,17 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+
 public class Diver {
 	
 	public float[] v;
 	public float maxSpeed, maxSpeedOrigin, decay, y1,h1,x2,y2,w2,h2;
 	private Rectangle[] shape;
 	private Sprite sprite;
-	private Touchpad joystick;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
-	private Stage stage;
 	private Air air;
 	
 	public Diver(Texture texture,int width, int height,int maxSpeed){
