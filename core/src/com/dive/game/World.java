@@ -61,20 +61,26 @@ public class World {
 		
 		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
-		objectGen.nextShark(objects, deltaTime);
+		objectGen.nextShark(objects, deltaTime, distance);
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
+		objectGen.nextJellyfish(objects, deltaTime);
+		
+
 		
 		
 		//Kollisionsabfragen
 		GameObject o = Collision.checkCollision(diver, objects);
 		if ( o != null){
-			if (o.getType() == ObjectType.TRASH) {o.delete(); score++;
+			if (o.getType() == ObjectType.TRASH) {o.delete(); score+=o.getTrashScore();
 			}
 			if (o.getType() == ObjectType.SHARK) {
 				state.gameOver();
 			} else if (o.getType() == ObjectType.PLANT) {
 				diver.slow();
+			} else if (o.getType() == ObjectType.JELLYFISH){
+				diver.slow();
+				diver.breathe(10);
 			}
 		}
 		

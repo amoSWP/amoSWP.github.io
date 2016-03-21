@@ -19,6 +19,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
 
 
 
@@ -43,6 +46,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	private Stage stage;
 	private Joystick joystick;
 	
+	private Table table;
+	
 	private OrthographicCamera cam;
 	
 	
@@ -64,18 +69,20 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		font.setColor(Color.BLACK);
+		font.setColor(Color.RED);
 		
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
-		newObjects = new ObjectGenerator(8,8,8,8, 0.1f);
+		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
 		parallax = new Parallax(0.1f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick erzeugen
 		stage = new Stage();
 		joystick = new Joystick();
-		if (Android){stage.addActor(joystick.getJoystick());}		
+//		//stage.addActor(joystick.getCheckbox());
+//		//System.out.println(joystick.getCheckbox());
+		if (Android){stage.addActor(joystick.getJoystick());}
 		
 		//Kamera erzeugen
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
@@ -116,7 +123,6 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();
-
 		
 		//Spiellogik updaten und Welt bewegen
 		if(gameState.getState() == State.GAME){
@@ -134,6 +140,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 		//batch erstellen
 		batch.begin();
+			world.draw(batch,Android);
 			bb1.draw(batch);
 			bb2.draw(batch);
 			parallax.draw(batch);
