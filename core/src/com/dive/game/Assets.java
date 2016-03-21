@@ -32,6 +32,7 @@ public class Assets {
 	public Texture black;
 	public Texture restartButton;
 	public Texture restartButton_hover;
+	public Texture startButton;
 	public Texture air;
 	public Texture air_green;
 	public Texture air_orange;
@@ -83,10 +84,12 @@ public class Assets {
 		black			 = loadTexture("background/black.png");
 		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
 		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
+		startButton		 = loadTexture("Gamescreens/startbutton.png");
 		air				 = loadTexture("air/air.png");
 		air_green		 = loadTexture("air/green.png");
 		air_orange		 = loadTexture("air/orange.png");
 		air_red			 = loadTexture("air/red.png");
+		
 	}
 
 	public void dispose() {

@@ -4,19 +4,15 @@ public class GameState {
 	
 	private State state;
 	
-	public enum State {
-		START, MENU, GAME, ENDSCREEN, HIGHSCORES, PAUSE
-	}
-	
 	public GameState(){
-		state = State.START;
+		state = State.MENU;
 	}
 	
 	public GameState(int i){
 		switch(i){
-			case 0: state = State.START; break;
+			case 0: state = State.MENU; break;
 			case 1: state = State.GAME; break; 
-			default : state = State.START; break;
+			default : state = State.MENU; break;
 		}
 	}
 	
@@ -30,6 +26,10 @@ public class GameState {
 	
 	public void resume(){
 		state = State.GAME;
+	}
+	
+	public void returnMenu(){
+		state = State.MENU;
 	}
 	
 	public void toggle(){
