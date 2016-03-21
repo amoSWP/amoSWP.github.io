@@ -33,14 +33,7 @@ public class Assets {
 	public Texture black;
 	public Texture restartButton;
 	public Texture restartButton_hover;
-<<<<<<< HEAD
-	public Texture air;
-	public Texture air_green;
-	public Texture air_orange;
-	public Texture air_red;
-=======
->>>>>>> b72c994d093533fb9908fd674128274a524c931b
-	
+
 	//public TextureRegion backgroundRegion;
 	
 	/*
@@ -80,10 +73,6 @@ public class Assets {
 		plant			 = loadTexture("Hindernisse/green-plant.png");
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
-<<<<<<< HEAD
-=======
-		air				 = loadTexture("air.png");
->>>>>>> b72c994d093533fb9908fd674128274a524c931b
 		apple 			 = loadTexture("Garbage/apple.png");
 		paper			 = loadTexture("Garbage/garbage.png");
 		oil				 =  loadTexture("Garbage/oil.png");
@@ -92,9 +81,6 @@ public class Assets {
 		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
 		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
 		air				 = loadTexture("air/air.png");
-		air_green		 = loadTexture("air/green.png");
-		air_orange		 = loadTexture("air/orange.png");
-		air_red			 = loadTexture("air/red.png");
 	}
 
 	public void dispose() {

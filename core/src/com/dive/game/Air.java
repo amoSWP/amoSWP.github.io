@@ -2,10 +2,8 @@ package com.dive.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-<<<<<<< HEAD
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-=======
->>>>>>> b72c994d093533fb9908fd674128274a524c931b
+
 
 public class Air {
 
