@@ -2,6 +2,7 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.audio.Sound;
 
 // From https://github.com/libgdx/libgdx-demo-superjumper/blob/master/core/src/com/badlogicgames/superjumper/Assets.java
@@ -38,6 +39,7 @@ public class Assets {
 	public Texture air_green;
 	public Texture air_orange;
 	public Texture air_red;
+	public BitmapFont font;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -91,7 +93,7 @@ public class Assets {
 		air_green		 = loadTexture("air/green.png");
 		air_orange		 = loadTexture("air/orange.png");
 		air_red			 = loadTexture("air/red.png");
-		
+		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
 	}
 
 	public void dispose() {
@@ -99,6 +101,7 @@ public class Assets {
 		for(Texture t:tex){
 			t.dispose();
 		}
+		font.dispose();
 	}
 
 	//public static void playSound (Sound sound) {
