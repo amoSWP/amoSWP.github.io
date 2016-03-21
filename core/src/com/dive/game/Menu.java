@@ -3,37 +3,19 @@ package com.dive.game;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Menu implements InputProcessor {
 	
-	private Sprite start;
-	private int score;
+	private Sprite start, logo;
 	private GameState gameState;
 	private World world;
 	private BitmapFont font;
 	
-	
-	private Table table;
-	
-	private Drawable checkboxOff;
-	private Drawable checkboxOn;
-	
-	private Skin Checkboxskin;
-	private CheckBoxStyle checkboxstyle;
-	private CheckBox checkbox;
-	private BitmapFont touch;
-	private Color color;
 	
 	private Stage stage;
 	
@@ -43,24 +25,19 @@ public class Menu implements InputProcessor {
 		gameState = state;
 		this.world = world;
 		this.font = font;
-		score = 0;
 		
 		start = new Sprite(Assets.getInstance().startButton);
 		start.setBounds(500, 200, 920, 178);
 		
+		logo = new Sprite(Assets.getInstance().diver);
+		logo.setBounds(460, 400, 1000, 400);
+		
+		
 	}
-
 	
 	public void draw(Batch batch){
 		start.draw(batch);
-		font.draw(batch, Integer.toString(score),1000, 500);
-		
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-		System.out.println("set " + score);
-		System.out.println("this" + this.score);
+		logo.draw(batch);
 	}
 	
 	public Sprite getRestart(){
@@ -72,13 +49,6 @@ public class Menu implements InputProcessor {
 		start.setBounds(500, 200, 920, 178);
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub

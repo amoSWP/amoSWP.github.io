@@ -2,6 +2,7 @@ package com.dive.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,7 +20,8 @@ public class World {
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
 	private float distance;					//die zurückgelegte Strecke - legt Geschwindigkeit fest
 	private int score;						//Anzahl des gesammelten Mülls
-	private BitmapFont font;				//Schriftart zum schreiben
+	private BitmapFont font;
+	public Music music;
 
 	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
@@ -28,12 +30,16 @@ public class World {
 		speed = iniSpeed;
 		distance = 0;
 		score = 0;
-		
+
 		this.objectGen = objectGen;
 		this.state = state;
 		this.font = font;
-		
+
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
+		
+		music = Assets.getInstance().music;
+		music.play();
+		music.setLooping(true);
 		 
 	}
 	
@@ -41,7 +47,7 @@ public class World {
 	public void draw(Batch batch,boolean android){			//Alle Spielobjekte zeichnen
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
-		font.draw(batch, Float.toString(score),5, 30);
+		font.draw(batch, Integer.toString(score),0, 1080);
 	}
 	
 	public void move(float deltaTime, boolean Android,float x,float y){
@@ -50,7 +56,6 @@ public class World {
 			}
 		diver.move(deltaTime, Android);
 		diver.moveonjoystick(x, y);	//wird implementiert
-
 	}
 	
 
@@ -65,33 +70,43 @@ public class World {
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
 		objectGen.nextJellyfish(objects, deltaTime);
+		objectGen.nextGasBottle(objects, deltaTime);
 		
 
 		
 		
 		//Kollisionsabfragen
-		GameObject o = Collision.checkCollision(diver, objects);
-		if ( o != null){
-			if (o.getType() == ObjectType.TRASH) {o.delete(); score+=o.getTrashScore();
+		ArrayList<GameObject> collisions = Collision.checkCollision(diver, objects);
+		for(GameObject o: collisions){
+			if(o.getType() == ObjectType.TRASH){
+				o.delete();
+				score+=o.getTrashScore();
 			}
-			if (o.getType() == ObjectType.SHARK) {
+			if(o.getType() == ObjectType.SHARK){
 				state.gameOver();
-			} else if (o.getType() == ObjectType.PLANT) {
+				break;
+			}
+			else if(o.getType() == ObjectType.PLANT){
 				diver.slow();
-			} else if (o.getType() == ObjectType.JELLYFISH){
+			}
+			else if(o.getType() == ObjectType.JELLYFISH){
 				diver.slow();
 				diver.breathe(10);
 			}
+			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
+				diver.breathe(-4000);
+			}	
 		}
 		
+		
 		//Luft updaten
-		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
+		if(diver.getSprite().getY() + diver.getSprite().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
 		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		distance += 10*speed*deltaTime;
-//		System.out.println("score: " + score + ", speed:" + speed);
+
 		speed = (float) (0.001*distance+0.1);
 		speed = (float) Math.min(speed, 1);
 		
