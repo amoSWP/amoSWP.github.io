@@ -41,7 +41,7 @@ public class World {
 	public void draw(Batch batch,boolean android){			//Alle Spielobjekte zeichnen
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
-		font.draw(batch, Float.toString(score),5, 30);
+		font.draw(batch, Integer.toString(score),0, 1080);
 	}
 	
 	public void move(float deltaTime, boolean Android,float x,float y){
@@ -50,7 +50,6 @@ public class World {
 			}
 		diver.move(deltaTime, Android);
 		diver.moveonjoystick(x, y);	//wird implementiert
-
 	}
 	
 

@@ -73,7 +73,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
 		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
-		parallax = new Parallax(0.1f);
+		parallax = new Parallax(0.03f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick erzeugen
@@ -142,7 +142,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 			parallax.draw(batch);
 			bb1.draw(batch);
 			bb2.draw(batch);
-			if(gameState.getState() == State.GAME){
+			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
 				world.draw(batch,Android);
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
