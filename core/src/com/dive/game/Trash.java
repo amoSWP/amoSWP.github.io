@@ -11,6 +11,8 @@ public class Trash extends GameObject {
 	private Sprite[] sprites;
 	private Random rand;
 	private int sizeTrash;
+	private int[] listTrashScore;
+	private int trashScore;
 
 	// kreiere Müll und ihr wird das Bild, Größe des Bildes (width,height) und
 	// Koordinaten übergeben
@@ -18,11 +20,14 @@ public class Trash extends GameObject {
 		// initialize random variable, speed in relation to background
 		rand = new Random();
 		acc = new float[] { 0, 0 };
+		
 
 		// array with sprites to choose from set of random textures
 		sprites = new Sprite[] { new Sprite(Assets.getInstance().apple),
 				new Sprite(Assets.getInstance().paper) , new Sprite(Assets.getInstance().oil)};
-
+		// apple 7 pts, paper 5 pts, oil 15 pts
+		listTrashScore = new int[]{7,5,15};
+		
 		// set texture, size
 		setRandomTexture();
 
@@ -50,11 +55,16 @@ public class Trash extends GameObject {
 		// bewegt Feld hinter dem Müll für Kollisionserkennung
 		shape.setPosition(sprite.getX(), sprite.getY());
 	}
+	
+	public int getTrashScore(){
+		return trashScore;
+	}
 
 	//method to assign texture and size of sprite
 	public void setRandomTexture() {
 		int i = rand.nextInt(3);
 		sprite = sprites[i];
+		trashScore = listTrashScore[i];
 		sizeTrash = 40 + rand.nextInt(50);
 		if(i==2){
 			sprite.setSize(sizeTrash + 340, sizeTrash + 60);
