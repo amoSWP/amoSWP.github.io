@@ -1,11 +1,13 @@
 # dive
 Development of a diving/trash clean-up game based on libGDX for the SWP course 2016 at Freie Universität Berlin
 
-**Übersicht**
+[Übersicht](#uebersicht)
+    * [Am Anfang war das Bild](#firstWeek)
+    * [Explosion](#secondWeek)
 
-**Am Anfang war das Bild**
+## Am Anfang war das Bild
 
-Der Einstieg in die Spieleentwicklung begann mit Konzept-Kunst: Nach unseren Lieblingssportarten befragt, sollten sich die TeilnehmerInnen des Seminars überlegen, wie sich die Essenz des Sport in eine Sportsimulation wiedergeben könnte. JedeR TeilnehmerIn eine grobe Skizze eines Spielbildschirmes. Diese eher detailarmen Entwürfe wurde im Laufe der ersten Woche ausgebaut.
+Der Einstieg in die Spieleentwicklung begann mit Konzept-Kunst: Nach unseren Lieblingssportarten befragt, sollten sich die TeilnehmerInnen des Seminars überlegen, wie sich die Essenz des Sport in eine Sportsimulation wiedergeben könnte. JedeR TeilnehmerIn eine grobe Skizze eines Spielbildschirmes. Diese eher detailarmen Entwürfe wurde im Laufe der ersten Woche mittels im Internet gesammelter Bilder ausgebaut.
 
 ![alt tag](https://github.com/NummerEins/dive/blob/master/BearbeiterterTaucher.png)
 
