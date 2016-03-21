@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Menu implements InputProcessor {
 	
@@ -16,7 +17,10 @@ public class Menu implements InputProcessor {
 	private BitmapFont font;
 	
 	
-	public Menu(GameState state,World world, BitmapFont font){
+	private Stage stage;
+	
+	
+	public Menu(GameState state,World world, BitmapFont font, Stage stage){
 		
 		gameState = state;
 		this.world = world;
