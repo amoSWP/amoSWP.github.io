@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
 
+
 public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
 	public boolean Android;
@@ -42,6 +43,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 	private Stage stage;
 	private Joystick joystick;
+	
+	private Table table;
 	
 	private OrthographicCamera cam;
 	
@@ -74,7 +77,9 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
 		stage = new Stage();
 		joystick = new Joystick();
-		if (Android){stage.addActor(joystick.getJoystick());}		
+//		stage.addActor(joystick.getCheckbox());
+//		System.out.println(joystick.getCheckbox());
+		if (Android){stage.addActor(joystick.getJoystick());}
 		
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
