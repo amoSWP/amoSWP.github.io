@@ -32,7 +32,7 @@ public class World {
 		this.state = state;
 		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300 + this.speed);
 		parallax = new Parallax(speed);
 		
 
