@@ -85,7 +85,7 @@ public class World {
 		}
 		
 		//Luft updaten
-		if(diver.getShape().getY()+diver.getShape().getHeight()>=950){diver.recover();}
+		if(diver.getSprite().getY() + diver.getSprite().getHeight()>=950){diver.recover();}
 		diver.breathe(deltaTime);
 		if(!diver.hasAir()){state.gameOver();}
 		
