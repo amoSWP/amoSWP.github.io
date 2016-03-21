@@ -22,9 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
-
-
-
 public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
 	public boolean Android;
@@ -94,9 +91,6 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		processors = new ArrayList<InputProcessor>();
 		processors.add(processor);
 		processors.add(stage);
-		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(processor);
-		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(this);
 		
 	}

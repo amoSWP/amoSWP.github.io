@@ -48,7 +48,9 @@ i:background/topBackground.png:291130:image/png
 i:background/vignet.png:503981:image/png
 i:background/black.png:146:image/png
 i:background/mainBackground.png:955174:image/png
+t:Touch.fnt:5:application/unknown
 d:test:0:application/unknown
+t:test/font.fnt:0:application/unknown
 i:test/Rotatingearth.gif:366932:image/gif
 t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:770:application/unknown
 t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:2886:application/unknown
