@@ -68,8 +68,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
-		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
-		parallax = new Parallax(0.03f);
+		newObjects = new ObjectGenerator(8,8,8,8,8,3, 0.1f);
+		parallax = new Parallax(0.1f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick erzeugen

@@ -30,11 +30,11 @@ public class World {
 		speed = iniSpeed;
 		distance = 0;
 		score = 0;
-		
+
 		this.objectGen = objectGen;
 		this.state = state;
 		this.font = font;
-		
+
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
 		
 		music = Assets.getInstance().music;
@@ -70,6 +70,7 @@ public class World {
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
 		objectGen.nextJellyfish(objects, deltaTime);
+		objectGen.nextGasBottle(objects, deltaTime);
 		
 
 		
@@ -91,6 +92,9 @@ public class World {
 			else if(o.getType() == ObjectType.JELLYFISH){
 				diver.slow();
 				diver.breathe(10);
+			}
+			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
+				diver.breathe(-4000);
 			}	
 		}
 		
@@ -102,7 +106,7 @@ public class World {
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 		distance += 10*speed*deltaTime;
-//		System.out.println("score: " + score + ", speed:" + speed);
+
 		speed = (float) (0.001*distance+0.1);
 		speed = (float) Math.min(speed, 1);
 		
