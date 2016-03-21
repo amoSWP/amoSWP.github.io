@@ -64,13 +64,12 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		float w = Gdx.graphics.getWidth();
 		
 		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setColor(Color.RED);
+		font = Assets.getInstance().font;
 		
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
 		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
-		parallax = new Parallax(0.1f);
+		parallax = new Parallax(0.03f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick erzeugen
@@ -137,14 +136,11 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 		//batch erstellen
 		batch.begin();
-			world.draw(batch,Android);
+			parallax.draw(batch);
 			bb1.draw(batch);
 			bb2.draw(batch);
-			parallax.draw(batch);
-			if(gameState.getState() == State.GAME){
+			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
 				world.draw(batch,Android);
-				stage.act(Gdx.graphics.getDeltaTime());
-				stage.draw();
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
 				world.draw(batch,Android);
@@ -154,6 +150,12 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 				menu.draw(batch);
 			}
 		batch.end();
+		
+		
+		if(gameState.getState() == State.GAME){
+			stage.act(Gdx.graphics.getDeltaTime());
+			stage.draw();
+		}
 		
 		
 	}

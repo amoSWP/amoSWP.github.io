@@ -104,7 +104,7 @@ public class ObjectGenerator {
 
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextShark(ArrayList<GameObject> list, float deltaTime, float score) {
+	public void nextShark(ArrayList<GameObject> list, float deltaTime, float distance) {
 		countDownShark -= deltaTime;
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
@@ -114,8 +114,8 @@ public class ObjectGenerator {
 
 			listSharks[pointerShark].active = true;
 			pointerShark = (pointerShark + 1) % maxNoShark;
-			if(score<100){
-			countDownShark = maxCountDown + 2 * rand.nextFloat()-(float) 0.01*score;}
+			if(distance<100){
+			countDownShark = maxCountDown + 2 * rand.nextFloat()-(float) 0.01*distance;}
 			else{
 				countDownShark = 2*rand.nextFloat();
 			}
