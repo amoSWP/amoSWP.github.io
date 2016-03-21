@@ -2,6 +2,7 @@ package com.dive.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,7 +20,8 @@ public class World {
 	private GameState state;				//setzt den SPielzustand (zB um zu pausieren)
 	private float distance;					//die zurückgelegte Strecke - legt Geschwindigkeit fest
 	private int score;						//Anzahl des gesammelten Mülls
-	private BitmapFont font;				//Schriftart zum schreiben
+	private BitmapFont font;
+	public Music music;
 
 	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
@@ -34,7 +36,11 @@ public class World {
 		this.font = font;
 
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
-
+		
+		music = Assets.getInstance().music;
+		music.play();
+		music.setLooping(true);
+		 
 	}
 	
 	
@@ -111,6 +117,7 @@ public class World {
 		return speed;
 	}
 
+
 	public int getScore() {
 		return score;
 	}
@@ -121,6 +128,7 @@ public class World {
 		speed = 0.1f;
 		objects.clear();
 		diver.reset();
+		
 		objectGen.reset();
 
 	}

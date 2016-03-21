@@ -2,6 +2,7 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.audio.Sound;
 
@@ -41,6 +42,7 @@ public class Assets {
 	public Texture air_orange;
 	public Texture air_red;
 	public BitmapFont font;
+	public Music music;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -66,6 +68,11 @@ public class Assets {
 		// gefunden wurde, ersetze die folgende Zeile mit der nachfolgenden.
 		return new Texture(Gdx.files.internal(location));
 		//return new Texture(location);
+	}
+	
+	private static Music loadMusic (String location){
+		// Benutze um Musik zu laden
+		return Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
 
 	private void load () {
@@ -95,6 +102,7 @@ public class Assets {
 		air_green		 = loadTexture("air/green.png");
 		air_orange		 = loadTexture("air/orange.png");
 		air_red			 = loadTexture("air/red.png");
+		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
 	}
 
@@ -103,6 +111,7 @@ public class Assets {
 		for(Texture t:tex){
 			t.dispose();
 		}
+		music.dispose();
 		font.dispose();
 	}
 
