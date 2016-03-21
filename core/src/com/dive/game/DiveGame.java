@@ -18,16 +18,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 
 
 
-
-public class DiveGame extends ApplicationAdapter implements ApplicationListener, InputProcessor {
+public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
 	public boolean Android;
 	private SpriteBatch batch;
@@ -44,17 +39,16 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 	private EndscreenProcessor processor;
 
 	private Stage stage;
-	private Touchpad joystick;
-	private Drawable knob;
-	private Drawable background;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
+	private Joystick joystick;
 	
 	private OrthographicCamera cam;
-
+	
+	
+	//Konstruktor für Android
 	public DiveGame(boolean Android) {
 		this.Android = Android;
 	}
+	//Konstruktor für alles andere :P
 	public DiveGame() {
 		this.Android = false;
 	}
@@ -67,7 +61,6 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 		float w = Gdx.graphics.getWidth();
 		
 		batch = new SpriteBatch();
-		stage = new Stage();
 		
 		font = new BitmapFont();
 		font.setColor(Color.RED);
@@ -77,19 +70,9 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 		world = new World(newObjects,0.1f,gameState, font);
 		pauseCD = 0;
 		
-		skin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
-		skin.add("background",Assets.getInstance().joystickunder);
-    		skin.add("knob",Assets.getInstance().joystickup);
-		background = skin.getDrawable("background");
-    		knob = skin.getDrawable("knob");
-    		joystickstyle = new TouchpadStyle(background,knob);		//Joystickstyle wird erstellt bekommt seine Drawables
-    	
-		knob.setMinWidth(Gdx.graphics.getWidth()/8);						//Größe des Joysticks
-		knob.setMinHeight(Gdx.graphics.getWidth()/8);
-		
-		joystick = new Touchpad(5,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		joystick.setBounds(3*Gdx.graphics.getWidth()/4,  0 , Gdx.graphics.getWidth()/4, Gdx.graphics.getWidth()/4);//Größe und Platzierung des Joystickpads
-		if (Android){stage.addActor(joystick);}		
+		stage = new Stage();
+		joystick = new Joystick();
+		if (Android){stage.addActor(joystick.getJoystick());}		
 		
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
@@ -97,11 +80,10 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
         
 		bb1 = new Sprite(Assets.getInstance().black);
 		bb2 = new Sprite(Assets.getInstance().black);
+		
         
 		endscreen = new EndScreen(0);
 		processor = new EndscreenProcessor(world, endscreen, gameState);
-//		Gdx.input.setInputProcessor(stage);
-		
 		processors = new ArrayList<InputProcessor>();
 		processors.add(processor);
 		processors.add(stage);
@@ -130,7 +112,7 @@ public class DiveGame extends ApplicationAdapter implements ApplicationListener,
 		//Spiellogik updaten und Welt bewegen
 		if(gameState.isRunning()){
 			world.update(deltaTime);
-			world.move(deltaTime, Android, joystick.getKnobPercentX(),joystick.getKnobPercentY());
+			world.move(deltaTime, Android, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
 		}
 		
 
