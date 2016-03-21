@@ -23,7 +23,7 @@ public class Diver {
 	private Stage stage;
 	private Air air;
 	
-	public Diver(Texture texture,int width, int height, int startY, float maxSpeed){
+	public Diver(Texture texture,int width, int height,int maxSpeed){
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		
@@ -32,8 +32,9 @@ public class Diver {
 		decay = 0.9f;
 		
 		sprite = new Sprite(texture);
-		sprite.setY(startY);
 		sprite.setSize(width, height);
+		sprite.setPosition(0,960-sprite.getHeight());
+		
 		
 		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 		
@@ -134,8 +135,14 @@ public class Diver {
 		air.setBreath(-2000);
 	}
 	
+	public void setBreath(int breath){
+		air.setBreath(breath);
+	}
+	
 	public void reset(){
 		air.reset();
+		sprite.setPosition(0,960-sprite.getHeight());
+		shape.setPosition(0,960-sprite.getHeight());
 	}
 
 }

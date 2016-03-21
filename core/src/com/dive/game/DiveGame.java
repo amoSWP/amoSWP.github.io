@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,15 +32,16 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
+	private Parallax parallax;
 	private GameState gameState;
-	private float deltaTime, pauseCD;
+	private float deltaTime;
 	private BitmapFont font;
 	private ArrayList<InputProcessor> processors;
 
 	private float widthScale; //breite der black bars 
 	private Sprite bb1, bb2; //blackBars für horizontales 16:9
 	private EndScreen endscreen;
-	private EndscreenProcessor processor;
+	private Menu menu;
 
 	private Stage stage;
 	private Joystick joystick;
@@ -66,34 +68,38 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		float w = Gdx.graphics.getWidth();
 		
 		batch = new SpriteBatch();
-		
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		
-		gameState = new GameState(1);
+		//Gamelogik der Welt erzeugen 
+		gameState = new GameState(0);
 		newObjects = new ObjectGenerator(8,8,8,8,8, 0.1f);
+		parallax = new Parallax(0.1f);
 		world = new World(newObjects,0.1f,gameState, font);
-		pauseCD = 0;
 		
+		//Joystick erzeugen
 		stage = new Stage();
 		joystick = new Joystick();
-//		stage.addActor(joystick.getCheckbox());
-//		System.out.println(joystick.getCheckbox());
+//		//stage.addActor(joystick.getCheckbox());
+//		//System.out.println(joystick.getCheckbox());
 		if (Android){stage.addActor(joystick.getJoystick());}
 		
+		//Kamera erzeugen
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
 		cam.update();
         
+		//schwarze Balken für 16:9 (nur vertikale Streifen)
 		bb1 = new Sprite(Assets.getInstance().black);
 		bb2 = new Sprite(Assets.getInstance().black);
 		
-        
-		endscreen = new EndScreen(0);
-		processor = new EndscreenProcessor(world, endscreen, gameState);
+        // Inputverwaltung setzen
+		endscreen = new EndScreen(gameState, world, font);
+		menu = new Menu(gameState, world, font);
 		processors = new ArrayList<InputProcessor>();
-		processors.add(processor);
+		processors.add(endscreen);
 		processors.add(stage);
+		processors.add(menu);
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -109,39 +115,50 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	@Override
 	public void render() {
 		
+		// kamera updaten
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		
+		//schwarze grundlage zeichnen, deltaTime auslesen
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Spiellogik updaten und Welt bewegen
-		if(gameState.isRunning()){
+		if(gameState.getState() == State.GAME){
 			world.update(deltaTime);
 			world.move(deltaTime, Android, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
+			parallax.setSpeed(world.getSpeed());
+			parallax.move(deltaTime);
 		}
-		
-
-		//Spiel pausieren
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && pauseCD <= 0){
-			gameState.toggle();pauseCD=0.1f;
+		else if(gameState.getState() == State.ENDSCREEN){
+			endscreen.setScore(world.getScore());
 		}
-		pauseCD-=deltaTime;
-		
+		else if(gameState.getState() == State.MENU){
+			parallax.move(deltaTime);
+		}	
 
 		//batch erstellen
 		batch.begin();
 			world.draw(batch,Android);
 			bb1.draw(batch);
 			bb2.draw(batch);
-			if(gameState.isEndscreen()){
-				endscreen.setScore(2);
+			parallax.draw(batch);
+			if(gameState.getState() == State.GAME){
+				world.draw(batch,Android);
+				stage.act(Gdx.graphics.getDeltaTime());
+				stage.draw();
+			}
+			else if(gameState.getState() == State.ENDSCREEN){
+				world.draw(batch,Android);
 				endscreen.draw(batch);
 			}
+			else if(gameState.getState() == State.MENU){
+				menu.draw(batch);
+			}
 		batch.end();
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+		
+		
 	}
 
 	@Override
@@ -173,6 +190,10 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode == Keys.SPACE){
+			gameState.toggle();
+			return true;
+		}
 		for(InputProcessor p: processors){
 			p.keyDown(keycode);
 		}
