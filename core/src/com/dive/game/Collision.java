@@ -9,7 +9,10 @@ public class Collision {
 	public static GameObject checkCollision(Diver diver, ArrayList<GameObject> objects ){
 		for (GameObject o: objects){
 			// falls eine Kollision vorliegt wird die Schleife abgebrochen und die Art zurückgegeben
-			if(Intersector.overlaps(o.getShape(), diver.getShape())){
+			if(Intersector.overlaps(o.getShape(), diver.getShape()[0])){
+				return o;
+			}
+			if(Intersector.overlaps(o.getShape(), diver.getShape()[1])){
 				return o;
 			}
 		}

@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 public class Diver {
 	
 	public float[] v;
-	public float maxSpeed, maxSpeedOrigin, decay;
-	private Rectangle shape;
+	public float maxSpeed, maxSpeedOrigin, decay, y1,h1,x2,y2,w2,h2;
+	private Rectangle[] shape;
 	private Sprite sprite;
 	private Touchpad joystick;
 	private TouchpadStyle joystickstyle;
@@ -34,9 +34,18 @@ public class Diver {
 		sprite = new Sprite(texture);
 		sprite.setSize(width, height);
 		sprite.setPosition(0,960-sprite.getHeight());
-		
-		
-		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(), sprite.getHeight());
+		// set shapes for collision
+		shape = new Rectangle[2];
+		// calculate size for bigger rectangle
+		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
+		h1 = sprite.getHeight()*0.62f;
+		shape[0] = new Rectangle(sprite.getX(), y1, sprite.getWidth(), h1);
+		// calculate size for head
+		x2 = sprite.getX() + sprite.getWidth()*0.71f;
+		y2 = sprite.getY() + sprite.getHeight()*0.82f;
+		w2 = sprite.getWidth()*0.18f;
+		h2 = sprite.getHeight()*0.17f;
+		shape[1] = new Rectangle(x2, y2, w2, h2);
 		
 	}
 	
@@ -45,7 +54,7 @@ public class Diver {
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]-=maxSpeed;}		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed;}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed*2;}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))	{v[0]+=maxSpeed;}
 		
 		//Bewegung normieren (durch Maximalgeschwindigkeit begrenzen)
@@ -71,7 +80,11 @@ public class Diver {
 		
 		//Diver bewegen
 		sprite.translate(xTranslate, yTranslate);
-		shape.setPosition(sprite.getX(), sprite.getY());
+		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
+		x2 = sprite.getX() + sprite.getWidth()*0.71f;
+		y2 = sprite.getY() + sprite.getHeight()*0.82f;
+		shape[0].setPosition(sprite.getX(), y1);
+		shape[1].setPosition(x2, y2);
 		
 		v[0]*=decay;
 		v[1]*=decay;
@@ -79,7 +92,11 @@ public class Diver {
 	}
 
 	public void moveonjoystick(float x,float y){
+		if( x < 0){
+			v[0] += 2*x*maxSpeed;
+		}else{
 		    v[0] += x*maxSpeed;
+		}
 		    v[1] += y*maxSpeed;
 	}
 
@@ -88,8 +105,12 @@ public class Diver {
 		air.draw(batch);
 	}
 
-	public Rectangle getShape(){
+	public Rectangle[] getShape(){
 		return this.shape;
+	}
+	
+	public Sprite getSprite(){
+		return this.sprite;
 	}
 	
 	private void norm(){
@@ -103,7 +124,6 @@ public class Diver {
 	private float speed(){
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 	}
-
 
 	public void refresh() {
 		maxSpeed = maxSpeedOrigin;
@@ -138,7 +158,11 @@ public class Diver {
 	public void reset(){
 		air.reset();
 		sprite.setPosition(0,960-sprite.getHeight());
-		shape.setPosition(0,960-sprite.getHeight());
+		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
+		x2 = sprite.getX() + sprite.getWidth()*0.71f;
+		y2 = sprite.getY() + sprite.getHeight()*0.82f;
+		shape[0].setPosition(sprite.getX(), y1);
+		shape[1].setPosition(x2, y2);
 	}
 
 }
