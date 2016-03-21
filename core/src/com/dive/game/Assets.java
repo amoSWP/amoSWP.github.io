@@ -44,6 +44,7 @@ public class Assets {
 	public Texture air_red;
 	public BitmapFont font;
 	public Music music;
+	public Sound bite;
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -75,6 +76,10 @@ public class Assets {
 		// Benutze um Musik zu laden
 		return Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
+	
+	private static Sound loadSound (String location){
+		return Gdx.audio.newSound(Gdx.files.internal(location));
+	}
 
 	private void load () {
 		
@@ -105,6 +110,8 @@ public class Assets {
 		air_red			 = loadTexture("air/red.png");
 		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
+		bite 			 = loadSound("sounds/Bite.wav");
+		
 	}
 
 	public void dispose() {
@@ -113,6 +120,7 @@ public class Assets {
 			t.dispose();
 		}
 		music.dispose();
+		bite.dispose();
 		font.dispose();
 	}
 
