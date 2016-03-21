@@ -41,13 +41,15 @@ public class GameObject {
 	
 	public void resize(float scale){
 		
-		
 	}
 	
 	public void delete(){
 		sprite.setX(-sprite.getWidth()-1);
 	}
 	
+	public int getTrashScore(){
+		return 0;
+	}
 	
 	
 	public void moveObject(float deltaTime, float gameSpeed){

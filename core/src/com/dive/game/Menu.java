@@ -8,51 +8,41 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class EndScreen implements InputProcessor {
+public class Menu implements InputProcessor {
 	
-	private Sprite restart, menu;
-	private int score;
+	private Sprite start, logo;
 	private GameState gameState;
 	private World world;
 	private BitmapFont font;
 	
 	
-	public EndScreen(GameState state, World world, BitmapFont font){
+	public Menu(GameState state,World world, BitmapFont font){
 		
 		gameState = state;
 		this.world = world;
 		this.font = font;
-		score = 0;
 		
-		restart = new Sprite(Assets.getInstance().restartButton);
-		restart.setBounds(560, 200, 800, 155);
+		start = new Sprite(Assets.getInstance().startButton);
+		start.setBounds(500, 200, 920, 178);
 		
-		menu = new Sprite(Assets.getInstance().menuButton);
-		menu.setBounds(560, 405, 800, 155);
+		logo = new Sprite(Assets.getInstance().diver);
+		logo.setBounds(460, 400, 1000, 400);
 		
 		
 	}
 	
 	public void draw(Batch batch){
-		restart.draw(batch);
-		menu.draw(batch);
-		font.draw(batch, Integer.toString(score),1000, 800);
-		
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-		System.out.println("set " + score);
-		System.out.println("this" + this.score);
+		start.draw(batch);
+		logo.draw(batch);
 	}
 	
 	public Sprite getRestart(){
-		return restart;
+		return start;
 	}
 	
 	public void setSprite(Texture tex){
-		restart = new Sprite(tex);
-		restart.setBounds(500, 200, 920, 178);
+		start = new Sprite(tex);
+		start.setBounds(500, 200, 920, 178);
 	}
 
 	@Override
@@ -76,21 +66,15 @@ public class EndScreen implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		if(gameState.getState() != State.ENDSCREEN){return false;}
+		if(gameState.getState() != State.MENU){return false;}
 		
 		screenY = Gdx.graphics.getHeight()-screenY;
 		float[] p = Coords.getCameraCoords(screenX, screenY);
 		
-		if(button == Buttons.LEFT){
-			if(restart.getBoundingRectangle().contains(p[0],p[1])){
-				gameState.resume();
-				world.reset();
-				return true;
-			}
-			else if(menu.getBoundingRectangle().contains(p[0],p[1])){
-				gameState.returnMenu();
-				return true;
-			}
+		if(button == Buttons.LEFT && start.getBoundingRectangle().contains(p[0],p[1])){
+			gameState.resume();
+			world.reset();
+			return true;
 		}
 		
 		return false;
@@ -110,20 +94,19 @@ public class EndScreen implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		
-		if(gameState.getState() != State.ENDSCREEN){return false;}
-		
-		screenY = Gdx.graphics.getHeight()-screenY;
-		float[] p = Coords.getCameraCoords(screenX, screenY);
-		
-		if(restart.getBoundingRectangle().contains(p[0],p[1])){
-			restart.setTexture(Assets.getInstance().restartButton_hover);
-		}
-		else{
-			restart.setTexture(Assets.getInstance().restartButton);
-		}
-			
-		return true;
+//		screenY = Gdx.graphics.getHeight()-screenY;
+//		float[] p = Coords.getCameraCoords(screenX, screenY);
+//		
+//		if(gameState.getState() == State.ENDSCREEN){
+//			if(restart.getBoundingRectangle().contains(p[0],p[1])){
+//				restart.setTexture(Assets.getInstance().restartButton_hover);
+//			}
+//			else{
+//				restart.setTexture(Assets.getInstance().restartButton);
+//			}
+//			return true;
+//		}
+		return false;
 	}
 
 	@Override
