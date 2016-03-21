@@ -71,7 +71,7 @@ public class World {
 		//Kollisionsabfragen
 		ArrayList<GameObject> collisions = Collision.checkCollision(diver, objects);
 		for(GameObject o: collisions){
-			if(o.getType() == ObjectType.TRASH){
+			if(o.getType() == ObjectType.TRASH && !o.isFading()){
 				o.delete();
 				score+=o.getTrashScore();
 			}
