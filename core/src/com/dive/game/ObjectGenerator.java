@@ -245,6 +245,8 @@ public class ObjectGenerator {
 				list.remove(b);
 				b.reset();
 				b.getSprite().setX(1920);
+				b.getSprite().setY(920);
+				System.out.println(b.sprite.getY());
 			}
 		}
 
