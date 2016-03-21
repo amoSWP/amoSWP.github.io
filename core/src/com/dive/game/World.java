@@ -3,6 +3,7 @@ package com.dive.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
@@ -17,6 +18,7 @@ public class World {
 	private int score;						//Anzahl des gesammelten Mülls
 	private BitmapFont font;
 	public Music music;
+	private Sound bite;
 
 	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
@@ -35,6 +37,8 @@ public class World {
 		music = Assets.getInstance().music;
 		music.play();
 		music.setLooping(true);
+		
+		bite = Assets.getInstance().bite;
 		 
 	}
 	
@@ -73,11 +77,12 @@ public class World {
 		//Kollisionsabfragen
 		ArrayList<GameObject> collisions = Collision.checkCollision(diver, objects);
 		for(GameObject o: collisions){
-			if(o.getType() == ObjectType.TRASH){
+			if(o.getType() == ObjectType.TRASH && !o.isFading()){
 				o.delete();
 				score+=o.getTrashScore();
 			}
 			if(o.getType() == ObjectType.SHARK){
+				bite.play();
 				state.gameOver();
 				break;
 			}

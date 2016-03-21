@@ -42,8 +42,6 @@ public class EndScreen implements InputProcessor {
 
 	public void setScore(int score) {
 		this.score = score;
-		System.out.println("set " + score);
-		System.out.println("this" + this.score);
 	}
 	
 	public Sprite getRestart(){
