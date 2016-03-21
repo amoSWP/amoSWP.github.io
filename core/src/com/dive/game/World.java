@@ -41,7 +41,7 @@ public class World {
 	public void draw(Batch batch,boolean android){			//Alle Spielobjekte zeichnen
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
-		font.draw(batch, Float.toString(score),5, 30);
+		font.draw(batch, Integer.toString(score),0, 1080);
 	}
 	
 	public void move(float deltaTime, boolean Android,float x,float y){
@@ -50,7 +50,6 @@ public class World {
 			}
 		diver.move(deltaTime, Android);
 		diver.moveonjoystick(x, y);	//wird implementiert
-
 	}
 	
 
@@ -70,19 +69,25 @@ public class World {
 		
 		
 		//Kollisionsabfragen
-		GameObject o = Collision.checkCollision(diver, objects);
-		if ( o != null){
-			if (o.getType() == ObjectType.TRASH) {o.delete(); score+=o.getTrashScore();
+		ArrayList<GameObject> collisions = Collision.checkCollision(diver, objects);
+		for(GameObject o: collisions){
+			if(o.getType() == ObjectType.TRASH){
+				o.delete();
+				score+=o.getTrashScore();
 			}
-			if (o.getType() == ObjectType.SHARK) {
+			if(o.getType() == ObjectType.SHARK){
 				state.gameOver();
-			} else if (o.getType() == ObjectType.PLANT) {
+				break;
+			}
+			else if(o.getType() == ObjectType.PLANT){
 				diver.slow();
-			} else if (o.getType() == ObjectType.JELLYFISH){
+			}
+			else if(o.getType() == ObjectType.JELLYFISH){
 				diver.slow();
 				diver.breathe(10);
-			}
+			}	
 		}
+		
 		
 		//Luft updaten
 		if(diver.getSprite().getY() + diver.getSprite().getHeight()>=950){diver.recover();}
