@@ -17,6 +17,7 @@ public class ObjectGenerator {
 	private float countDownShark;
 	private float countDownPlant;
 	private float countDownBoat;
+	
 
 	private float maxCountDown;
 	private int pointerShark;
@@ -33,12 +34,8 @@ public class ObjectGenerator {
 	// zufällige Schwimmhöhe von Haien mit festem min/max Wert, Pflanzen haben
 	// feste y
 	// Koordinate
-	private int minHeightWater = 80;
-	private int maxHeightWater = 880;
-
-	// initialisieren von Variablen die Hai/Pflanze neue Größe zuordnet
-	private int newSizeShark;
-	private int newSizePlant;
+	private int minHeightWater = 100;
+	private int maxHeightWater = 860;
 
 	private Random rand;
 
@@ -50,16 +47,14 @@ public class ObjectGenerator {
 		pointerPlant = 0;
 		pointerBoat = 0;
 
-		countDownTrash = countDownShark = countDownPlant = maxCountDown = countDownBoat = 1.5f;
+		countDownShark = countDownPlant = maxCountDown = countDownBoat = 1f;
+		countDownTrash = 1.5f;
 		rand = new Random();
 
 		this.maxNoTrash = maxNoTrash;
 		this.maxNoShark = maxNoShark;
 		this.maxNoPlant = maxNoPlant;
 		this.maxNoBoat = maxNoBoat;
-
-		newSizeShark = 70 + rand.nextInt(70);
-		newSizePlant = 50 + rand.nextInt(50);
 
 		listTrash = new Trash[maxNoTrash];
 		listSharks = new Shark[maxNoShark];
@@ -96,7 +91,7 @@ public class ObjectGenerator {
 
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextShark(ArrayList<GameObject> list, float deltaTime) {
+	public void nextShark(ArrayList<GameObject> list, float deltaTime, float score) {
 		countDownShark -= deltaTime;
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
@@ -106,7 +101,11 @@ public class ObjectGenerator {
 
 			listSharks[pointerShark].active = true;
 			pointerShark = (pointerShark + 1) % maxNoShark;
-			countDownShark = maxCountDown + 2 * rand.nextFloat();
+			if(score<100){
+			countDownShark = maxCountDown + 2 * rand.nextFloat()-(float) 0.01*score;}
+			else{
+				countDownShark = 2*rand.nextFloat();
+			}
 		}
 
 		// wenn Objekt Bildschirmrand erreicht wird es aus Liste gestrichen, auf
@@ -141,6 +140,7 @@ public class ObjectGenerator {
 			listPlants[pointerPlant].active = true;
 			pointerPlant = (pointerPlant + 1) % maxNoPlant;
 			countDownPlant = maxCountDown + 2 * rand.nextFloat();
+			
 		}
 
 		for (int i = 0; i < maxNoPlant; i++) {

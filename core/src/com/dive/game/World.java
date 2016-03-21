@@ -34,8 +34,6 @@ public class World {
 		
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
 		parallax = new Parallax(speed);
-		
-
 		 
 	}
 	
@@ -66,15 +64,22 @@ public class World {
 		
 		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
-		objectGen.nextShark(objects, deltaTime);
+		objectGen.nextShark(objects, deltaTime, score);
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
+		
+		//Score verwalten und Spielgeschwindigkeit anpassen
+				score += 10*speed*deltaTime;
+				// System.out.println("score: " + score + ", speed:" + speed);
+				speed = (float) (0.001*score+0.1);
+				speed = (float) Math.min(speed, 1);
+				parallax.setSpeed(speed);
 		
 		
 		//Kollisionsabfragen
 		GameObject o = Collision.checkCollision(diver, objects);
 		if ( o != null){
-			if (o.getType() == ObjectType.TRASH) {o.delete(); diver.breathe(-1000);
+			if (o.getType() == ObjectType.TRASH) {o.delete(); updateScore(o.getTrashScore());
 			}
 			if (o.getType() == ObjectType.SHARK) {
 				state.gameOver();
@@ -88,13 +93,11 @@ public class World {
 		diver.breathe(deltaTime);
 		if(!diver.hasAir()){state.gameOver();}
 		
-		//Score verwalten und Spielgeschwindigkeit anpassen
-		score += 10*speed*deltaTime;
-//		System.out.println("score: " + score + ", speed:" + speed);
-		speed = (float) (0.001*score+0.1);
-		speed = (float) Math.min(speed, 1);
-		parallax.setSpeed(speed);
 		
+	}
+	
+	public void updateScore(int trashScore){
+		score = score + trashScore;
 	}
 
 
