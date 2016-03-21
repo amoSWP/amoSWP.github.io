@@ -44,7 +44,7 @@ public class Diver {
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))		{v[1]-=maxSpeed;}		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed;}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))		{v[0]-=maxSpeed*2;}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))	{v[0]+=maxSpeed;}
 		
 		//Bewegung normieren (durch Maximalgeschwindigkeit begrenzen)
@@ -78,7 +78,11 @@ public class Diver {
 	}
 
 	public void moveonjoystick(float x,float y){
+		if( x < 0){
+			v[0] += 2*x*maxSpeed;
+		}else{
 		    v[0] += x*maxSpeed;
+		}
 		    v[1] += y*maxSpeed;
 	}
 
