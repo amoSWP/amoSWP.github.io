@@ -32,7 +32,7 @@ public class World {
 		this.state = state;
 		this.font = font;
 		
-		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 100, 300 + this.speed);
 		parallax = new Parallax(speed);
 		 
 	}
@@ -67,6 +67,7 @@ public class World {
 		objectGen.nextShark(objects, deltaTime, score);
 		objectGen.nextTrash(objects, deltaTime);
 		objectGen.nextBoat(objects, deltaTime);
+		objectGen.nextJellyfish(objects, deltaTime);
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
 				score += 10*speed*deltaTime;
@@ -85,6 +86,9 @@ public class World {
 				state.gameOver();
 			} else if (o.getType() == ObjectType.PLANT) {
 				diver.slow();
+			} else if (o.getType() == ObjectType.JELLYFISH){
+				diver.slow();
+				diver.breathe(10);
 			}
 		}
 		

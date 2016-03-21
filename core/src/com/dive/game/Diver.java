@@ -23,7 +23,7 @@ public class Diver {
 	private Stage stage;
 	private Air air;
 	
-	public Diver(Texture texture,int width, int height, int startY, int maxSpeed){
+	public Diver(Texture texture,int width, int height, int startY, float maxSpeed){
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		
