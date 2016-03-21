@@ -3,10 +3,17 @@ package com.dive.game;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Menu implements InputProcessor {
 	
@@ -17,7 +24,21 @@ public class Menu implements InputProcessor {
 	private BitmapFont font;
 	
 	
-	public Menu(GameState state,World world, BitmapFont font){
+	private Table table;
+	
+	private Drawable checkboxOff;
+	private Drawable checkboxOn;
+	
+	private Skin Checkboxskin;
+	private CheckBoxStyle checkboxstyle;
+	private CheckBox checkbox;
+	private BitmapFont touch;
+	private Color color;
+	
+	private Stage stage;
+	
+	
+	public Menu(GameState state,World world, BitmapFont font, Stage stage){
 		
 		gameState = state;
 		this.world = world;
@@ -27,8 +48,8 @@ public class Menu implements InputProcessor {
 		start = new Sprite(Assets.getInstance().startButton);
 		start.setBounds(500, 200, 920, 178);
 		
-		
 	}
+
 	
 	public void draw(Batch batch){
 		start.draw(batch);
@@ -51,6 +72,13 @@ public class Menu implements InputProcessor {
 		start.setBounds(500, 200, 920, 178);
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
