@@ -9,7 +9,11 @@ i:spritesheet/spritesheet.png:23917:image/png
 i:spritesheet/spriteAnimation.png:63643:image/png
 d:Hindernisse:0:application/unknown
 i:Hindernisse/myshark.png:46850:image/png
+<<<<<<< HEAD
 i:Hindernisse/ship.png:372350:image/png
+=======
+i:Hindernisse/ship.png:369546:image/png
+>>>>>>> upstream/master
 i:Hindernisse/qualle.png:8420:image/png
 i:Hindernisse/green-plant.png:257902:image/png
 i:Hindernisse/Stone.png:25048:image/png
@@ -39,7 +43,14 @@ i:background/black.png:146:image/png
 i:background/mainBackground.png:955174:image/png
 d:sounds:0:application/unknown
 a:sounds/Bite.wav:15418:audio/x-wav
+<<<<<<< HEAD
 a:sounds/backgroundmusic.mp3:1441540:application/unknown
+=======
+a:sounds/Backgroundmusic.mp3:1441540:application/unknown
+a:sounds/Boathit.wav:535424:audio/x-wav
+a:sounds/Gasbottlehit.wav:392836:audio/x-wav
+a:sounds/Startup.wav:372628:audio/x-wav
+>>>>>>> upstream/master
 d:fonts:0:application/unknown
 i:fonts/StS_0.png:15552:image/png
 t:fonts/StS.fnt:7517:application/unknown

@@ -2,7 +2,6 @@ package com.dive.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Parallax {
 	
@@ -36,6 +35,10 @@ public class Parallax {
 		top.move(deltatime);
 		middle.move(deltatime);
 		bottom.move(deltatime);
+	}
+	
+	public void setIdle(){
+		setSpeed(0.03f);
 	}
 	
 }

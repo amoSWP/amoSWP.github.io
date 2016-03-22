@@ -1,6 +1,5 @@
 package com.dive.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -45,7 +44,7 @@ public class Joystick{
 		this.knob.setMinHeight(125);
 		
 		this.joystick = new Touchpad(5,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		this.joystick.setBounds(0,  0 ,180, 180);//Größe und Platzierung des Joystickpads
+		this.joystick.setBounds(54,  5 ,180, 180);//Größe und Platzierung des Joystickpads
     	
 		
     	this.Checkboxskin = new Skin();	//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
@@ -60,7 +59,7 @@ public class Joystick{
     	
     	this.checkboxstyle= new CheckBoxStyle(this.checkboxOn,this.checkboxOff,this.touch,this.color);
 		this.checkbox = new CheckBox("a",this.checkboxstyle);
-		this.checkbox.setBounds(9*Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()-Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10);
+		this.checkbox.setBounds(1850, 900, 100, 100);
 	
 
 	
