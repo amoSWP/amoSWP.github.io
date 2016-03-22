@@ -11,6 +11,8 @@ public class Boat extends GameObject{
 	
 	private Random rand;
 	private int sizeBoat, ycord;
+	private Sprite[] sprites;
+
 
 	// kreiere Müll und ihr wird das Bild, Größe des Bildes (width,height) und
 	// Koordinaten übergeben
@@ -20,36 +22,45 @@ public class Boat extends GameObject{
 		// initialize random variable, speed in relation to background
 		rand = new Random();
 		acc = new float[] { 0, 0 };
-		sprite = new Sprite(Assets.getInstance().boat);
+		
+		sprites = new Sprite []{ new Sprite(Assets.getInstance().boat), new Sprite(Assets.getInstance().cargoShip)};
+		
+		sprite = sprites[0];
+		// set texture, size
+		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(),
+				sprite.getHeight());
 
+		reset();
 		// set position to the right of the screen at arbitrary height
 		sprite.setPosition(xcord, ycord);
 		
 		// rectangle behind sprite to detect collisions
-		shape = new Rectangle(0f, sprite.getY(), sprite.getWidth(),
-				sprite.getHeight());
 		
-		// set texture, size
-		reset();
+		
 		
 		//assign other attributes
 		active = false;
-		type = ObjectType.SHARK;
+		type = ObjectType.BOAT;
 	}
 
-//	public void moveObject(float deltaTime,
-//			float gameSpeed) {
-//		
-//		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), 0);
-//		
-//		// bewegt Feld hinter dem Hai für Kollisionserkennung
-//		shape.setPosition(sprite.getX(), sprite.getY());
-//	}
+	public void moveObject(float deltaTime,
+			float gameSpeed) {
+		
+		sprite.translate(-1920 * deltaTime * (gameSpeed + acc[0]), 0);
+		
+		// bewegt Feld hinter dem Boot für Kollisionserkennung
+		shape.setPosition(sprite.getX(), sprite.getY());
+	}
 
 	//method to assign texture and size of sprite
 	public void reset(){
+		int i = rand.nextInt(2);
+		sprite = sprites[i];
 		sizeBoat = 60 + rand.nextInt(40);
-		sprite.setSize(sizeBoat+120, sizeBoat + 60);
+		if(i == 1){
+			sprite.setSize(sizeBoat + 400, sizeBoat + 60);
+		}
+		else{sprite.setSize(sizeBoat+140, sizeBoat + 100);}
 		shape.setSize(sprite.getWidth(), sprite.getHeight());
 	}
 }

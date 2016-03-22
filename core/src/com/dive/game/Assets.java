@@ -27,12 +27,15 @@ public class Assets {
 	public Texture shark;
 	public Texture jellyfish;
 	public Texture plant;
+	public Texture rock;
 	public Texture joystickup;
 	public Texture joystickunder;
 	public Texture apple;
 	public Texture paper;
 	public Texture oil;
 	public Texture boat;
+	public Texture cargoShip;
+	public Texture gasBottle;
 	public Texture black;
 	public Texture restartButton;
 	public Texture restartButton_hover;
@@ -44,6 +47,8 @@ public class Assets {
 	public Texture air_red;
 	public BitmapFont font;
 	public Music music;
+	public Sound bite;
+
 	
 	//public TextureRegion backgroundRegion;
 	
@@ -75,6 +80,10 @@ public class Assets {
 		// Benutze um Musik zu laden
 		return Gdx.audio.newMusic(Gdx.files.internal(location));
 	}
+	
+	private static Sound loadSound (String location){
+		return Gdx.audio.newSound(Gdx.files.internal(location));
+	}
 
 	private void load () {
 		
@@ -88,12 +97,15 @@ public class Assets {
 		shark			 = loadTexture("Hindernisse/myshark.png");
 		jellyfish 		 = loadTexture("Hindernisse/qualle.png");
 		plant			 = loadTexture("Hindernisse/green-plant.png");
+		rock 			 = loadTexture("Hindernisse/Stone.png");
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		apple 			 = loadTexture("Garbage/apple.png");
 		paper			 = loadTexture("Garbage/garbage.png");
 		oil				 =  loadTexture("Garbage/oil.png");
 		boat			= loadTexture("Hindernisse/ship.png");
+		cargoShip 	= loadTexture("Hindernisse/cargo_ship.png");
+		gasBottle 	= loadTexture("Hindernisse/Tauchflasche.png");
 		black			 = loadTexture("background/black.png");
 		restartButton	 = loadTexture("Gamescreens/restartbutton.png");
 		restartButton_hover	 = loadTexture("Gamescreens/restartbutton_hover.png");
@@ -105,14 +117,17 @@ public class Assets {
 		air_red			 = loadTexture("air/red.png");
 		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
+		bite 			 = loadSound("sounds/Bite.wav");
+		
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, boat, shark, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, rock, boat, cargoShip, shark, gasBottle, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
 		for(Texture t:tex){
 			t.dispose();
 		}
 		music.dispose();
+		bite.dispose();
 		font.dispose();
 	}
 
