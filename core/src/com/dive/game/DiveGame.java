@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 
 
-
 public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
 
@@ -42,7 +41,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 	private Stage stage;
 	private Joystick joystick;
-
+	
+	private DiverAnimation diverAnimation;
 	
 	private OrthographicCamera cam;
 	
@@ -53,6 +53,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
 		
+		diverAnimation = new DiverAnimation();
 		
 		batch = new SpriteBatch();
 		font = Assets.getInstance().font;
