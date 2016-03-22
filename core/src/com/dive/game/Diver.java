@@ -2,28 +2,44 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+
 public class Diver {
 	
 	public float[] v;
-	public float maxSpeed, maxSpeedOrigin, decay, y1,h1,x2,y2,w2,h2;
+	public float maxSpeed, maxSpeedOrigin, decay, x1,y1,w1,h1,x2,y2,w2,h2;
 	private Rectangle[] shape;
 	private Sprite sprite;
-	private Touchpad joystick;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
-	private Stage stage;
 	private Air air;
 	
+    private Animation animation;          // #3
+    private Texture animationTexture;              // #4
+    private TextureRegion[] animationRegion; 
+    private TextureRegion currentFrame;
+    public float animationTimer;
+    
+    private static final int        FRAME_COLS = 8;         // #1
+    private static final int        FRAME_ROWS = 1;         // #2
+
+	
 	public Diver(Texture texture,int width, int height,int maxSpeed){
+		
+		animationTexture = Assets.getInstance().animation;
+		TextureRegion[][] animationSplitter = TextureRegion.split(animationTexture, animationTexture.getWidth()/FRAME_COLS, animationTexture.getHeight()/FRAME_ROWS);              // #10
+		animationRegion = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                animationRegion[index++] = animationSplitter[i][j];
+            }
+        }
+        animation = new Animation(0.025f, animationRegion);
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		
@@ -36,11 +52,13 @@ public class Diver {
 		sprite.setPosition(0,960-sprite.getHeight());
 		// set shapes for collision
 		shape = new Rectangle[2];
-		// calculate size for bigger rectangle
+		// calculate size and position for bigger rectangle
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
+		w1 = sprite.getWidth()*0.74f;
 		h1 = sprite.getHeight()*0.62f;
-		shape[0] = new Rectangle(sprite.getX(), y1, sprite.getWidth(), h1);
-		// calculate size for head
+		shape[0] = new Rectangle(x1, y1, w1, h1);
+		// calculate size and position for head
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
 		w2 = sprite.getWidth()*0.18f;
@@ -48,8 +66,15 @@ public class Diver {
 		shape[1] = new Rectangle(x2, y2, w2, h2);
 		
 	}
+	public void animate(){
+		animationTimer += Gdx.graphics.getDeltaTime();           // #15
+        currentFrame = animation.getKeyFrame(animationTimer, true);
+	}
+	public void drawAnimation(Batch batch){
+		batch.draw(currentFrame, sprite.getX(), sprite.getY()); 
+	}
 	
-	public void move(float deltaTime, boolean Android){
+	public void move(float deltaTime){
 
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
@@ -80,10 +105,13 @@ public class Diver {
 		
 		//Diver bewegen
 		sprite.translate(xTranslate, yTranslate);
+		// calculate shape positions
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
-		shape[0].setPosition(sprite.getX(), y1);
+		// set shape positions
+		shape[0].setPosition(x1, y1);
 		shape[1].setPosition(x2, y2);
 		
 		v[0]*=decay;
@@ -101,7 +129,8 @@ public class Diver {
 	}
 
 	public void draw(Batch batch){
-		sprite.draw(batch);
+		animate();
+		drawAnimation(batch);
 		air.draw(batch);
 	}
 
@@ -125,13 +154,16 @@ public class Diver {
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 	}
 
-	public void refresh() {
-		maxSpeed = maxSpeedOrigin;
+	public void refresh(float gameSpeed) {
+		maxSpeed = 1.8f*192 * (float) Math.pow(Math.log(Math.E+gameSpeed), 4);
+		//System.out.println("maxSpeed:" + maxSpeed);
+		// System.out.println("maxSpeedOrigin" + maxSpeedOrigin);
 		air.catchBreath();
 	}
 
-	public void slow() {
-		maxSpeed = maxSpeedOrigin*0.2f;
+	public void slow(float gameSpeed) {
+		maxSpeed = 0.5f*192 * (float) Math.pow(Math.log(Math.E+gameSpeed), 4);
+		//System.out.println("maxSpeed:"+ maxSpeed);
 		air.setBreath(1000);
 	}
 
@@ -158,10 +190,13 @@ public class Diver {
 	public void reset(){
 		air.reset();
 		sprite.setPosition(0,960-sprite.getHeight());
+		// calculate position of shapes
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
-		shape[0].setPosition(sprite.getX(), y1);
+		// set shapes
+		shape[0].setPosition(x1, y1);
 		shape[1].setPosition(x2, y2);
 	}
 

@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
-	public boolean Android;
+
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
@@ -38,6 +38,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	private Sprite bb1, bb2; //blackBars für horizontales 16:9
 	private EndScreen endscreen;
 	private Menu menu;
+	private ScoreScreen highscores;
 
 	private Stage stage;
 	private Joystick joystick;
@@ -52,13 +53,14 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
 		
+		
 		batch = new SpriteBatch();
 		font = Assets.getInstance().font;
 		
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
-		newObjects = new ObjectGenerator(8,8,8,8,8,3, 0.1f);
-		parallax = new Parallax(0.1f);
+		newObjects = new ObjectGenerator(8,8,8,8,6,3,3, 0.1f);
+		parallax = new Parallax(0.03f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick und Stage erzeugen
@@ -77,11 +79,13 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
         // Inputverwaltung setzen
 		endscreen = new EndScreen(gameState, world, font);
-		menu = new Menu(gameState, world, font, stage);
+		menu = new Menu(gameState, world);
+		highscores = new ScoreScreen(gameState, world, font);
 		processors = new ArrayList<InputProcessor>();
 		processors.add(endscreen);
 		processors.add(stage);
 		processors.add(menu);
+		processors.add(highscores);
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -110,44 +114,49 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		//Spiellogik updaten und Welt bewegen
 		if(gameState.getState() == State.GAME){
 			world.update(deltaTime);
-			world.move(deltaTime, Android, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
+			world.move(deltaTime, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
 			parallax.setSpeed(world.getSpeed());
 			parallax.move(deltaTime);
 		}
 		else if(gameState.getState() == State.ENDSCREEN){
 			endscreen.setScore(world.getScore());
 		}
-		else if(gameState.getState() == State.MENU){
+		else if(gameState.getState() == State.HIGHSCORES){
+			parallax.setIdle();
 			parallax.move(deltaTime);
-			if (joystick.getCheckbox().isChecked()){
-				this.Android = true;
-			}else{
-				Android = false;
-			}
+		}
+		else if(gameState.getState() == State.MENU){
+			parallax.setIdle();
+			parallax.move(deltaTime);
 		}	
-
+		
+		
 		//batch erstellen
 		batch.begin();
 			parallax.draw(batch);
-			bb1.draw(batch);
-			bb2.draw(batch);
 			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
-				world.draw(batch,Android);
 				joystick.getCheckbox().addAction(Actions.fadeOut(1));
+				world.draw(batch);
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
-				world.draw(batch,Android);
+				joystick.getCheckbox().addAction(Actions.fadeIn(1));
+				world.draw(batch);
 				endscreen.draw(batch);
 			}
+			else if(gameState.getState() == State.HIGHSCORES){
+				highscores.draw(batch);
+			}
 			else if(gameState.getState() == State.MENU){
-				joystick.getCheckbox().addAction(Actions.fadeIn(1));
+				joystick.getCheckbox().addAction(Actions.fadeIn(1)); 
 				if(joystick.getCheckbox().isChecked()){
-					joystick.getJoystick().addAction(Actions.fadeIn(1));
-				}else{
 					joystick.getJoystick().addAction(Actions.fadeOut(1));
+				}else{
+					joystick.getJoystick().addAction(Actions.fadeIn(1));
 				}
 				menu.draw(batch);
 			}
+			bb1.draw(batch);
+			bb2.draw(batch);
 		batch.end();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -197,6 +206,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		for(InputProcessor p: processors){
 			p.keyUp(keycode);
 		}
+		if(keycode == Keys.CONTROL_LEFT){world.setInfAir();}
+		else if(keycode == Keys.ENTER){gameState.resume();}
 		return false;
 	}
 	@Override
