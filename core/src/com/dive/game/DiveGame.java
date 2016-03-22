@@ -40,6 +40,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	private Stage stage;
 	private Joystick joystick;
 	
+	private DiverAnimation diverAnimation;
+	
 	private OrthographicCamera cam;
 	
 
@@ -49,6 +51,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
 		
+		diverAnimation = new DiverAnimation();
 		
 		batch = new SpriteBatch();
 		font = Assets.getInstance().font;
@@ -57,7 +60,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		gameState = new GameState(0);
 		newObjects = new ObjectGenerator(8,8,8,8,8,3, 0.1f);
 		parallax = new Parallax(0.1f);
-		world = new World(newObjects,0.1f,gameState, font);
+		world = new World(newObjects,0.1f,gameState, font, diverAnimation);
 		
 		//Joystick und Stage erzeugen
 		stage = new Stage();
@@ -131,6 +134,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 				world.draw(batch);
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
+				
 				joystick.getCheckbox().addAction(Actions.fadeIn(1));
 				world.draw(batch);
 				endscreen.draw(batch);
