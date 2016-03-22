@@ -66,12 +66,13 @@ public class World {
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
-		diver.refresh();
+		diver.refresh(speed);
+		System.out.println("game speed:" + speed);
 		
 		//Level aufbauen
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime, distance);
-		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextTrash(objects, deltaTime, distance);
 		objectGen.nextBoat(objects, deltaTime);
 		objectGen.nextJellyfish(objects, deltaTime);
 		objectGen.nextGasBottle(objects, deltaTime);

@@ -42,7 +42,7 @@ public class ObjectGenerator {
 	// feste y
 	// Koordinate
 	private int minHeightWater = 100;
-	private int maxHeightWater = 860;
+	private int maxHeightWater = 830;
 
 	private Random rand;
 
@@ -57,9 +57,10 @@ public class ObjectGenerator {
 		pointerJellyfish = 0;
 		pointerGasBottle = 0;
 
-		countDownShark = countDownPlant = maxCountDown = countDownJellyfish = 1f;
+		countDownShark = countDownPlant = maxCountDown = 1.5f;
+		countDownJellyfish = 1f;
 		countDownTrash = 1.5f;
-		countDownBoat = countDownGasBottle = 10;
+		countDownBoat = countDownGasBottle = 10f;
 
 		rand = new Random();
 
@@ -254,7 +255,7 @@ public class ObjectGenerator {
 
 	// gehe Liste der Haie durch und erstelle neue Liste von Haien welche genau
 	// so gezeichnet werden soll
-	public void nextTrash(ArrayList<GameObject> list, float deltaTime) {
+	public void nextTrash(ArrayList<GameObject> list, float deltaTime, float distance) {
 		countDownTrash -= deltaTime;
 
 		// überprüft ob Zeit abgelaufen und Objekt nicht aktiv, schreibt in
@@ -264,12 +265,18 @@ public class ObjectGenerator {
 			Trash t = listTrash[pointerTrash];
 
 			for (int k = 0; k < 10; k++) {
-				if (!overlapShark(t.getSprite().getHeight(), t.getSprite().getY())) {
+				if (!overlapShark(t.getSprite().getHeight(), t.getSprite()
+						.getY())) {
 					list.add(listTrash[pointerTrash]);
 					listTrash[pointerTrash].active = true;
 
 					pointerTrash = (pointerTrash + 1) % maxNoTrash;
-					countDownTrash = 10 + maxCountDown + 2 * rand.nextFloat();
+					if (distance < 100) {
+						countDownTrash = 4 + maxCountDown + 2
+								* rand.nextFloat() - (float) 0.02 * distance;
+					} else {
+						countDownTrash = 3 + maxCountDown + 2 * rand.nextFloat();
+					}
 
 					break;
 				} else {
