@@ -16,7 +16,7 @@ public class GasBottle extends GameObject {
 		acc = new float[]{0,0};
 		sizeGasBottle = 70;
 		
-		this.sprite = new Sprite(Assets.getInstance().paper);
+		this.sprite = new Sprite(Assets.getInstance().gasBottle);
 		
 		sprite.setSize(sizeGasBottle, sizeGasBottle);
 		sprite.setPosition(xcord, ycord);

@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
+
 
 
 
@@ -39,23 +41,10 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 	private Stage stage;
 	private Joystick joystick;
-	
-	private Table table;
+
 	
 	private OrthographicCamera cam;
 	
-
-	
-	
-	//Konstruktor für Android
-	public DiveGame(boolean Android) {
-		this.Android = Android;
-	}
-	//Konstruktor für alles andere :P
-	public DiveGame() {
-		this.Android = false;
-	}
-
 
 	@Override
 	public void create() {
@@ -72,12 +61,10 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		parallax = new Parallax(0.1f);
 		world = new World(newObjects,0.1f,gameState, font);
 		
-		//Joystick erzeugen
+		//Joystick und Stage erzeugen
 		stage = new Stage();
-		joystick = new Joystick();
-//		//stage.addActor(joystick.getCheckbox());
-//		//System.out.println(joystick.getCheckbox());
-		if (Android){stage.addActor(joystick.getJoystick());}
+		joystick = new Joystick(stage,font);
+		joystick.addActors();
 		
 		//Kamera erzeugen
 		cam = new OrthographicCamera(1920, 1920 * (h / w));
@@ -90,7 +77,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
         // Inputverwaltung setzen
 		endscreen = new EndScreen(gameState, world, font);
-		menu = new Menu(gameState, world, font);
+		menu = new Menu(gameState, world, font, stage);
 		processors = new ArrayList<InputProcessor>();
 		processors.add(endscreen);
 		processors.add(stage);
@@ -132,6 +119,11 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		}
 		else if(gameState.getState() == State.MENU){
 			parallax.move(deltaTime);
+			if (joystick.getCheckbox().isChecked()){
+				this.Android = true;
+			}else{
+				Android = false;
+			}
 		}	
 
 		//batch erstellen
@@ -141,22 +133,24 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 			bb2.draw(batch);
 			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
 				world.draw(batch,Android);
+				joystick.getCheckbox().addAction(Actions.fadeOut(1));
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
 				world.draw(batch,Android);
 				endscreen.draw(batch);
 			}
 			else if(gameState.getState() == State.MENU){
+				joystick.getCheckbox().addAction(Actions.fadeIn(1));
+				if(joystick.getCheckbox().isChecked()){
+					joystick.getJoystick().addAction(Actions.fadeIn(1));
+				}else{
+					joystick.getJoystick().addAction(Actions.fadeOut(1));
+				}
 				menu.draw(batch);
 			}
 		batch.end();
-		
-		
-		if(gameState.getState() == State.GAME){
-			stage.act(Gdx.graphics.getDeltaTime());
-			stage.draw();
-		}
-		
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
 		
 	}
 

@@ -3,9 +3,11 @@ package com.dive.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -23,9 +25,13 @@ public class Joystick{
 	private CheckBox checkbox;
 	private BitmapFont touch;
 	private Color color;
-
+	private Table table;
+	private Stage stage;
 	
-	public Joystick(){
+	public Joystick(Stage stage, BitmapFont font){
+		
+		table = new Table();
+		this.stage = stage;
 		
 		this.Joystickskin = new Skin();										//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
 		this.Joystickskin.add("background",Assets.getInstance().joystickunder);
@@ -35,11 +41,11 @@ public class Joystick{
     	this.joystickstyle = new TouchpadStyle(background,knob);
     	
     	
-		this.knob.setMinWidth(Gdx.graphics.getWidth()/8);						//Größe des Joysticks
-		this.knob.setMinHeight(Gdx.graphics.getWidth()/8);
+		this.knob.setMinWidth(125);						//Größe des Joysticks
+		this.knob.setMinHeight(125);
 		
 		this.joystick = new Touchpad(5,joystickstyle);	//Joystick wird erstellt mit Bewegungsradius des Knüppels = 1/10 des Bildschirms
-		this.joystick.setBounds(0,  0 , Gdx.graphics.getWidth()/6, Gdx.graphics.getWidth()/6);//Größe und Platzierung des Joystickpads
+		this.joystick.setBounds(0,  0 ,180, 180);//Größe und Platzierung des Joystickpads
     	
 		
     	this.Checkboxskin = new Skin();	//Ein Skin wird erzeugt um aus Texture Dateien Drawables zu machen
@@ -49,17 +55,23 @@ public class Joystick{
     	this.checkboxOn = Checkboxskin.getDrawable("checkboxOn");
     	
     	
-//    	this.touch = Assets.getInstance().touch;
-//    	this.color = Color.BLACK;
-//    	
-//    	this.checkboxstyle= new CheckBoxStyle(this.checkboxOn,this.checkboxOff,this.touch,this.color);
-//		this.checkbox = new CheckBox("a",this.checkboxstyle);
-//		this.checkbox.setBounds(9*Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()-Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10);
-//	
+    	this.touch = font;
+    	this.color = Color.BLACK;
+    	
+    	this.checkboxstyle= new CheckBoxStyle(this.checkboxOn,this.checkboxOff,this.touch,this.color);
+		this.checkbox = new CheckBox("a",this.checkboxstyle);
+		this.checkbox.setBounds(9*Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()-Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10);
+	
 
 	
 	}
 	
+	public void addActors(){
+		table.addActor(checkbox);
+		stage.addActor(table);
+		stage.addActor(joystick);
+		
+	}
 	public Touchpad getJoystick(){
 		return this.joystick;
 	}

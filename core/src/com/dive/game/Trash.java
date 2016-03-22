@@ -2,7 +2,9 @@ package com.dive.game;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -40,7 +42,15 @@ public class Trash extends GameObject {
 		
 		//assign other attributes
 		active = false;
+		fading = false;
+		fadeCounter = 0;
+		scoreOffset = 0;
 		type = ObjectType.TRASH;
+		
+		font.getData().setScale(3, 3);
+		font.setColor(Color.YELLOW);
+		
+		
 	}
 
 	public void moveObject(float deltaTime,
@@ -54,6 +64,24 @@ public class Trash extends GameObject {
 
 		// bewegt Feld hinter dem Müll für Kollisionserkennung
 		shape.setPosition(sprite.getX(), sprite.getY());
+		
+		if(fading){
+			if(fadeCounter<0.3){
+//				sprite.setSize(sprite.getWidth()*1.01f, sprite.getHeight()*1.01f);
+				scoreOffset += 2;
+				fadeCounter += deltaTime;
+				sprite.setColor(1, 1, 1, (0.3f-fadeCounter)/0.3f);
+			}
+			else{
+				fading = false;
+				fadeCounter = 0;
+				sprite.setX(-sprite.getWidth()-1);
+				scoreOffset = 0;
+			}
+			
+		}
+		
+		
 	}
 	
 	public int getTrashScore(){
@@ -67,8 +95,20 @@ public class Trash extends GameObject {
 		trashScore = listTrashScore[i];
 		sizeTrash = 40 + rand.nextInt(50);
 		if(i==2){
-			sprite.setSize(sizeTrash, sizeTrash + 60);
+			sprite.setSize(sizeTrash + 20, sizeTrash + 10);
 		}
-		sprite.setSize(sizeTrash, sizeTrash);
+		else{ sprite.setSize(sizeTrash, sizeTrash);}
 	}
+	
+	public void delete(){
+		fading = true;
+	}
+	
+	public void draw(Batch batch){	//zeichnet das Objekt auf den gegebenen batch
+		if(fading){
+			font.draw(batch, "+" + trashScore, sprite.getX(), sprite.getY()+sprite.getHeight()+scoreOffset+20);
+		}
+		sprite.draw(batch);
+	}
+	
 }
