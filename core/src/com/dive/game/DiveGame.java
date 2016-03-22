@@ -102,9 +102,6 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	@Override
 	public void render() {
 		
-		
-		System.out.println(gameState.getState());
-		
 		// kamera updaten
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
@@ -200,7 +197,6 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 			return true;
 		}
 		if(keycode == Keys.CONTROL_LEFT){world.setInfAir();}
-		else if(keycode == Keys.ENTER && (gameState.getState() == State.MENU || gameState.getState() == State.ENDSCREEN)){world.reset(); gameState.resume();}
 		for(InputProcessor p: processors){
 			p.keyDown(keycode);
 		}

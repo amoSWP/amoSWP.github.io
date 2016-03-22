@@ -2,6 +2,7 @@ package com.dive.game;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -32,7 +33,10 @@ public class ScoreScreen implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		if(keycode == Keys.ESCAPE){
+			gameState.returnMenu();
+			return true;
+		}
 		return false;
 	}
 
@@ -77,18 +81,19 @@ public class ScoreScreen implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-//		screenY = Gdx.graphics.getHeight()-screenY;
-//		float[] p = Coords.getCameraCoords(screenX, screenY);
-//		
-//		if(gameState.getState() == State.ENDSCREEN){
-//			if(restart.getBoundingRectangle().contains(p[0],p[1])){
-//				restart.setTexture(Assets.getInstance().restartButton_hover);
-//			}
-//			else{
-//				restart.setTexture(Assets.getInstance().restartButton);
-//			}
-//			return true;
-//		}
+		
+		if(gameState.getState() != State.HIGHSCORES){return false;}
+
+		float[] p = Coords.getCameraCoords(screenX, Gdx.graphics.getHeight()-screenY);
+		
+		if(returnMenu.getBoundingRectangle().contains(p[0],p[1])){
+			returnMenu.setTexture(Assets.getInstance().menuButton_hover);
+			return true;
+		}
+		else{
+			returnMenu.setTexture(Assets.getInstance().menuButton);
+		}
+		
 		return false;
 	}
 
