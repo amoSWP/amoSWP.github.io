@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Background {
 
 	private Sprite sprite1,sprite2;
-	private float speed, oldwidth;
+	private float speed;
 	
 	public Background(Texture sprite, float speed){
 		// set sprites
