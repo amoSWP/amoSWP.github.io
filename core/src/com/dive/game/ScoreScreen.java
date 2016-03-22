@@ -9,48 +9,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class Menu implements InputProcessor {
+public class ScoreScreen implements InputProcessor {
 	
-	private Sprite start, logo, highscores;
+	private Sprite returnMenu;
 	private GameState gameState;
-	private World world;
 	private BitmapFont font;
 	
 	
-	private Stage stage;
-	
-	
-	public Menu(GameState state,World world, BitmapFont font, Stage stage){
+	public ScoreScreen(GameState state,World world, BitmapFont font){
 		
 		gameState = state;
-		this.world = world;
 		this.font = font;
 		
-		start = new Sprite(Assets.getInstance().startButton);
-		start.setBounds(560, 200, 800, 155);
-		
-		highscores = new Sprite(Assets.getInstance().menuButton);
-		highscores.setBounds(560, 405, 800, 155);
-		
-		logo = new Sprite(Assets.getInstance().diver);
-		logo.setBounds(460, 560, 1000, 400);
-		
+		returnMenu = new Sprite(Assets.getInstance().menuButton);
+		returnMenu.setBounds(560, 200, 800, 155);
 		
 	}
 	
 	public void draw(Batch batch){
-		highscores.draw(batch);
-		start.draw(batch);
-		logo.draw(batch);
-	}
-	
-	public Sprite getRestart(){
-		return start;
-	}
-	
-	public void setSprite(Texture tex){
-		start = new Sprite(tex);
-		start.setBounds(500, 200, 920, 178);
+		returnMenu.draw(batch);
 	}
 
 	@Override
@@ -74,18 +51,12 @@ public class Menu implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		if(gameState.getState() != State.MENU || button != Buttons.LEFT){return false;}
+		if(gameState.getState() != State.HIGHSCORES){return false;}
+
+		float[] p = Coords.getCameraCoords(screenX, Gdx.graphics.getHeight()-screenY);
 		
-		screenY = Gdx.graphics.getHeight()-screenY;
-		float[] p = Coords.getCameraCoords(screenX, screenY);
-		
-		if(start.getBoundingRectangle().contains(p[0],p[1])){
-			gameState.resume();
-			world.reset();
-			return true;
-		}
-		else if(highscores.getBoundingRectangle().contains(p[0],p[1])){
-			gameState.seeScores();
+		if(button == Buttons.LEFT && returnMenu.getBoundingRectangle().contains(p[0],p[1])){
+			gameState.returnMenu();
 			return true;
 		}
 		

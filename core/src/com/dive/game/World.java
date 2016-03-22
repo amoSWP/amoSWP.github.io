@@ -24,6 +24,8 @@ public class World {
 	private BitmapFont font;
 	public Music music;
 	private Sound bite;
+	
+	private boolean infAir;
 
 	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
@@ -45,6 +47,8 @@ public class World {
 		
 		bite = Assets.getInstance().bite;
 		 
+		infAir = false;
+		
 	}
 	
 	
@@ -96,7 +100,7 @@ public class World {
 			}
 			else if(o.getType() == ObjectType.JELLYFISH){
 				diver.slow();
-				diver.breathe(10);
+				diver.setBreath(2000);
 			}
 			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
 				diver.breathe(-4000);
@@ -106,7 +110,7 @@ public class World {
 		
 		//Luft updaten
 		if(diver.getSprite().getY() + diver.getSprite().getHeight()>=950){diver.recover();}
-		diver.breathe(deltaTime);
+		if(!infAir){diver.breathe(deltaTime);}
 		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
@@ -136,6 +140,10 @@ public class World {
 		
 		objectGen.reset();
 
+	}
+	
+	public void setInfAir(){
+		infAir = !infAir;
 	}
 
 }
