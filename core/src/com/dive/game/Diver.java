@@ -130,8 +130,9 @@ public class Diver {
 		return (float) Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 	}
 
-	public void refresh() {
+	public void refresh(float gameSpeed) {
 		maxSpeed = maxSpeedOrigin;
+		System.out.println("maxSpeedOrigin:" + maxSpeedOrigin);
 		air.catchBreath();
 	}
 
