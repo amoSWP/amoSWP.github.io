@@ -40,7 +40,7 @@ public class Boat extends GameObject{
 		
 		//assign other attributes
 		active = false;
-		type = ObjectType.SHARK;
+		type = ObjectType.BOAT;
 	}
 
 	public void moveObject(float deltaTime,

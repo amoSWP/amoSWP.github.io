@@ -70,6 +70,7 @@ public class World {
 		System.out.println("game speed:" + speed);
 		
 		//Level aufbauen
+		objectGen.nextRock(objects, deltaTime);
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime, distance);
 		objectGen.nextTrash(objects, deltaTime, distance);
@@ -89,6 +90,12 @@ public class World {
 			}
 			if(o.getType() == ObjectType.SHARK){
 				bite.play();
+				state.gameOver();
+				break;
+			}else if(o.getType() == ObjectType.BOAT){
+				state.gameOver();
+				break;
+			}else if (o.getType() == ObjectType.ROCK){
 				state.gameOver();
 				break;
 			}

@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 public class Diver {
 	
 	public float[] v;
-	public float maxSpeed, maxSpeedOrigin, decay, y1,h1,x2,y2,w2,h2;
+	public float maxSpeed, maxSpeedOrigin, decay, x1,y1,w1,h1,x2,y2,w2,h2;
 	private Rectangle[] shape;
 	private Sprite sprite;
 	private Touchpad joystick;
@@ -36,11 +36,13 @@ public class Diver {
 		sprite.setPosition(0,960-sprite.getHeight());
 		// set shapes for collision
 		shape = new Rectangle[2];
-		// calculate size for bigger rectangle
+		// calculate size and position for bigger rectangle
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
+		w1 = sprite.getWidth()*0.74f;
 		h1 = sprite.getHeight()*0.62f;
-		shape[0] = new Rectangle(sprite.getX(), y1, sprite.getWidth(), h1);
-		// calculate size for head
+		shape[0] = new Rectangle(x1, y1, w1, h1);
+		// calculate size and position for head
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
 		w2 = sprite.getWidth()*0.18f;
@@ -80,10 +82,13 @@ public class Diver {
 		
 		//Diver bewegen
 		sprite.translate(xTranslate, yTranslate);
+		// calculate shape positions
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
-		shape[0].setPosition(sprite.getX(), y1);
+		// set shape positions
+		shape[0].setPosition(x1, y1);
 		shape[1].setPosition(x2, y2);
 		
 		v[0]*=decay;
@@ -159,10 +164,13 @@ public class Diver {
 	public void reset(){
 		air.reset();
 		sprite.setPosition(0,960-sprite.getHeight());
+		// calculate position of shapes
+		x1 = sprite.getX()+ sprite.getWidth() * 0.15f;
 		y1 = sprite.getY()+ 0.2f*sprite.getHeight();
 		x2 = sprite.getX() + sprite.getWidth()*0.71f;
 		y2 = sprite.getY() + sprite.getHeight()*0.82f;
-		shape[0].setPosition(sprite.getX(), y1);
+		// set shapes
+		shape[0].setPosition(x1, y1);
 		shape[1].setPosition(x2, y2);
 	}
 
