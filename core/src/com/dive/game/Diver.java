@@ -126,8 +126,8 @@ public class Diver {
 	}
 
 	public void refresh(float gameSpeed) {
-		maxSpeed = maxSpeedOrigin;
-		System.out.println("maxSpeedOrigin:" + maxSpeedOrigin);
+		maxSpeed = 1.8f*1920*gameSpeed;
+		System.out.println("maxSpeed:" + maxSpeed);
 		air.catchBreath();
 	}
 
