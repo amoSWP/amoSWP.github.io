@@ -1,30 +1,24 @@
 package com.dive.game;
 
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Menu implements InputProcessor {
 	
 	private Sprite start, logo, highscores;
 	private GameState gameState;
 	private World world;
-	private BitmapFont font;
+
 	
 	
-	private Stage stage;
-	
-	
-	public Menu(GameState state,World world, BitmapFont font, Stage stage){
+	public Menu(GameState state,World world){
 		
 		gameState = state;
 		this.world = world;
-		this.font = font;
 		
 		start = new Sprite(Assets.getInstance().startButton);
 		start.setBounds(560, 200, 800, 155);

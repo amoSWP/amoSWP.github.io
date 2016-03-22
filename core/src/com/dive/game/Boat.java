@@ -1,8 +1,6 @@
 package com.dive.game;
 
 import java.util.Random;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -40,7 +38,7 @@ public class Boat extends GameObject{
 		
 		//assign other attributes
 		active = false;
-		type = ObjectType.SHARK;
+		type = ObjectType.BOAT;
 	}
 
 	public void moveObject(float deltaTime,

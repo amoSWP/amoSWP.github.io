@@ -1,10 +1,11 @@
 package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 
 // From https://github.com/libgdx/libgdx-demo-superjumper/blob/master/core/src/com/badlogicgames/superjumper/Assets.java
 // Extended by Singleton-mechanics
@@ -27,6 +28,7 @@ public class Assets {
 	public Texture shark;
 	public Texture jellyfish;
 	public Texture plant;
+	public Texture rock;
 	public Texture joystickup;
 	public Texture joystickunder;
 	public Texture apple;
@@ -47,6 +49,7 @@ public class Assets {
 	public BitmapFont font;
 	public Music music;
 	public Sound bite;
+	public Texture animation;
 
 	
 	//public TextureRegion backgroundRegion;
@@ -73,6 +76,7 @@ public class Assets {
 		// gefunden wurde, ersetze die folgende Zeile mit der nachfolgenden.
 		return new Texture(Gdx.files.internal(location));
 		//return new Texture(location);
+	
 	}
 	
 	private static Music loadMusic (String location){
@@ -96,6 +100,7 @@ public class Assets {
 		shark			 = loadTexture("Hindernisse/myshark.png");
 		jellyfish 		 = loadTexture("Hindernisse/qualle.png");
 		plant			 = loadTexture("Hindernisse/green-plant.png");
+		rock 			 = loadTexture("Hindernisse/Stone.png");
 		joystickup       = loadTexture("joystick/Joystickup.png");
 		joystickunder    = loadTexture("joystick/Joystickunder.png");
 		apple 			 = loadTexture("Garbage/apple.png");
@@ -116,11 +121,12 @@ public class Assets {
 		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
 		bite 			 = loadSound("sounds/Bite.wav");
+		animation 		 = loadTexture("spritesheet/spritesheet.png");
 		
 	}
 
 	public void dispose() {
-		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, boat, cargoShip, shark, gasBottle, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
+		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, rock, boat, cargoShip, shark, gasBottle, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
 		for(Texture t:tex){
 			t.dispose();
 		}

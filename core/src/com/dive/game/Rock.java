@@ -5,18 +5,18 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Plant extends GameObject {
-
+public class Rock extends GameObject {
+	
 	private int ycord;
 	private Random rand;
-	private int sizePlant;
+	private int sizeRock;
 
-	public Plant(int xcord) {
-		ycord = 20;
+	public Rock(int xcord) {
+		ycord = 25;
 		rand = new Random();
 		acc = new float[]{0,0};
 
-		this.sprite = new Sprite(Assets.getInstance().plant);
+		this.sprite = new Sprite(Assets.getInstance().rock);
 		
 		sprite.setPosition(xcord, ycord);
 		
@@ -26,14 +26,15 @@ public class Plant extends GameObject {
 		reset();
 		
 		active = false;
-		type = ObjectType.PLANT;
+		type = ObjectType.ROCK;
 
 	}
 	
 	public void reset(){
-		sizePlant = 70 + rand.nextInt(90);
-		sprite.setSize(sizePlant + 120, sizePlant);
+		sizeRock = 150 + rand.nextInt(70);
+		sprite.setSize(sizeRock*1.92f, sizeRock);
 		shape.setSize(sprite.getWidth(), sprite.getHeight());
 	}
 	
+
 }
