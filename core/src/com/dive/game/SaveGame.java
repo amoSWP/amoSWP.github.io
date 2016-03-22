@@ -13,30 +13,22 @@ import com.badlogic.gdx.utils.Json;
 public class SaveGame {
 
 	// TODO: Change topten to private
-	public Score[] topten;
 	private Json serializer;
 	
 	public SaveGame()
 	{
 		serializer = new Json();
 		serializer.setIgnoreUnknownFields(false);
-		
-		topten = new Score[10];
 	}
 	
-	public void dumpScores() {
-		for (Score current : topten) {
-			System.out.println(current.getName() + ": " + current.getScore());
-		}		
+	public void dumpHighscores(Highscores highscores) {
+		System.out.println(highscores);
 	}
 	
-	public void toJson(String location) {
+	public void saveHighscore(String location, Highscores highscores) {
 		
-		// TODO: Exception handling
-		//Path locationPath = Paths.get(location);
-		//return serializer.toJson(topten);
-		
-		String output = serializer.toJson(topten);
+		// Only save the set highscores, not the default-constructed ones
+		String output = serializer.toJson(highscores.get(highscores.size()));
 		
 		try {
 			Files.write(
@@ -50,57 +42,60 @@ public class SaveGame {
 		}
 	}
 	
-	public void fromJson(String location) {
+	public Highscores loadHighscore(String location) {
 		
 		// TODO: Exception handling
 		
 		String input;
+		// Create empty score array
+		Score[] scores = {};
+		
 		try {
-			input = new String(Files.readAllBytes(Paths.get(location)));
-			topten = serializer.fromJson(Score[].class, input);
+			input  = new String(Files.readAllBytes(Paths.get(location)));
+			scores = serializer.fromJson(Score[].class, input);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Score[] topten = {
-					new Score(), new Score(), new Score(), new Score(), new Score(), new Score(), new Score(), new Score(), new Score(), new Score()
-			};
+			// Print error message
+			System.err.println(String.format("Failed to load file '" + location + "'%%nContinue with default.."));			
 		}
-				
+		
+		return new Highscores(scores);
 	}
 	
 	public static void main(String[] args) {
 		
 		System.out.println("### Creating Highscores ###");
 		Score[] topten = {
-			new Score("Füü", 999),
-			new Score("Bar", 888),
-			new Score("Baz", 777)
+			new Score("Füü", 777),
+			new Score("Bar", 999),
+			new Score("Baz", 888)
 		};
-		Highscores highscores = new Highscores();
-		highscores.add(new Score("Füü", 999));
-		highscores.add(new Score("Bar", 888));
-		highscores.add(new Score("Baz", 777));
+		//Highscores highscores = new Highscores();
+		//highscores.add(new Score("Füü", 777));
+		//highscores.add(new Score("Bar", 999));
+		//highscores.add(new Score("Baz", 888));
+		Highscores highscores = new Highscores(topten);
 				
 		String location = new String("/home/tonn/Desktop/highscores.json");
 		
 		SaveGame saveGame = new SaveGame();
-		saveGame.topten = topten;
 		
 		System.out.println("### Highscores ###");
 		
-		//saveGame.dumpScores();
-		System.out.println(highscores);
+		//System.out.println(highscores);
+		for (Score score : topten) {
+			System.out.println(score);
+		}
 		
 		System.out.println("### Saving files to '" + location + "' ###");
 		
-		saveGame.toJson(location);
+		saveGame.saveHighscore(location, highscores);
 		
 		System.out.println("### Reading file from '" + location + "' ###");
-		saveGame.fromJson(location);
+		saveGame.loadHighscore(location);
 		
 		System.out.println("### Highscores ###");
 		
-		saveGame.dumpScores();
+		saveGame.dumpHighscores(highscores);
 	}
 	
 }

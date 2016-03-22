@@ -1,26 +1,24 @@
 package com.dive.game;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.dive.game.Score;
 import java.util.Stack;
 import java.util.PriorityQueue;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Highscores {
-	
-	//private Score[] highscores;
+
 	private PriorityQueue<Score> highscores; 
 
 	public Highscores() {
-		//highscores = new Score[10];
-		highscores = new PriorityQueue<Score>();
+		highscores = new PriorityQueue<Score>(10, Collections.reverseOrder());
 	}
 	
-	public Highscores(String json) {
-		// TODO: Construct from JSON?
-		// highscores = new PriorityQueue<Score>(HERE BE Score[] array);
-		throw new NotImplementedException();
+	public Highscores(Score[] scores) {
+		highscores = new PriorityQueue<Score>(10, Collections.reverseOrder());
+		for (Score score : scores) {
+			add(score);
+		}
 	}
 	
 	public Score[] get() {
