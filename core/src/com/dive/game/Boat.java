@@ -58,7 +58,7 @@ public class Boat extends GameObject{
 		sprite = sprites[i];
 		sizeBoat = 60 + rand.nextInt(40);
 		if(i == 1){
-			sprite.setSize(sizeBoat + 400, sizeBoat + 60);
+			sprite.setSize(sizeBoat + 600, sizeBoat + 60);
 		}
 		else{sprite.setSize(sizeBoat+140, sizeBoat + 100);}
 		shape.setSize(sprite.getWidth(), sprite.getHeight());
