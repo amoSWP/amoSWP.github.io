@@ -5,11 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class World {
@@ -56,17 +51,17 @@ public class World {
 	}
 	
 	
-	public void draw(Batch batch,boolean android){			//Alle Spielobjekte zeichnen
+	public void draw(Batch batch){			//Alle Spielobjekte zeichnen
 		for(GameObject o: objects){o.draw(batch);}
 		diver.draw(batch);
 		font.draw(batch, Integer.toString(score),0, 1080);
 	}
 	
-	public void move(float deltaTime, boolean Android,float x,float y){
+	public void move(float deltaTime,float x,float y){
 		for(GameObject o: objects){
 			o.moveObject(deltaTime, speed);
 			}
-		diver.move(deltaTime, Android);
+		diver.move(deltaTime);
 		diver.moveonjoystick(x, y);	//wird implementiert
 	}
 	

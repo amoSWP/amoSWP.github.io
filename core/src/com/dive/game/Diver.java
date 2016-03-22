@@ -2,28 +2,44 @@ package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+
 public class Diver {
 	
 	public float[] v;
 	public float maxSpeed, maxSpeedOrigin, decay, x1,y1,w1,h1,x2,y2,w2,h2;
 	private Rectangle[] shape;
 	private Sprite sprite;
-	private Touchpad joystick;
-	private TouchpadStyle joystickstyle;
-	private Skin skin;
-	private Stage stage;
 	private Air air;
 	
+    private Animation animation;          // #3
+    private Texture animationTexture;              // #4
+    private TextureRegion[] animationRegion; 
+    private TextureRegion currentFrame;
+    public float animationTimer;
+    
+    private static final int        FRAME_COLS = 8;         // #1
+    private static final int        FRAME_ROWS = 1;         // #2
+
+	
 	public Diver(Texture texture,int width, int height,int maxSpeed){
+		
+		animationTexture = Assets.getInstance().animation;
+		TextureRegion[][] animationSplitter = TextureRegion.split(animationTexture, animationTexture.getWidth()/FRAME_COLS, animationTexture.getHeight()/FRAME_ROWS);              // #10
+		animationRegion = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                animationRegion[index++] = animationSplitter[i][j];
+            }
+        }
+        animation = new Animation(0.025f, animationRegion);
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		
@@ -50,8 +66,15 @@ public class Diver {
 		shape[1] = new Rectangle(x2, y2, w2, h2);
 		
 	}
+	public void animate(){
+		animationTimer += Gdx.graphics.getDeltaTime();           // #15
+        currentFrame = animation.getKeyFrame(animationTimer, true);
+	}
+	public void drawAnimation(Batch batch){
+		batch.draw(currentFrame, sprite.getX(), sprite.getY()); 
+	}
 	
-	public void move(float deltaTime, boolean Android){
+	public void move(float deltaTime){
 
 		//Bewegungssteuerung
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))		{v[1]+=maxSpeed;}		
@@ -106,7 +129,8 @@ public class Diver {
 	}
 
 	public void draw(Batch batch){
-		sprite.draw(batch);
+		animate();
+		drawAnimation(batch);
 		air.draw(batch);
 	}
 
@@ -131,8 +155,8 @@ public class Diver {
 	}
 
 	public void refresh(float gameSpeed) {
-		maxSpeed = maxSpeedOrigin;
-		System.out.println("maxSpeedOrigin:" + maxSpeedOrigin);
+		maxSpeed = 1.8f*1920*gameSpeed;
+		System.out.println("maxSpeed:" + maxSpeed);
 		air.catchBreath();
 	}
 
