@@ -1,3 +1,4 @@
+
 package com.dive.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -13,11 +14,6 @@ public class DesktopLauncher {
 		config.width = 1920;
 		config.height = 1080;
 		
-<<<<<<< HEAD
-		new LwjglApplication(new DiveGame(false), config);
-=======
 		new LwjglApplication(new DiveGame(), config);
->>>>>>> upstream/master
 	}
 }
-
