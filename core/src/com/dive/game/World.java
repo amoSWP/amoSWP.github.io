@@ -69,6 +69,7 @@ public class World {
 		diver.refresh();
 		
 		//Level aufbauen
+		objectGen.nextRock(objects, deltaTime);
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime, distance);
 		objectGen.nextTrash(objects, deltaTime);
@@ -88,6 +89,12 @@ public class World {
 			}
 			if(o.getType() == ObjectType.SHARK){
 				bite.play();
+				state.gameOver();
+				break;
+			}else if(o.getType() == ObjectType.BOAT){
+				state.gameOver();
+				break;
+			}else if (o.getType() == ObjectType.ROCK){
 				state.gameOver();
 				break;
 			}
