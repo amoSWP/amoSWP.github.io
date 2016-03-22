@@ -1,6 +1,5 @@
 package com.dive.game;
 
-import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,13 +7,12 @@ import com.badlogic.gdx.math.Rectangle;
 public class Jellyfish extends GameObject {
 	
 		private int sizeJellyfish;
-		private Random rand;
+		public boolean alreadyhit;
 		
 		public Jellyfish(int xcord, int ycord){
 			
 			// initialize random variable, speed in relation to background
 			acc = new float[]{0, 0.2f};
-			rand = new Random();
 			sprite = new Sprite(Assets.getInstance().jellyfish);
 						
 			// set position of jellyfish
@@ -28,6 +26,7 @@ public class Jellyfish extends GameObject {
 			reset();
 						
 			active = false;
+			alreadyhit = false;
 			type = ObjectType.JELLYFISH;
 		}
 
@@ -52,6 +51,7 @@ public class Jellyfish extends GameObject {
 			sprite.setSize(sizeJellyfish, sizeJellyfish*1.3f);
 			shape.setSize(sprite.getWidth(), sprite.getHeight());
 			shape.setPosition(sprite.getX(), sprite.getY());
+			alreadyhit = false;
 		}
 
 }

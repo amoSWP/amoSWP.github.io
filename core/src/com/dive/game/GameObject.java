@@ -17,6 +17,7 @@ public class GameObject {
 	protected BitmapFont font = new BitmapFont();
 	protected boolean fading;			//gibt an, ob das Objekt gerade ausgeblendet wird
 	protected float fadeCounter, scoreOffset;
+	public boolean alreadyhit;
 	
 	
 	public void draw(Batch batch){	//zeichnet das Objekt auf den gegebenen batch

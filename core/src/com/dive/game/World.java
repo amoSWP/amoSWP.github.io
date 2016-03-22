@@ -21,6 +21,7 @@ public class World {
 	private Sound bite;
 	private Sound gasbottlehit;
 	private Sound boathit;
+	private Sound jellyfishhit;
 	private Sound startup;
 	private boolean infAir;
 
@@ -38,15 +39,16 @@ public class World {
 
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
 		// start playing background music
-		music = Assets.getInstance().music;
-//		music.play();
-//		music.setVolume(0.25f);
-//		music.setLooping(true);
+		music = Assets.getInstance().music;	
+		music.setVolume(0.1f);
+		music.play();
+		music.setLooping(true);
 		// loading sounds
 		bite = Assets.getInstance().bite;
 		gasbottlehit = Assets.getInstance().gasbottlehit;
 		boathit = Assets.getInstance().boathit;
-		//startup = Assets.getInstance().startup;
+		jellyfishhit = Assets.getInstance().jellyfishhit;
+		startup = Assets.getInstance().startup;
 		infAir = false;
 		
 	}
@@ -104,9 +106,16 @@ public class World {
 				break;
 			}
 			else if(o.getType() == ObjectType.PLANT){
+				if(o.alreadyhit == false){
+					o.alreadyhit = true;
+				}
 				diver.slow(speed);
 			}
 			else if(o.getType() == ObjectType.JELLYFISH){
+				if(o.alreadyhit == false){
+					o.alreadyhit = true;
+					jellyfishhit.play(100f);
+				}
 				diver.slow(speed);
 				diver.setBreath(2000);
 			}
@@ -148,7 +157,7 @@ public class World {
 		diver.reset();
 		
 		objectGen.reset();
-		//startup.play();
+		startup.play();
 	}
 	
 	public void setInfAir(){
