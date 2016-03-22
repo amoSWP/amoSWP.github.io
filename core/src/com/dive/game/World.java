@@ -38,7 +38,7 @@ public class World {
 		
 		diverAnimation = animation;
 
-		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 300, diverAnimation);
 		// start playing background music
 		music = Assets.getInstance().music;	
 		music.setVolume(0.1f);
