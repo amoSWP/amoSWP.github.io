@@ -48,6 +48,9 @@ public class Assets {
 	public BitmapFont font;
 	public Music music;
 	public Sound bite;
+	public Sound gasbottlehit;
+	public Sound boathit;
+	public Sound startup;
 
 	
 	//public TextureRegion backgroundRegion;
@@ -115,19 +118,29 @@ public class Assets {
 		air_green		 = loadTexture("air/green.png");
 		air_orange		 = loadTexture("air/orange.png");
 		air_red			 = loadTexture("air/red.png");
-		music 		     = loadMusic("sounds/backgroundmusic.mp3");
-		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
+		music 		     = loadMusic("sounds/Backgroundmusic.mp3");
 		bite 			 = loadSound("sounds/Bite.wav");
+		gasbottlehit	 = loadSound("sounds/Gasbottlehit.wav");
+		boathit			 = loadSound("sounds/Boathit.wav");
+		//startup			 = loadSound("sounds/Startup.wav");
+		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
 		
 	}
 
 	public void dispose() {
+		// dispose Textures
 		Texture[] tex = new Texture[]{backgroundMiddle, background, diver, plant, rock, boat, cargoShip, shark, gasBottle, jellyfish, joystickup, joystickunder, apple, paper, oil, air,air_green,air_orange,air_red, black,restartButton,restartButton_hover, startButton, menuButton};
 		for(Texture t:tex){
 			t.dispose();
 		}
+		// dispose Sounds
+		Sound[] sounds = new Sound[]{bite, gasbottlehit, boathit};
+		for(Sound s:sounds){
+			s.dispose();
+		}
+		// dispose music
 		music.dispose();
-		bite.dispose();
+		// dispose fonts
 		font.dispose();
 	}
 
