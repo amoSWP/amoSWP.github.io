@@ -1,9 +1,5 @@
 android {
-<<<<<<< HEAD
-    buildToolsVersion "23.0.2"
-=======
     buildToolsVersion "23.0.1"
->>>>>>> upstream/master
     compileSdkVersion 23
     sourceSets {
         main {
