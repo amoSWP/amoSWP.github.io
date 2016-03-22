@@ -1,10 +1,11 @@
 package com.dive.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 
 // From https://github.com/libgdx/libgdx-demo-superjumper/blob/master/core/src/com/badlogicgames/superjumper/Assets.java
 // Extended by Singleton-mechanics
@@ -48,6 +49,7 @@ public class Assets {
 	public BitmapFont font;
 	public Music music;
 	public Sound bite;
+	public Texture animation;
 
 	
 	//public TextureRegion backgroundRegion;
@@ -74,6 +76,7 @@ public class Assets {
 		// gefunden wurde, ersetze die folgende Zeile mit der nachfolgenden.
 		return new Texture(Gdx.files.internal(location));
 		//return new Texture(location);
+	
 	}
 	
 	private static Music loadMusic (String location){
@@ -118,6 +121,7 @@ public class Assets {
 		music 		     = loadMusic("sounds/backgroundmusic.mp3");
 		font 			 = new BitmapFont(Gdx.files.internal("fonts/StS.fnt"));
 		bite 			 = loadSound("sounds/Bite.wav");
+		animation 		 = loadTexture("spritesheet/spritesheet.png");
 		
 	}
 
