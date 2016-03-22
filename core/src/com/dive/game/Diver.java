@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class Diver {
@@ -18,28 +16,13 @@ public class Diver {
 	private Sprite sprite;
 	private Air air;
 	
-    private Animation animation;          // #3
-    private Texture animationTexture;              // #4
-    private TextureRegion[] animationRegion; 
-    private TextureRegion currentFrame;
-    public float animationTimer;
-    
-    private static final int        FRAME_COLS = 8;         // #1
-    private static final int        FRAME_ROWS = 1;         // #2
+	private DiverAnimation diverAnimation;
 
 	
-	public Diver(Texture texture,int width, int height,int maxSpeed){
+	public Diver(Texture texture,int width, int height,int maxSpeed, DiverAnimation animation){
 		
-		animationTexture = Assets.getInstance().animation;
-		TextureRegion[][] animationSplitter = TextureRegion.split(animationTexture, animationTexture.getWidth()/FRAME_COLS, animationTexture.getHeight()/FRAME_ROWS);              // #10
-		animationRegion = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                animationRegion[index++] = animationSplitter[i][j];
-            }
-        }
-        animation = new Animation(0.025f, animationRegion);
+
+        diverAnimation = animation ;
 
 		maxSpeedOrigin = this.maxSpeed = maxSpeed;
 		
@@ -66,14 +49,7 @@ public class Diver {
 		shape[1] = new Rectangle(x2, y2, w2, h2);
 		
 	}
-	public void animate(){
-		animationTimer += Gdx.graphics.getDeltaTime();           // #15
-        currentFrame = animation.getKeyFrame(animationTimer, true);
-	}
-	public void drawAnimation(Batch batch){
-		batch.draw(currentFrame, sprite.getX(), sprite.getY()); 
-	}
-	
+
 	public void move(float deltaTime){
 
 		//Bewegungssteuerung
@@ -117,6 +93,8 @@ public class Diver {
 		v[0]*=decay;
 		v[1]*=decay;
 		
+		diverAnimation.animationTimer();
+		
 	}
 
 	public void moveonjoystick(float x,float y){
@@ -129,9 +107,9 @@ public class Diver {
 	}
 
 	public void draw(Batch batch){
-		animate();
-		drawAnimation(batch);
 		air.draw(batch);
+		diverAnimation.drawAnimation(batch, sprite.getX(), sprite.getY());
+		 
 	}
 
 	public Rectangle[] getShape(){
