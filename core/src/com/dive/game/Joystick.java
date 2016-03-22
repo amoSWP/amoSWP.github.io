@@ -1,6 +1,5 @@
 package com.dive.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -60,7 +59,7 @@ public class Joystick{
     	
     	this.checkboxstyle= new CheckBoxStyle(this.checkboxOn,this.checkboxOff,this.touch,this.color);
 		this.checkbox = new CheckBox("a",this.checkboxstyle);
-		this.checkbox.setBounds(9*Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()-Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10, Gdx.graphics.getWidth()/10);
+		this.checkbox.setBounds(1850, 900, 100, 100);
 	
 
 	
