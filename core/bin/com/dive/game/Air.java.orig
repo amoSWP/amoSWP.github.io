@@ -1,0 +1,89 @@
+package com.dive.game;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+<<<<<<< HEAD
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+=======
+>>>>>>> b72c994d093533fb9908fd674128274a524c931b
+
+public class Air {
+
+	private int air;
+<<<<<<< HEAD
+	private int breath, breathOrigin;
+	private TextureRegion airRegion;
+	private Sprite border_green,border_orange,border_red;
+=======
+	private Sprite sprite;
+	private int breath, breathOrigin;
+>>>>>>> b72c994d093533fb9908fd674128274a524c931b
+	
+	public Air(int breathe){
+		air = 10000;
+		breathOrigin = this.breath = breathe;
+<<<<<<< HEAD
+		airRegion = new TextureRegion(Assets.getInstance().air, 7, 7, 47, 467);
+		
+		border_green = new Sprite(Assets.getInstance().air_green);
+		border_green.setBounds(10, 306, 61, 467);
+		
+		border_orange = new Sprite(Assets.getInstance().air_orange);
+		border_orange.setBounds(10, 306, 61, 467);
+		
+		border_red = new Sprite(Assets.getInstance().air_red);
+		border_red.setBounds(10, 306, 61, 467);
+
+=======
+		
+		sprite = new Sprite(Assets.getInstance().air);
+		sprite.setPosition(0, 0);
+		sprite.setSize(1920, 20);
+>>>>>>> b72c994d093533fb9908fd674128274a524c931b
+	}
+	
+	public void breathe(float deltaTime){
+		air = (int) Math.max(0, air-deltaTime*breath);
+		air = Math.min(10000, air);
+<<<<<<< HEAD
+		airRegion.setRegionY((int) (467-467*(air/10000.0f)));
+=======
+		sprite.setSize(1920*(air/10000.0f), 20);
+>>>>>>> b72c994d093533fb9908fd674128274a524c931b
+	}
+	
+	public void breathe(int k){
+		air = Math.max(0, air-k);
+	}
+	
+	public void draw(Batch batch){
+<<<<<<< HEAD
+		batch.enableBlending();
+		batch.draw(airRegion, 17, 306);
+		if(air>5000){border_green.draw(batch);}
+		else if(air>2500){border_orange.draw(batch);}
+		else{border_red.draw(batch);}
+=======
+		sprite.draw(batch);
+>>>>>>> b72c994d093533fb9908fd674128274a524c931b
+	}
+	
+	public int getAir(){
+		return air;
+	}
+	
+	public void catchBreath(){
+		breath = breathOrigin;
+	}
+	
+	public void setBreath(int breath){
+		this.breath = breath;
+	}
+
+	public void reset() {
+		air = 10000;
+		
+	}
+	
+	
+}
