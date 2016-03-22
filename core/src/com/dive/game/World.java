@@ -23,9 +23,8 @@ public class World {
 	private Sound boathit;
 	private Sound startup;
 	private boolean infAir;
-
-	
-	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font){
+	private DiverAnimation diverAnimation;
+	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font, DiverAnimation animation){
 		
 		objects = new ArrayList<GameObject>();
 		speed = iniSpeed;
@@ -35,9 +34,11 @@ public class World {
 		this.objectGen = objectGen;
 		this.state = state;
 		this.font = font;
+		
+		diverAnimation = animation;
 
-		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
-		// start playing background music
+		diver = new Diver(Assets.getInstance().diver, 150, 75, 300, diverAnimation);
+		
 		music = Assets.getInstance().music;
 //		music.play();
 //		music.setVolume(0.25f);
