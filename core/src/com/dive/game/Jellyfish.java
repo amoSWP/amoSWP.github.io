@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Jellyfish extends GameObject {
 	
 		private int sizeJellyfish;
-		public boolean alreadyhit;
+		private boolean alreadyhit;
 		
 		public Jellyfish(int xcord, int ycord){
 			
@@ -44,6 +44,15 @@ public class Jellyfish extends GameObject {
 			shape.setPosition(sprite.getX(), sprite.getY());
 		}
 		
+		public void setAlreadyhit(boolean bumms) {
+			this.alreadyhit = bumms;
+			
+		}
+
+		public boolean getAlreadyhit() {
+			
+			return this.alreadyhit;
+		}
 		
 		
 		public void reset(){
@@ -51,7 +60,7 @@ public class Jellyfish extends GameObject {
 			sprite.setSize(sizeJellyfish, sizeJellyfish*1.3f);
 			shape.setSize(sprite.getWidth(), sprite.getHeight());
 			shape.setPosition(sprite.getX(), sprite.getY());
-			alreadyhit = false;
+			this.alreadyhit = false;
 		}
 
 }

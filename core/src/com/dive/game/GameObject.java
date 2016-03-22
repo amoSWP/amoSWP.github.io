@@ -68,6 +68,16 @@ public class GameObject {
 		// TODO: Implement collision detection for trash 
 		shape.setPosition(sprite.getX(), sprite.getY());
 	}
+
+	public void setAlreadyhit(boolean b) {
+		this.alreadyhit = b;
+		
+	}
+
+	public boolean getAlreadyhit() {
+		
+		return this.alreadyhit;
+	}
 	
 	
 	

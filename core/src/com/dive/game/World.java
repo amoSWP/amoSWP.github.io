@@ -112,10 +112,11 @@ public class World {
 				diver.slow(speed);
 			}
 			else if(o.getType() == ObjectType.JELLYFISH){
-				if(o.alreadyhit == false){
-					o.alreadyhit = true;
+				if(o.getAlreadyhit() == false){
+					o.setAlreadyhit(true);
 					jellyfishhit.play(100f);
 				}
+				System.out.println(o.alreadyhit);
 				diver.slow(speed);
 				diver.setBreath(2000);
 			}
@@ -155,7 +156,6 @@ public class World {
 		speed = 0.1f;
 		objects.clear();
 		diver.reset();
-		
 		objectGen.reset();
 		startup.play();
 	}
