@@ -71,10 +71,9 @@ public class World {
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
 		diver.refresh(speed);
-		System.out.println("game speed:" + speed);
 		
 		//Level aufbauen
-		objectGen.nextRock(objects, deltaTime);
+		objectGen.nextRock(objects, deltaTime, distance);
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime, distance);
 		objectGen.nextTrash(objects, deltaTime, distance);
@@ -105,11 +104,10 @@ public class World {
 				break;
 			}
 			else if(o.getType() == ObjectType.PLANT){
-				diver.slow();
+				diver.slow(speed);
 			}
 			else if(o.getType() == ObjectType.JELLYFISH){
-				
-				diver.slow();
+				diver.slow(speed);
 				diver.setBreath(2000);
 			}
 			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
