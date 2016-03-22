@@ -20,10 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 
 
-
 public class DiveGame extends ApplicationAdapter implements InputProcessor,ApplicationListener{
 
-	public boolean Android;
+
 	private SpriteBatch batch;
 	private ObjectGenerator newObjects;
 	private World world;
@@ -40,7 +39,6 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 
 	private Stage stage;
 	private Joystick joystick;
-
 	
 	private OrthographicCamera cam;
 	
@@ -50,6 +48,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
+		
 		
 		batch = new SpriteBatch();
 		font = Assets.getInstance().font;
@@ -109,7 +108,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		//Spiellogik updaten und Welt bewegen
 		if(gameState.getState() == State.GAME){
 			world.update(deltaTime);
-			world.move(deltaTime, Android, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
+			world.move(deltaTime, joystick.getJoystick().getKnobPercentX(),joystick.getJoystick().getKnobPercentY());
 			parallax.setSpeed(world.getSpeed());
 			parallax.move(deltaTime);
 		}
@@ -118,32 +117,30 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		}
 		else if(gameState.getState() == State.MENU){
 			parallax.move(deltaTime);
-			if (joystick.getCheckbox().isChecked()){
-				this.Android = true;
-			}else{
-				Android = false;
-			}
-		}	
 
+		}	
+		
+		
 		//batch erstellen
 		batch.begin();
 			parallax.draw(batch);
 			bb1.draw(batch);
 			bb2.draw(batch);
 			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
-				world.draw(batch,Android);
 				joystick.getCheckbox().addAction(Actions.fadeOut(1));
+				world.draw(batch);
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
-				world.draw(batch,Android);
+				joystick.getCheckbox().addAction(Actions.fadeIn(1));
+				world.draw(batch);
 				endscreen.draw(batch);
 			}
 			else if(gameState.getState() == State.MENU){
-				joystick.getCheckbox().addAction(Actions.fadeIn(1));
+				joystick.getCheckbox().addAction(Actions.fadeIn(1)); 
 				if(joystick.getCheckbox().isChecked()){
-					joystick.getJoystick().addAction(Actions.fadeIn(1));
-				}else{
 					joystick.getJoystick().addAction(Actions.fadeOut(1));
+				}else{
+					joystick.getJoystick().addAction(Actions.fadeIn(1));
 				}
 				menu.draw(batch);
 			}
