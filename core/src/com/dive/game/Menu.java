@@ -70,8 +70,7 @@ public class Menu implements InputProcessor {
 		
 		if(gameState.getState() != State.MENU || button != Buttons.LEFT){return false;}
 		
-		screenY = Gdx.graphics.getHeight()-screenY;
-		float[] p = Coords.getCameraCoords(screenX, screenY);
+		float[] p = Coords.getCameraCoords(screenX, Gdx.graphics.getHeight()-screenY);
 		
 		if(start.getBoundingRectangle().contains(p[0],p[1])){
 			gameState.resume();

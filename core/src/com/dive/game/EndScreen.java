@@ -81,8 +81,8 @@ public class EndScreen implements InputProcessor {
 		
 		if(button == Buttons.LEFT){
 			if(restart.getBoundingRectangle().contains(p[0],p[1])){
-				gameState.resume();
 				world.reset();
+				gameState.resume();
 				return true;
 			}
 			else if(menu.getBoundingRectangle().contains(p[0],p[1])){

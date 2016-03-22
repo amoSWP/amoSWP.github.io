@@ -51,11 +51,11 @@ public class ScoreScreen implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		if(gameState.getState() != State.HIGHSCORES){return false;}
+		if(gameState.getState() != State.HIGHSCORES || button != Buttons.LEFT){return false;}
 
 		float[] p = Coords.getCameraCoords(screenX, Gdx.graphics.getHeight()-screenY);
 		
-		if(button == Buttons.LEFT && returnMenu.getBoundingRectangle().contains(p[0],p[1])){
+		if(returnMenu.getBoundingRectangle().contains(p[0],p[1])){
 			gameState.returnMenu();
 			return true;
 		}
