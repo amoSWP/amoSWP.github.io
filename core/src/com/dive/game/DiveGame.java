@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -36,6 +37,7 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 	private Sprite bb1, bb2; //blackBars für horizontales 16:9
 	private EndScreen endscreen;
 	private Menu menu;
+	private ScoreScreen highscores;
 
 	private Stage stage;
 	private Joystick joystick;
@@ -58,9 +60,9 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		
 		//Gamelogik der Welt erzeugen 
 		gameState = new GameState(0);
-		newObjects = new ObjectGenerator(8,8,8,8,8,3, 0.1f);
-		parallax = new Parallax(0.1f);
-		world = new World(newObjects,0.1f,gameState, font, diverAnimation);
+		newObjects = new ObjectGenerator(8,8,8,8,6,3,3, 0.1f);
+		parallax = new Parallax(0.03f);
+		world = new World(newObjects,0.1f,gameState, font);
 		
 		//Joystick und Stage erzeugen
 		stage = new Stage();
@@ -79,10 +81,12 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
         // Inputverwaltung setzen
 		endscreen = new EndScreen(gameState, world, font);
 		menu = new Menu(gameState, world);
+		highscores = new ScoreScreen(gameState, world, font);
 		processors = new ArrayList<InputProcessor>();
 		processors.add(endscreen);
 		processors.add(stage);
 		processors.add(menu);
+		processors.add(highscores);
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -118,26 +122,30 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		else if(gameState.getState() == State.ENDSCREEN){
 			endscreen.setScore(world.getScore());
 		}
-		else if(gameState.getState() == State.MENU){
+		else if(gameState.getState() == State.HIGHSCORES){
+			parallax.setIdle();
 			parallax.move(deltaTime);
-
+		}
+		else if(gameState.getState() == State.MENU){
+			parallax.setIdle();
+			parallax.move(deltaTime);
 		}	
 		
 		
 		//batch erstellen
 		batch.begin();
 			parallax.draw(batch);
-			bb1.draw(batch);
-			bb2.draw(batch);
 			if(gameState.getState() == State.GAME || gameState.getState() == State.PAUSE){
 				joystick.getCheckbox().addAction(Actions.fadeOut(1));
 				world.draw(batch);
 			}
 			else if(gameState.getState() == State.ENDSCREEN){
-				
 				joystick.getCheckbox().addAction(Actions.fadeIn(1));
 				world.draw(batch);
 				endscreen.draw(batch);
+			}
+			else if(gameState.getState() == State.HIGHSCORES){
+				highscores.draw(batch);
 			}
 			else if(gameState.getState() == State.MENU){
 				joystick.getCheckbox().addAction(Actions.fadeIn(1)); 
@@ -148,6 +156,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 				}
 				menu.draw(batch);
 			}
+			bb1.draw(batch);
+			bb2.draw(batch);
 		batch.end();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
@@ -197,6 +207,8 @@ public class DiveGame extends ApplicationAdapter implements InputProcessor,Appli
 		for(InputProcessor p: processors){
 			p.keyUp(keycode);
 		}
+		if(keycode == Keys.CONTROL_LEFT){world.setInfAir();}
+		else if(keycode == Keys.ENTER){gameState.resume();}
 		return false;
 	}
 	@Override

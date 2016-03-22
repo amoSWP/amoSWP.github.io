@@ -19,9 +19,11 @@ public class World {
 	private BitmapFont font;
 	public Music music;
 	private Sound bite;
+	private Sound gasbottlehit;
+	private Sound boathit;
+	private Sound startup;
+	private boolean infAir;
 	private DiverAnimation diverAnimation;
-
-	
 	public World(ObjectGenerator objectGen, float iniSpeed, GameState state, BitmapFont font, DiverAnimation animation){
 		
 		objects = new ArrayList<GameObject>();
@@ -38,11 +40,16 @@ public class World {
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300, diverAnimation);
 		
 		music = Assets.getInstance().music;
-		music.play();
-		music.setLooping(true);
-		
+//		music.play();
+//		music.setVolume(0.25f);
+//		music.setLooping(true);
+		// loading sounds
 		bite = Assets.getInstance().bite;
-		 
+		gasbottlehit = Assets.getInstance().gasbottlehit;
+		boathit = Assets.getInstance().boathit;
+		//startup = Assets.getInstance().startup;
+		infAir = false;
+		
 	}
 	
 	
@@ -64,12 +71,13 @@ public class World {
 	
 	public void update(float deltaTime){
 		//Diver auf Standardgeschwindigkeit (nachdem er verlangsamt wurde durch kollision)
-		diver.refresh();
+		diver.refresh(speed);
 		
 		//Level aufbauen
+		objectGen.nextRock(objects, deltaTime, distance);
 		objectGen.nextPlant(objects, deltaTime);
 		objectGen.nextShark(objects, deltaTime, distance);
-		objectGen.nextTrash(objects, deltaTime);
+		objectGen.nextTrash(objects, deltaTime, distance);
 		objectGen.nextBoat(objects, deltaTime);
 		objectGen.nextJellyfish(objects, deltaTime);
 		objectGen.nextGasBottle(objects, deltaTime);
@@ -88,15 +96,23 @@ public class World {
 				bite.play();
 				state.gameOver();
 				break;
+			}else if(o.getType() == ObjectType.BOAT){
+				boathit.play(20f);
+				state.gameOver();
+				break;
+			}else if (o.getType() == ObjectType.ROCK){
+				state.gameOver();
+				break;
 			}
 			else if(o.getType() == ObjectType.PLANT){
-				diver.slow();
+				diver.slow(speed);
 			}
 			else if(o.getType() == ObjectType.JELLYFISH){
-				diver.slow();
-				diver.breathe(10);
+				diver.slow(speed);
+				diver.setBreath(2000);
 			}
 			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
+				gasbottlehit.play();
 				diver.breathe(-4000);
 			}	
 		}
@@ -104,7 +120,7 @@ public class World {
 		
 		//Luft updaten
 		if(diver.getSprite().getY() + diver.getSprite().getHeight()>=950){diver.recover();}
-		diver.breathe(deltaTime);
+		if(!infAir){diver.breathe(deltaTime);}
 		if(!diver.hasAir()){state.gameOver();}
 		
 		//Score verwalten und Spielgeschwindigkeit anpassen
@@ -133,7 +149,11 @@ public class World {
 		diver.reset();
 		
 		objectGen.reset();
-
+		//startup.play();
+	}
+	
+	public void setInfAir(){
+		infAir = !infAir;
 	}
 
 }

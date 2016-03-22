@@ -32,6 +32,10 @@ public class GameState {
 		state = State.MENU;
 	}
 	
+	public void seeScores(){
+		state = State.HIGHSCORES;
+	}
+	
 	public void toggle(){
 		if(state == State.GAME){state=State.PAUSE;}
 		else if(state == State.PAUSE){state=State.GAME;}

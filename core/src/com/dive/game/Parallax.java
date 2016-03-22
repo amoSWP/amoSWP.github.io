@@ -37,4 +37,8 @@ public class Parallax {
 		bottom.move(deltatime);
 	}
 	
+	public void setIdle(){
+		setSpeed(0.03f);
+	}
+	
 }
