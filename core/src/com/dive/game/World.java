@@ -19,7 +19,9 @@ public class World {
 	private BitmapFont font;
 	public Music music;
 	private Sound bite;
-	
+	private Sound gasbottlehit;
+	private Sound boathit;
+	private Sound startup;
 	private boolean infAir;
 
 	
@@ -35,13 +37,16 @@ public class World {
 		this.font = font;
 
 		diver = new Diver(Assets.getInstance().diver, 150, 75, 300);
-		
+		// start playing background music
 		music = Assets.getInstance().music;
-		music.play();
-		music.setLooping(true);
-		
+//		music.play();
+//		music.setVolume(0.25f);
+//		music.setLooping(true);
+		// loading sounds
 		bite = Assets.getInstance().bite;
-		 
+		gasbottlehit = Assets.getInstance().gasbottlehit;
+		boathit = Assets.getInstance().boathit;
+		//startup = Assets.getInstance().startup;
 		infAir = false;
 		
 	}
@@ -91,6 +96,7 @@ public class World {
 				state.gameOver();
 				break;
 			}else if(o.getType() == ObjectType.BOAT){
+				boathit.play(20f);
 				state.gameOver();
 				break;
 			}else if (o.getType() == ObjectType.ROCK){
@@ -105,6 +111,7 @@ public class World {
 				diver.setBreath(2000);
 			}
 			else if (o.getType() == ObjectType.GASBOTTLE){o.delete();
+				gasbottlehit.play();
 				diver.breathe(-4000);
 			}	
 		}
@@ -141,7 +148,7 @@ public class World {
 		diver.reset();
 		
 		objectGen.reset();
-
+		//startup.play();
 	}
 	
 	public void setInfAir(){
